@@ -1,18 +1,8 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme {
-	--color-brand-50: oklch(97.5% 0.031 135.3);
-	--color-brand-100: oklch(94.9% 0.067 135.5);
-	--color-brand-200: oklch(91.5% 0.127 135.7);
-	--color-brand-300: oklch(87.4% 0.196 135.9);
-	--color-brand-400: oklch(82.9% 0.238 136.1);
-	--color-brand-500: oklch(78.8% 0.233 136.3);
-	--color-brand-600: oklch(63.7% 0.232 136.5);
-	--color-brand-700: oklch(50.3% 0.232 136.7);
-	--color-brand-800: oklch(38.9% 0.232 136.9);
-	--color-brand-900: oklch(26.8% 0.232 137.1);
-	--color-brand-950: oklch(20.1% 0.232 137.3);
+@theme inline {
+	--font-sans: var(--font-inter), sans-serif;
 
 	--color-badge-tool: color-mix(
 		in oklch,
@@ -105,6 +95,8 @@
 	}
 
 	body {
+		@apply font-sans;
+
 		position: relative;
 		display: flex;
 		flex-direction: column;
