@@ -1,0 +1,24 @@
+---
+import GLOBAL from "../lib/globalData";
+
+export type TSeo = {
+	canonical_url?: string;
+	description?: string;
+	title?: string;
+	//
+};
+
+type Props = { data: TSeo };
+
+const { canonical_url, description, title } = Astro.props.data;
+---
+
+<>
+	<title>{title} &mdash; {GLOBAL.site_title}</title>
+	<meta property="og:title" content={title} />
+	<meta property="og:image" content="" />
+	<!-- OG:Image - Needs attention... -->
+	<meta name="description" content={description} />
+	<meta property="og:description" content={description} />
+	{canonical_url && <link rel="canonical" href={canonical_url} />}
+</>

@@ -1,0 +1,26 @@
+---
+import PageSeo from "@components/PageSeo.astro";
+import "../styles/global.css";
+import type { TSeo } from "../components/PageSeo.astro";
+
+type Props = { data: TSeo };
+
+const { data: seo_data } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<PageSeo data={seo_data} />
+		<script type="module" src="/scripts/toggleTheme.js" defer></script>
+		<script type="module" src="/scripts/toggleMobileMenu.js" defer></script>
+	</head>
+	<body data-theme="light">
+		<slot />
+	</body>
+</html>
