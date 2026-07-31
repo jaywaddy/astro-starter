@@ -5,15 +5,6 @@ export type TBanner = {
 	cta: TCta;
 };
 
-export type TBrand = {
-	favicon: {
-		fallback: string;
-		svg: string;
-	};
-	logo: string;
-	name: string;
-};
-
 export type TCta = {
 	href: string;
 	icon?: TIcon;

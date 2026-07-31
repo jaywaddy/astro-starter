@@ -1,7 +1,13 @@
-import type { TBrand, TSocialData } from "../lib/types";
+import type { TSocialData } from "./types";
 
 type TGlobalData = {
-	brand: TBrand;
+	brand: {
+		favicon: {
+			fallback: string;
+			svg: string;
+		};
+		name: string;
+	};
 	contact?: {
 		email?: string;
 		timeZone?: string;
@@ -17,7 +23,6 @@ const GLOBAL_DATA: TGlobalData = {
 			fallback: "/favicon.ico",
 			svg: "/favicon.svg",
 		},
-		logo: "/logo.svg",
 		name: "Astro Starter",
 	},
 	contact: {

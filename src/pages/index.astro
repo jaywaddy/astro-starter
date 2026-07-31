@@ -1,15 +1,12 @@
 ---
 import GlobalLayout from "../layouts/GlobalLayout.astro";
-import DATA from "../content/globalData";
+import DATA from "../lib/globalData";
 
 const { brand } = DATA;
 
-const seo_data = {
-	title: "Home",
-	//
-};
+const seo = { title: "Home" };
 ---
 
-<GlobalLayout data={seo_data}>
+<GlobalLayout data={seo}>
 	<h1>{brand.name}</h1>
 </GlobalLayout>
