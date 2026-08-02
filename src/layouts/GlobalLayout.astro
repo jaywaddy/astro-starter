@@ -7,6 +7,7 @@ import Container from "./Container.astro";
 import Banner from "@components/global/Banner.astro";
 import Navigation from "@components/global/Navigation.astro";
 import GLOBAL_DATA from "../lib/globalData";
+import Footer from "@components/global/Footer.astro";
 
 type Props = { data: TSeo };
 
@@ -75,11 +76,12 @@ const { data } = Astro.props;
 	<body>
 		<header class="fixed top-0 w-full" data-toggle="show" id="header">
 			<Banner />
-			<Navigation data={GLOBAL_DATA.navigation} />
+			<Navigation data={GLOBAL_DATA} />
 		</header>
 		<main class="mt-48">
 			<slot />
 		</main>
+		<Footer data={GLOBAL_DATA} />
 	</body>
 </html>
 <script>

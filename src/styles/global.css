@@ -150,3 +150,25 @@
 		var(--gutter-width) auto;
 	gap: var(--site-gap);
 }
+
+/* --- Components --- */
+@utility badge {
+	--default-color: color-mix(in srgb, currentColor 60%, transparent);
+
+	display: flex;
+	align-items: center;
+	gap: --spacing(1.5);
+
+	text-transform: capitalize;
+	letter-spacing: var(--tracking-wide);
+	color: var(--badge-color, var(--default-color));
+
+	& svg {
+		width: --spacing(4);
+	}
+}
+
+@utility lead {
+	font-size: 1.325rem;
+	color: color-mix(in srgb, currentColor 80%, transparent);
+}

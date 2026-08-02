@@ -1,0 +1,65 @@
+---
+import Img from "@components/ui/Img.astro";
+import Button from "../ui/Button.astro";
+import GlobalGrid from "../../layouts/GlobalGrid.astro";
+import Container from "../../layouts/Container.astro";
+import type { TCta } from "../../lib/types";
+import type { TIcon } from "@components/ui/Icon.astro";
+import Icon from "@components/ui/Icon.astro";
+import Svg from "@components/ui/Svg.astro";
+import type { TGlobalData } from "../../lib/types";
+import logo from "@assets/logo.svg";
+
+type Props = { data: TGlobalData };
+type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
+
+const { brand, navigation } = Astro.props.data;
+
+const LINK_COUNT = 5;
+
+const footerGroups: TFooterGroup[] = [
+	{ icon: "navigation", label: "Navigation", links: navigation.categories },
+	{ icon: "resource", label: "Blog", links: navigation.categories },
+];
+---
+
+<GlobalGrid class="bg-primary mt-auto">
+	<Container layout="body">
+		<div class="border-outline border-b py-8">
+			<a href="/" aria-label="Home" class="inline-block">
+				<Svg class="[&_svg]:h-8" src={logo} />
+			</a>
+			<div class="w-full"></div>
+		</div>
+		<div class="grid grid-cols-5 gap-16 py-8">
+			{
+				footerGroups.map(({ icon, label, links }) => (
+					<ul class="flex flex-col gap-2">
+						<li class="badge">
+							<Icon name={icon} />
+							<span>{label}</span>
+						</li>
+						{links.map((link) => (
+							<li>{<Button data={link} varient={["md", "link"]} class="w-fit" />}</li>
+						))}
+					</ul>
+				))
+			}
+		</div>
+	</Container>
+	<Container layout="full" tag="small" class="bg-banner flex justify-center py-4 text-[white]">
+		<div class="flex gap-1 text-current">
+			<span>Copyright &copy;</span>
+			<span id="copyright-text"></span>
+			<span>{brand.name}. All rights reserved.</span>
+		</div>
+	</Container>
+</GlobalGrid>
+<script>
+	const copyrightElement = document.getElementById("copyright-text");
+	const currentYear = new Date().getFullYear().toString();
+
+	if (copyrightElement) {
+		copyrightElement.innerText = copyrightElement.innerText = currentYear;
+	}
+</script>

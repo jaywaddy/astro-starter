@@ -1,5 +1,5 @@
 ---
-import type { TNavigation } from "../../lib/types";
+import type { TGlobalData } from "../../lib/types";
 import Button from "../ui/Button.astro";
 import GlobalGrid from "../../layouts/GlobalGrid.astro";
 import Container from "../../layouts/Container.astro";
@@ -9,16 +9,9 @@ import Svg from "@components/ui/Svg.astro";
 import logo from "@assets/logo.svg";
 import GLOBAL_DATA from "../../lib/globalData";
 
-type Props = { data: TNavigation };
+type Props = { data: TGlobalData };
 
-const { data } = Astro.props;
-
-if (!data) {
-	console.warn("Header: Failed to fetch global data.");
-	return null;
-}
-
-const { position, categories, cta } = data ?? {};
+const { position, categories, cta } = Astro.props.data.navigation ?? {};
 
 const navPosition = () => {
 	switch (position) {

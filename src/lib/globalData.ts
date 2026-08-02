@@ -1,29 +1,4 @@
-import type { TCta, TNavigation, TSocialData } from "./types";
-
-type TGlobalData = {
-	banner: {
-		cta: TCta;
-		display: boolean;
-		label: string;
-		varient: "auto-hide" | "constant" | "manual-hide";
-	};
-	brand: {
-		favicon: {
-			fallback: string;
-			svg: string;
-		};
-		name: string;
-	};
-	contact?: {
-		email?: string;
-		timeZone?: string;
-		location?: string;
-		phoneNumber?: string;
-	};
-	navigation: TNavigation;
-	social?: TSocialData;
-	warn: (_element: string, _prop: string) => void;
-};
+import type { TGlobalData, TNavigation, TSocialData } from "./types";
 
 const GLOBAL_DATA: TGlobalData = {
 	// --- Global Components --- //

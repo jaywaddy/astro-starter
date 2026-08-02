@@ -11,6 +11,31 @@ export type TCta = {
 	label: string;
 };
 
+export type TGlobalData = {
+	banner: {
+		cta: TCta;
+		display: boolean;
+		label: string;
+		varient: "auto-hide" | "constant" | "manual-hide";
+	};
+	brand: {
+		favicon: {
+			fallback: string;
+			svg: string;
+		};
+		name: string;
+	};
+	contact?: {
+		email?: string;
+		timeZone?: string;
+		location?: string;
+		phoneNumber?: string;
+	};
+	navigation: TNavigation;
+	social?: TSocialData;
+	warn: (_element: string, _prop: string) => void;
+};
+
 export type TImage = {
 	alt: string;
 	path: string;
