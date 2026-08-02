@@ -1,0 +1,55 @@
+---
+import Button from "@components/ui/Button.astro";
+import Container from "../../layouts/Container.astro";
+import GLOBAL_DATA from "../../lib/globalData";
+import GlobalGrid from "../../layouts/GlobalGrid.astro";
+
+const { cta, display, label, varient } = GLOBAL_DATA.banner ?? {};
+
+if (!display) {
+	return null;
+}
+---
+
+<GlobalGrid class="bg-banner text-banner-text relative" varient={varient.toString()} id="banner">
+	<Container
+		layout="body"
+		style="--color-cta-hover: var(--color-banner-hover);"
+		class="relative flex items-center justify-between py-1"
+	>
+		<div class="mx-auto flex min-h-8 items-center gap-2">
+			<small class="flex gap-2">
+				<span class="text-nowrap">{label}</span>
+				<span>&mdash;</span>
+			</small>
+			<Button data={cta} varient={["sm", "outline"]} />
+		</div>
+		{
+			varient === "manual-hide" && (
+				<Button
+					class="absolute right-0"
+					data={{ label: "Close banner" }}
+					icon={["close"]}
+					iconOnly
+					id="dismiss-button"
+					varient={["md", "ghost"]}
+				/>
+			)
+		}
+	</Container>
+</GlobalGrid>
+<script>
+	const banner = document.getElementById("banner");
+	const dismissButton = document.getElementById("dismiss-button");
+
+	if (banner && dismissButton) {
+		const timestamp = Date.now().toString();
+
+		dismissButton.addEventListener("click", () => {
+			banner.style.display = "none";
+			banner.dataset.hidden = "true";
+			localStorage.setItem("hideBanner", "true");
+			localStorage.setItem("hideBannerTimestamp", timestamp);
+		});
+	}
+</script>

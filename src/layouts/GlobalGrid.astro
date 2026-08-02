@@ -1,0 +1,12 @@
+---
+import type { HTMLTag } from "astro/types";
+
+type Props = { class?: string; id?: string; tag?: HTMLTag; varient?: string };
+
+const { class: className, id, tag, varient } = Astro.props;
+const Tag = tag || "div";
+---
+
+<Tag {id} class:list={["site-grid", className]} data-varient={varient}>
+	<slot />
+</Tag>

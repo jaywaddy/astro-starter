@@ -1,8 +1,12 @@
 ---
-import AstroSeo from "@components/AstroSeo.astro";
+import AstroSeo, { type TSeo } from "@components/AstroSeo.astro";
 import "../styles/global.css";
-import type { TSeo } from "../components/AstroSeo.astro";
 import Font from "astro/components/Font.astro";
+import GlobalGrid from "./GlobalGrid.astro";
+import Container from "./Container.astro";
+import Banner from "@components/global/Banner.astro";
+import Navigation from "@components/global/Navigation.astro";
+import GLOBAL_DATA from "../lib/globalData";
 
 type Props = { data: TSeo };
 
@@ -14,15 +18,146 @@ const { data } = Astro.props;
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
+		<script type="module" defer>
+			const systemTheme =
+				window.matchMedia && window.matchMedia("(prefers-color-scheme: light").matches;
+			const themeToggleButton = document.getElementById("theme-toggle-button");
+			const banner = document.getElementById("banner");
+			const hideBanner = localStorage.getItem("hideBanner");
+			const hideBannerTimestamp = localStorage.getItem("hideBannerTimestamp");
+			const timer = 604800000;
+
+			const body = document.body;
+			const lightMode = systemTheme === true;
+			const defaultTheme = "dark";
+			let selectedTheme = localStorage.getItem("theme");
+
+			if (hideBanner === "true") {
+				if (Math.abs(hideBannerTimestamp - Date.now()) > timer) {
+					banner.style.display = "block";
+				} else {
+					banner.style.display = "none";
+				}
+			}
+
+			if (!selectedTheme) {
+				localStorage.setItem("theme", lightMode ? "light" : "dark");
+			}
+
+			if (body) {
+				body.setAttribute("data-theme", selectedTheme ?? defaultTheme);
+				themeToggleButton.setAttribute("data-theme", selectedTheme ?? defaultTheme);
+				themeToggleButton.addEventListener("click", toggleTheme);
+			}
+
+			function toggleTheme() {
+				selectedTheme = localStorage.getItem("theme");
+
+				if (selectedTheme === "light") {
+					localStorage.setItem("theme", "dark");
+					body.setAttribute("data-theme", "dark");
+					themeToggleButton.setAttribute("data-theme", "dark");
+					return;
+				}
+
+				localStorage.setItem("theme", "light");
+				body.setAttribute("data-theme", "light");
+				themeToggleButton.setAttribute("data-theme", "light");
+			}
+		</script>
+		<script type="module" src="/scripts/toggleMobileMenu.js" defer></script>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<AstroSeo {data} />
 		<Font cssVariable="--font-inter" preload />
-		<script type="module" src="/scripts/toggleTheme.js" defer></script>
-		<script type="module" src="/scripts/toggleMobileMenu.js" defer></script>
 	</head>
-	<body data-theme="light">
-		<slot />
+	<body>
+		<header class="fixed top-0 w-full" data-toggle="show" id="header">
+			<Banner />
+			<Navigation data={GLOBAL_DATA.navigation} />
+		</header>
+		<main class="mt-48">
+			<slot />
+		</main>
 	</body>
 </html>
+<script>
+	const banner = document.getElementById("banner") as HTMLElement;
+	const bannerHeight = banner.scrollHeight;
+	const header = document.getElementById("header") as HTMLElement;
+	const links = document.getElementsByTagName("a") as HTMLCollectionOf<Element>;
+	const navigation = document.getElementById("navigation") as HTMLElement;
+	const autoHideEnabled = banner.dataset.varient === "auto-hide";
+
+	if (banner) {
+		window.addEventListener("scroll", (): void => {
+			const bgBase = navigation.classList.contains("bg-base");
+			const bgPrimary = navigation.classList.contains("bg-primary");
+
+			const duration = 300;
+			const durationClass = "duration-300";
+
+			if (bgBase && window.pageYOffset > 5) {
+				bgTransition("hide", duration, durationClass);
+			}
+
+			if (bgPrimary && window.pageYOffset <= 5) {
+				bgTransition("reset", duration, durationClass);
+			}
+
+			[...links].forEach((_link) => {
+				_link.addEventListener("click", (_event: any) => {
+					const eventDuration = 100;
+					const eventDurationClass = "duration-100";
+
+					if (banner.dataset.varient === "auto-hide" && window.pageYOffset > 5) {
+						_event.preventDefault();
+						bgTransition("reset", eventDuration, eventDurationClass);
+
+						setTimeout(() => {
+							window.location.href = _link.baseURI;
+						}, eventDuration);
+					}
+				});
+			});
+
+			function bgTransition(
+				_variation: "hide" | "reset",
+				_duration: number,
+				_durationClass: string,
+			): void {
+				const transitionClasses = {
+					header: ["transition-[top]", _durationClass, "ease-(--easing)"],
+					nav: ["transition-[background-color]", _durationClass, "ease-(--easing)"],
+				};
+
+				if (_variation === "hide") {
+					navigation.classList.remove("bg-base");
+					navigation.classList.add("bg-primary");
+				}
+
+				if (_variation === "hide" && autoHideEnabled) {
+					header.classList.add(...transitionClasses["header"]);
+					header.style.top = `-${bannerHeight}px`;
+				}
+
+				if (_variation === "reset") {
+					navigation.classList.remove("bg-primary");
+					navigation.classList.add("bg-base");
+				}
+
+				if (_variation === "reset" && autoHideEnabled) {
+					header.classList.add(...transitionClasses["header"]);
+					header.style.top = "0px";
+				}
+
+				navigation.classList.add(...transitionClasses["nav"]);
+				setTimeout(() => {
+					navigation.classList.remove(...transitionClasses["nav"]);
+					header.classList.remove(...transitionClasses["header"]);
+				}, _duration);
+			}
+		});
+	}
+</script>

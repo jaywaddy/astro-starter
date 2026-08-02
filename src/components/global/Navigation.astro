@@ -1,0 +1,71 @@
+---
+import type { TNavigation } from "../../lib/types";
+import Button from "../ui/Button.astro";
+import GlobalGrid from "../../layouts/GlobalGrid.astro";
+import Container from "../../layouts/Container.astro";
+import Seperator from "@components/ui/Seperator.astro";
+import Svg from "@components/ui/Svg.astro";
+
+import logo from "@assets/logo.svg";
+import GLOBAL_DATA from "../../lib/globalData";
+
+type Props = { data: TNavigation };
+
+const { data } = Astro.props;
+
+if (!data) {
+	console.warn("Header: Failed to fetch global data.");
+	return null;
+}
+
+const { position, categories, cta } = data ?? {};
+
+const navPosition = () => {
+	switch (position) {
+		case "center":
+			return "mx-auto";
+		case "right":
+			return "ml-auto";
+		case "left":
+			return "mr-auto";
+		default:
+			GLOBAL_DATA.warn("Navigation", "position");
+			return undefined;
+	}
+};
+---
+
+<GlobalGrid class="bg-base py-4" id="navigation">
+	<Container class="flex items-center gap-12" layout="body">
+		<a aria-label="Home" class="hover:text-hover" href="/">
+			<Svg class="[&_svg]:h-8" src={logo} />
+		</a>
+		<nav class:list={["flex items-center gap-12", navPosition()]}>
+			<ul class="flex items-center gap-2">
+				{
+					categories.map((link) => (
+						<li>
+							<Button class="nav-link" data={link} varient={["md", "ghost"]} />
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+		<div
+			class:list={[
+				"flex items-center justify-end gap-4",
+				"**:data-[theme='light']:[&_#theme-dark-icon]:hidden **:data-[theme='dark']:[&_#theme-light-icon]:hidden",
+			]}
+		>
+			<Button
+				id="theme-toggle-button"
+				data={{ label: "Toggle theme" }}
+				varient={["md", "ghost"]}
+				icons={[["theme-light"], ["theme-dark"]]}
+				iconOnly
+			/>
+			<Seperator />
+			<Button data={cta} varient={["md"]} />
+		</div>
+	</Container>
+</GlobalGrid>

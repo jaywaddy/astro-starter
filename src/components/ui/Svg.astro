@@ -9,6 +9,6 @@ const { class: className, src } = Astro.props;
 const Svg = src;
 ---
 
-<div class:list={["overflow-clip", className]}>
-	<Svg class="[&_path]:fill-current" />
+<div class:list={["overflow-clip [&_svg]:text-current", className]}>
+	<Svg />
 </div>

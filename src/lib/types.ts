@@ -17,8 +17,12 @@ export type TImage = {
 };
 
 export type TNavigation = {
-	categories: TCta[];
 	cta: TCta;
+	categories: {
+		href: string;
+		label: string;
+		collection?: string;
+	}[];
 	position: "left" | "center" | "right";
 };
 

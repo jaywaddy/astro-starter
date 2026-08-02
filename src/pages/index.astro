@@ -1,12 +1,18 @@
 ---
+import Container from "../layouts/Container.astro";
+import GlobalGrid from "../layouts/GlobalGrid.astro";
 import GlobalLayout from "../layouts/GlobalLayout.astro";
-import DATA from "../lib/globalData";
+import GLOBAL_DATA from "../lib/globalData";
 
-const { brand } = DATA;
+const { brand } = GLOBAL_DATA;
 
 const seo = { title: "Home" };
 ---
 
 <GlobalLayout data={seo}>
-	<h1>{brand.name}</h1>
+	<GlobalGrid>
+		<Container class="h-[200vh]" layout="content">
+			<h1>{brand.name}</h1>
+		</Container>
+	</GlobalGrid>
 </GlobalLayout>
