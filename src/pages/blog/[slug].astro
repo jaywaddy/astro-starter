@@ -5,6 +5,7 @@ import GlobalGrid from "../../layouts/GlobalGrid.astro";
 import GlobalLayout from "../../layouts/GlobalLayout.astro";
 import { calcReadTime, formatDate } from "@lib/utils";
 import Seperator from "@components/ui/Seperator.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -33,7 +34,7 @@ const seo = { title, metaTitle, description, metaDescription };
 				<small>{calcReadTime(body)}</small>
 			</div>
 		</Container>
-		<Container class="flex flex-col gap-4" layout="article">
+		<Container class="mt-4 flex flex-col gap-8 [&>*>h2]:mt-8" layout="article">
 			<article class="flex flex-col gap-4" set:html={rendered?.html} />
 		</Container>
 	</GlobalGrid>

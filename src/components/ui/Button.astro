@@ -97,12 +97,7 @@ const LabelTag = size === "sm" ? "small" : "span";
 >
 	{
 		iconName !== "none" && !icons && !noIcon && (
-			<span
-				class:list={[
-					`text-current ${iconStrokeWidths[size]}`,
-					size === "sm" && "[&_svg]:w-3",
-				]}
-			>
+			<span class:list={[iconStrokeWidths[size], size === "sm" && "[&_svg]:w-3"]}>
 				<Icon name={iconName} />
 			</span>
 		)
@@ -113,10 +108,7 @@ const LabelTag = size === "sm" ? "small" : "span";
 			icons.map((_icon) => (
 				<span
 					id={`${_icon[0]}-icon`}
-					class:list={[
-						`text-current ${iconStrokeWidths[size]}`,
-						size === "sm" && "[&_svg]:w-3",
-					]}
+					class:list={[iconStrokeWidths[size], size === "sm" && "[&_svg]:w-3"]}
 				>
 					<Icon name={_icon[0]} />
 				</span>

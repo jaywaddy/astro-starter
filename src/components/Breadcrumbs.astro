@@ -1,0 +1,61 @@
+---
+import type { TCta } from "@lib/types";
+import Button from "./ui/Button.astro";
+import Icon from "./ui/Icon.astro";
+import GlobalData from "@lib/config";
+
+type Props = { path: string; title: string | undefined };
+
+const { path, title } = Astro.props;
+
+const crumbs = path.split("/");
+const lastCrumb = crumbs.length - 1;
+
+const crumbList: TCta[] = crumbs.map((_crumb, _index) => {
+	const setHref = () => {
+		if (_index > 0 && _index < crumbs.length) {
+			return crumbs.slice(0, _index + 1).join("/");
+		}
+
+		return "/";
+	};
+
+	const setLabel = () => {
+		if (_index == lastCrumb) {
+			return title;
+		}
+
+		if (_index === 0) {
+			return "home";
+		}
+
+		return _crumb.replace("-", " ");
+	};
+
+	return {
+		href: setHref(),
+		label: _crumb === "" ? GlobalData.brand.name : setLabel() || "",
+		icon: _index === 0 ? "home" : undefined,
+	};
+});
+---
+
+<ul class="flex gap-2">
+	{
+		crumbList.map((_crumb, _index) => (
+			<li class:list={["flex items-center gap-2"]}>
+				{_index > 0 && <Icon class="text-50 w-4" name="chevron-right" />}
+				<Button
+					class:list={[
+						"w-fit capitalize",
+						_index !== lastCrumb && "text-50 hover:text-100",
+					]}
+					data={_crumb}
+					varient={["md", "ghost"]}
+					iconOnly={_index === 0}
+				/>
+			</li>
+			//
+		))
+	}
+</ul>

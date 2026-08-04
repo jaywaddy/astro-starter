@@ -18,6 +18,7 @@ import {
 	Flame,
 	Hammer,
 	Handshake,
+	House,
 	Mail,
 	MapPin,
 	Menu,
@@ -63,6 +64,7 @@ const iconMap = {
 	"guide": BookOpen,
 	"gumroad": Gumroad,
 	"handshake": Handshake,
+	"home": House,
 	"ko-fi": KoFi,
 	"location": MapPin,
 	"mail": Mail,
@@ -91,13 +93,13 @@ const iconMap = {
 };
 
 export type TIcon = keyof typeof iconMap;
-type Props = { name: TIcon };
+type Props = { class?: string; name: TIcon };
 
-const { name } = Astro.props;
+const { class: className, name } = Astro.props;
 
 if (!name) return null;
 
 const Icon = iconMap[name] ?? Fragment;
 ---
 
-<Icon class="fill-none" />
+<Icon class:list={["fill-none", className]} />

@@ -1,5 +1,4 @@
 ---
-import Img from "@components/ui/Img.astro";
 import Button from "../ui/Button.astro";
 import GlobalGrid from "../../layouts/GlobalGrid.astro";
 import Container from "../../layouts/Container.astro";
@@ -9,30 +8,34 @@ import Svg from "@components/ui/Svg.astro";
 import type { TCta } from "@lib/types";
 import GlobalData from "@lib/config";
 import logo from "@assets/logo.svg";
+import { getCollection } from "astro:content";
+import { setHref } from "@lib/utils";
 
 type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
 
 const { brand, navigation } = GlobalData;
 
-const LINK_COUNT = 5;
+const blogPosts = await getCollection("blog");
+const blogLinks = blogPosts.map((post) => ({ href: setHref(post), label: post.data.title }));
+const maxLinks = 5;
 
 const footerGroups: TFooterGroup[] = [
 	{ icon: "navigation", label: "Navigation", links: navigation.categories },
-	{ icon: "resource", label: "Blog", links: navigation.categories },
+	{ icon: "resource", label: "Blog", links: blogLinks },
 ];
 ---
 
 <GlobalGrid class="bg-primary mt-auto">
 	<Container layout="body">
 		<div class="border-outline border-b py-8">
-			<a href="/" aria-label="Home" class="inline-block">
+			<a href="/" aria-label="Home" class="hover:text-50 inline-block">
 				<Svg class="[&_svg]:h-8" src={logo} />
 			</a>
 			<div class="w-full"></div>
 		</div>
 		<div class="grid grid-cols-5 gap-16 py-8">
 			{
-				footerGroups.map(({ icon, label, links }) => (
+				footerGroups.slice(0, maxLinks).map(({ icon, label, links }) => (
 					<ul class="flex flex-col gap-2">
 						<li class="badge">
 							<Icon name={icon} />

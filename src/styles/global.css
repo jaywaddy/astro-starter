@@ -16,6 +16,18 @@
 	--color-brand-900: var(--color-purple-900);
 	--color-brand-950: var(--color-purple-950);
 
+	--color-0: color-mix(in oklch, currentColor 0%, transparent);
+	--color-10: color-mix(in oklch, currentColor 10%, transparent);
+	--color-20: color-mix(in oklch, currentColor 20%, transparent);
+	--color-30: color-mix(in oklch, currentColor 30%, transparent);
+	--color-40: color-mix(in oklch, currentColor 40%, transparent);
+	--color-50: color-mix(in oklch, currentColor 50%, transparent);
+	--color-60: color-mix(in oklch, currentColor 60%, transparent);
+	--color-70: color-mix(in oklch, currentColor 70%, transparent);
+	--color-80: color-mix(in oklch, currentColor 80%, transparent);
+	--color-90: color-mix(in oklch, currentColor 90%, transparent);
+	--color-100: color-mix(in oklch, currentColor 100%, transparent);
+
 	--color-badge-tool: color-mix(
 		in oklch,
 		var(--color-brand-500) 40%,
@@ -37,8 +49,8 @@
 	--color-banner-hover: var(--color-zinc-800);
 	--color-banner-text: var(--color-zinc-50);
 
-	--color-cta-primary: var(--color-brand-500);
-	--color-cta-primary-hover: var(--color-brand-hover);
+	--color-cta-primary: var(--color-brand-400);
+	--color-cta-primary-hover: var(--color-brand-300);
 	--color-cta-secondary: var(--color-zinc-200);
 	--color-cta-secondary-hover: var(--color-zinc-100);
 
@@ -47,10 +59,9 @@
 	/* Typography */
 	--default-font-family: "Outfit";
 
-	--color-cta-primary-text: var(--color-brand-950);
+	--color-cta-primary-text: var(--color-zinc-950);
 
 	--color-text: var(--color-zinc-950);
-	--color-hover: color-mix(in oklch, currentColor 60%, transparent);
 
 	/* General */
 	--color-brand: var(--color-brand-500);

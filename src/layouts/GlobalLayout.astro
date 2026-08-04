@@ -7,6 +7,7 @@ import Container from "./Container.astro";
 import Banner from "@components/global/Banner.astro";
 import Navigation from "@components/global/Navigation.astro";
 import Footer from "@components/global/Footer.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
 
 type Props = { data: TSeo };
 
@@ -73,11 +74,16 @@ const { data } = Astro.props;
 		<Font cssVariable="--font-inter" preload />
 	</head>
 	<body>
-		<header class="fixed top-0 w-full" data-toggle="show" id="header">
+		<header class="fixed top-0 z-999 w-full" data-toggle="show" id="header">
 			<Banner />
 			<Navigation />
 		</header>
-		<main class="mt-48">
+		<main class="mt-48 flex flex-col gap-4">
+			<GlobalGrid>
+				<Container layout="content">
+					<Breadcrumbs path={Astro.url.pathname} title={data.title} />
+				</Container>
+			</GlobalGrid>
 			<slot />
 		</main>
 		<Footer />
