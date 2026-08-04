@@ -1,6 +1,7 @@
 ---
 import type { HTMLTag } from "astro/types";
-import GLOBAL_DATA from "../lib/globalData";
+import GLOBAL_DATA from "../lib/config";
+import { setWarning } from "../lib/utils";
 
 type TGridLayout =
 	| "full"
@@ -15,7 +16,7 @@ type Props = { class?: string; id?: string; layout: TGridLayout; style?: string;
 const { class: className, id, layout, style, tag } = Astro.props;
 
 if (!layout) {
-	GLOBAL_DATA.warn("Container", "layout");
+	setWarning("Container", "layout");
 	return null;
 }
 

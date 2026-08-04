@@ -1,5 +1,5 @@
 ---
-import GLOBAL from "../lib/globalData";
+import GLOBAL from "@lib/config";
 
 export type TSeo = {
 	canonicalUrl?: string;
@@ -20,6 +20,6 @@ const { brand } = GLOBAL;
 	<meta property="og:image" content="" />
 	<!-- OG:Image - Needs attention... -->
 	<meta name="description" content={description} />
-	<meta property="og:description" content={description} />
+	<meta property="og:description" content={`${description} - ${brand.name}`} />
 	{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 </>

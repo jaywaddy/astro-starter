@@ -3,17 +3,16 @@ import Img from "@components/ui/Img.astro";
 import Button from "../ui/Button.astro";
 import GlobalGrid from "../../layouts/GlobalGrid.astro";
 import Container from "../../layouts/Container.astro";
-import type { TCta } from "../../lib/types";
 import type { TIcon } from "@components/ui/Icon.astro";
 import Icon from "@components/ui/Icon.astro";
 import Svg from "@components/ui/Svg.astro";
-import type { TGlobalData } from "../../lib/types";
+import type { TCta } from "@lib/types";
+import GlobalData from "@lib/config";
 import logo from "@assets/logo.svg";
 
-type Props = { data: TGlobalData };
 type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
 
-const { brand, navigation } = Astro.props.data;
+const { brand, navigation } = GlobalData;
 
 const LINK_COUNT = 5;
 
@@ -40,7 +39,16 @@ const footerGroups: TFooterGroup[] = [
 							<span>{label}</span>
 						</li>
 						{links.map((link) => (
-							<li>{<Button data={link} varient={["md", "link"]} class="w-fit" />}</li>
+							<li>
+								{
+									<Button
+										data={link}
+										varient={["md", "link"]}
+										class="w-fit"
+										noIcon
+									/>
+								}
+							</li>
 						))}
 					</ul>
 				))

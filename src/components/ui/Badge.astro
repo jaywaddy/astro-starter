@@ -1,6 +1,6 @@
 ---
 import Icon, { type TIcon } from "./Icon.astro";
-import GLOBAL_DATA from "../../lib/globalData";
+import { setWarning } from "../../lib/utils";
 
 type Props = { class?: string; badge?: TBadge };
 export type TBadge = { icon: TIcon; label: string };
@@ -8,7 +8,7 @@ export type TBadge = { icon: TIcon; label: string };
 const { class: className, badge } = Astro.props;
 
 if (!badge) {
-	GLOBAL_DATA.warn("Badge", "badge");
+	setWarning("Badge", "badge");
 	return null;
 }
 

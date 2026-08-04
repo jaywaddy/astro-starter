@@ -1,5 +1,5 @@
 ---
-import GLOBAL_DATA from "../../lib/globalData";
+import { setWarning } from "@lib/utils";
 import Icon, { type TIcon } from "./Icon.astro";
 
 type TCtaSize = "sm" | "md" | "lg";
@@ -11,13 +11,14 @@ type Props = {
 	bgHover?: string;
 	varient?: [TCtaSize, TCtaDesign?];
 	class?: string;
-	data: { href?: string; icon?: TIcon; label: string };
+	data: { href?: string; icon?: TIcon; label: string; collection?: string };
 	icon?: [TIcon, TIconPosition?];
 	icons?: [TIcon, TIconPosition?][];
 	iconOnly?: boolean;
 	id?: string;
 	isExternal?: boolean;
 	isUnderlined?: boolean;
+	noIcon?: boolean;
 };
 
 const {
@@ -25,16 +26,17 @@ const {
 	varient = ["md", "primary"],
 	class: classAttribute,
 	data,
-	icon = [data.icon || "none", "left"],
+	icon = data.collection ? ["chevron-down", "right"] : [data.icon || "none", "left"],
 	icons,
 	iconOnly = false,
 	id,
 	isExternal,
 	isUnderlined,
+	noIcon = false,
 } = Astro.props;
 
 if (!data || data === undefined) {
-	GLOBAL_DATA.warn("Cta", "data");
+	setWarning("Cta", "data");
 	return null;
 }
 
@@ -47,9 +49,13 @@ const iconPosition = icon[1] || "left";
 const target = isExternal ? "_blank" : undefined;
 
 const ctaSizes: { [key in TCtaSize]: string } = {
-	sm: `${iconOnly ? "px-1 pb-0.25" : "px-2 pb-0.25 text-sm"}`,
-	md: `${iconOnly ? "aspect-1/1 p-[calc(--spacing(1)+0.5px)]" : "px-3 py-1.5 text-[0.875rem]"}`,
-	lg: `${iconOnly ? "aspect-1/1 p-2" : "font-[500] px-4 py-2"}`,
+	sm: iconOnly ? "px-1 pb-0.25" : "px-2 pb-0.25 text-sm",
+	md: data.collection
+		? "pl-3 pr-1 py-1.5 text-[0.875rem]"
+		: iconOnly
+			? "aspect-1/1 p-[calc(--spacing(1)+0.5px)]"
+			: "px-3 py-1.5 text-[0.875rem]",
+	lg: iconOnly ? "aspect-1/1 p-2" : "font-[500] px-4 py-2",
 };
 
 const ctaDesigns: { [key in TCtaDesign]: string } = {
@@ -90,7 +96,7 @@ const LabelTag = size === "sm" ? "small" : "span";
 	aria-current={arriaCurrent}
 >
 	{
-		iconName !== "none" && !icons && (
+		iconName !== "none" && !icons && !noIcon && (
 			<span
 				class:list={[
 					`text-current ${iconStrokeWidths[size]}`,
@@ -103,6 +109,7 @@ const LabelTag = size === "sm" ? "small" : "span";
 	}
 	{
 		icons &&
+			!noIcon &&
 			icons.map((_icon) => (
 				<span
 					id={`${_icon[0]}-icon`}
@@ -116,7 +123,7 @@ const LabelTag = size === "sm" ? "small" : "span";
 			))
 	}
 	{
-		iconOnly === false && (
+		(!iconOnly || noIcon) && (
 			<LabelTag class:list={[design === "link" && ctaDesigns[design]]}>{label}</LabelTag>
 		)
 	}

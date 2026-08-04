@@ -1,5 +1,5 @@
 ---
-import type { TGlobalData } from "../../lib/types";
+import GlobalData from "@lib/config";
 import Button from "../ui/Button.astro";
 import GlobalGrid from "../../layouts/GlobalGrid.astro";
 import Container from "../../layouts/Container.astro";
@@ -7,11 +7,9 @@ import Seperator from "@components/ui/Seperator.astro";
 import Svg from "@components/ui/Svg.astro";
 
 import logo from "@assets/logo.svg";
-import GLOBAL_DATA from "../../lib/globalData";
+import { setWarning } from "../../lib/utils";
 
-type Props = { data: TGlobalData };
-
-const { position, categories, cta } = Astro.props.data.navigation ?? {};
+const { categories, cta, position } = GlobalData.navigation ?? {};
 
 const navPosition = () => {
 	switch (position) {
@@ -22,7 +20,7 @@ const navPosition = () => {
 		case "left":
 			return "mr-auto";
 		default:
-			GLOBAL_DATA.warn("Navigation", "position");
+			setWarning("Navigation", "position");
 			return undefined;
 	}
 };

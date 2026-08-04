@@ -6,7 +6,6 @@ import GlobalGrid from "./GlobalGrid.astro";
 import Container from "./Container.astro";
 import Banner from "@components/global/Banner.astro";
 import Navigation from "@components/global/Navigation.astro";
-import GLOBAL_DATA from "../lib/globalData";
 import Footer from "@components/global/Footer.astro";
 
 type Props = { data: TSeo };
@@ -76,19 +75,19 @@ const { data } = Astro.props;
 	<body>
 		<header class="fixed top-0 w-full" data-toggle="show" id="header">
 			<Banner />
-			<Navigation data={GLOBAL_DATA} />
+			<Navigation />
 		</header>
 		<main class="mt-48">
 			<slot />
 		</main>
-		<Footer data={GLOBAL_DATA} />
+		<Footer />
 	</body>
 </html>
 <script>
 	const banner = document.getElementById("banner") as HTMLElement;
 	const bannerHeight = banner.scrollHeight;
 	const header = document.getElementById("header") as HTMLElement;
-	const links = document.getElementsByTagName("a") as HTMLCollectionOf<Element>;
+	const links = document.getElementsByTagName("a") as HTMLCollectionOf<HTMLAnchorElement>;
 	const navigation = document.getElementById("navigation") as HTMLElement;
 	const autoHideEnabled = banner.dataset.varient === "auto-hide";
 
@@ -109,7 +108,7 @@ const { data } = Astro.props;
 			}
 
 			[...links].forEach((_link) => {
-				_link.addEventListener("click", (_event: any) => {
+				_link.addEventListener("click", (_event) => {
 					const eventDuration = 100;
 					const eventDurationClass = "duration-100";
 
@@ -118,7 +117,7 @@ const { data } = Astro.props;
 						bgTransition("reset", eventDuration, eventDurationClass);
 
 						setTimeout(() => {
-							window.location.href = _link.baseURI;
+							window.location.href = _link.href;
 						}, eventDuration);
 					}
 				});

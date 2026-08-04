@@ -1,8 +1,25 @@
 import type { TIcon } from "@components/ui/Icon.astro";
 
 export type TBanner = {
-	description: string;
 	cta: TCta;
+	display: boolean;
+	label: string;
+	varient: "auto-hide" | "constant" | "manual-hide";
+};
+
+export type TBrand = {
+	favicon: {
+		fallback: string;
+		svg: string;
+	};
+	name: string;
+};
+
+export type TContactt = {
+	email?: string;
+	timeZone?: string;
+	location?: string;
+	phoneNumber?: string;
 };
 
 export type TCta = {
@@ -12,25 +29,6 @@ export type TCta = {
 };
 
 export type TGlobalData = {
-	banner: {
-		cta: TCta;
-		display: boolean;
-		label: string;
-		varient: "auto-hide" | "constant" | "manual-hide";
-	};
-	brand: {
-		favicon: {
-			fallback: string;
-			svg: string;
-		};
-		name: string;
-	};
-	contact?: {
-		email?: string;
-		timeZone?: string;
-		location?: string;
-		phoneNumber?: string;
-	};
 	navigation: TNavigation;
 	social?: TSocialData;
 	warn: (_element: string, _prop: string) => void;

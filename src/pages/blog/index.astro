@@ -1,0 +1,46 @@
+---
+import type { TSeo } from "@components/AstroSeo.astro";
+import GlobalLayout from "../../layouts/GlobalLayout.astro";
+import GlobalGrid from "../../layouts/GlobalGrid.astro";
+import Container from "../../layouts/Container.astro";
+import { getCollection } from "astro:content";
+import { calcReadTime, formatDate } from "@lib/utils";
+import Seperator from "@components/ui/Seperator.astro";
+
+const getPosts = await getCollection("blog");
+const posts = getPosts.sort((_older, _newer) => {
+	return _newer.data.dateCreated.valueOf() - _older.data.dateCreated.valueOf();
+});
+
+const seo: TSeo = {
+	title: "Blog",
+	description: "Description",
+	//
+};
+---
+
+<GlobalLayout data={seo}>
+	<GlobalGrid>
+		<Container layout="content">
+			<h1>Blog</h1>
+		</Container>
+		<Container layout="content">
+			<ul class="flex flex-col gap-8">
+				{
+					posts.map(({ body, collection, data, id }) => (
+						<li class="flex flex-col gap-1">
+							<a class="w-fit hover:underline" href={`/${collection}/${id}`}>
+								<strong>{data.title}</strong>
+							</a>
+							<div class="flex items-center gap-2">
+								<small class="opacity-50">{formatDate(data.dateCreated)}</small>
+								<Seperator />
+								<small class="opacity-50">{calcReadTime(body)}</small>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</Container>
+	</GlobalGrid>
+</GlobalLayout>
