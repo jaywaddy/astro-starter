@@ -43,14 +43,7 @@ const footerGroups: TFooterGroup[] = [
 						</li>
 						{links.map((link) => (
 							<li>
-								{
-									<Button
-										data={link}
-										varient={["md", "link"]}
-										class="w-fit"
-										noIcon
-									/>
-								}
+								{<Button {...link} varient={["md", "link"]} class="w-fit" noIcon />}
 							</li>
 						))}
 					</ul>

@@ -8,10 +8,15 @@ import Banner from "@components/global/Banner.astro";
 import Navigation from "@components/global/Navigation.astro";
 import Footer from "@components/global/Footer.astro";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { getEntry } from "astro:content";
 
-type Props = { data: TSeo };
+const globalData = await getEntry("global", "data");
+const data = globalData?.data;
 
-const { data } = Astro.props;
+type Props = TSeo;
+
+const { canonicalUrl, description, metaDescription, metaTitle, title } = Astro.props;
+const { name } = data.brand ?? {};
 ---
 
 <!doctype html>
@@ -70,7 +75,7 @@ const { data } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<AstroSeo {data} />
+		<AstroSeo {...Astro.props} {name} />
 		<Font cssVariable="--font-inter" preload />
 	</head>
 	<body>
@@ -78,10 +83,11 @@ const { data } = Astro.props;
 			<Banner />
 			<Navigation />
 		</header>
+		<div class=""></div>
 		<main class="mt-48 flex flex-col gap-4">
 			<GlobalGrid>
 				<Container layout="content">
-					<Breadcrumbs path={Astro.url.pathname} title={data.title} />
+					<Breadcrumbs path={Astro.url.pathname} {title} />
 				</Container>
 			</GlobalGrid>
 			<slot />

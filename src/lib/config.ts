@@ -5,7 +5,6 @@ import type {
 	TNavigation,
 	TSocialData,
 } from "./types";
-import config from "./config.json";
 
 // --- GLOBAL COMONENTS --- //
 const banner: TBanner = {

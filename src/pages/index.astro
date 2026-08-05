@@ -8,7 +8,7 @@ const { brand } = GLOBAL_DATA;
 const seo = { title: "Home" };
 ---
 
-<GlobalLayout data={seo}>
+<GlobalLayout {...seo}>
 	<GlobalGrid>
 		<Container layout="content">
 			<h1>{brand.name}</h1>

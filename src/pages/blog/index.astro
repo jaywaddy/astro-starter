@@ -8,18 +8,18 @@ import { calcReadTime, formatDate } from "@lib/utils";
 import Seperator from "@components/ui/Seperator.astro";
 
 const getPosts = await getCollection("blog");
-const posts = getPosts.sort((_older, _newer) => {
-	return _newer.data.dateCreated.valueOf() - _older.data.dateCreated.valueOf();
+const posts = getPosts.sort((older, newer) => {
+	return newer.data.dateCreated.valueOf() - older.data.dateCreated.valueOf();
 });
 
-const seo: TSeo = {
+const data: TSeo = {
 	title: "Blog",
 	description: "Description",
 	//
 };
 ---
 
-<GlobalLayout data={seo}>
+<GlobalLayout {...data}>
 	<GlobalGrid>
 		<Container layout="content">
 			<h1>Blog</h1>

@@ -5,7 +5,6 @@ import GlobalGrid from "../../layouts/GlobalGrid.astro";
 import GlobalLayout from "../../layouts/GlobalLayout.astro";
 import { calcReadTime, formatDate } from "@lib/utils";
 import Seperator from "@components/ui/Seperator.astro";
-import Breadcrumbs from "@components/Breadcrumbs.astro";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -19,11 +18,9 @@ export async function getStaticPaths() {
 
 const { body, data, rendered } = Astro.props.post ?? {};
 const { dateCreated, dateUpdated, title, metaTitle, description, metaDescription } = data ?? {};
-
-const seo = { title, metaTitle, description, metaDescription };
 ---
 
-<GlobalLayout data={seo}>
+<GlobalLayout {...data}>
 	<GlobalGrid>
 		<Container class="flex flex-col gap-4" layout="article">
 			<h1>{title}</h1>

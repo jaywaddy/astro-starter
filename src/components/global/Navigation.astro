@@ -1,5 +1,4 @@
 ---
-import GlobalData from "@lib/config";
 import Button from "../ui/Button.astro";
 import GlobalGrid from "../../layouts/GlobalGrid.astro";
 import Container from "../../layouts/Container.astro";
@@ -7,9 +6,14 @@ import Seperator from "@components/ui/Seperator.astro";
 import Svg from "@components/ui/Svg.astro";
 
 import logo from "@assets/logo.svg";
-import { setWarning } from "../../lib/utils";
+import { setWarning } from "@lib/utils";
+import { getEntry } from "astro:content";
+import type { TNavigation } from "@lib/types";
 
-const { categories, cta, position } = GlobalData.navigation ?? {};
+const navigation = await getEntry("global", "data");
+const data: TNavigation = navigation?.data.navigation;
+
+const { categories, cta, position } = data ?? {};
 
 const navPosition = () => {
 	switch (position) {
@@ -36,7 +40,7 @@ const navPosition = () => {
 				{
 					categories.map((link) => (
 						<li>
-							<Button class="nav-link" data={link} varient={["md", "ghost"]} />
+							<Button class="nav-link" {...link} varient={["md", "ghost"]} />
 						</li>
 					))
 				}
@@ -50,13 +54,13 @@ const navPosition = () => {
 		>
 			<Button
 				id="theme-toggle-button"
-				data={{ label: "Toggle theme" }}
+				label="Toggle theme"
 				varient={["md", "ghost"]}
 				icons={[["theme-light"], ["theme-dark"]]}
 				iconOnly
 			/>
 			<Seperator />
-			<Button data={cta} varient={["md"]} />
+			<Button {...cta} varient={["md"]} />
 		</div>
 	</Container>
 </GlobalGrid>

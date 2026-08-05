@@ -1,47 +1,45 @@
 {
-	"banner": {
-		"cta": {
-			"href": "/",
-			"icon": "new",
-			"label": "CTA link"
+	"data": {
+		"banner": {
+			"cta": {
+				"href": "/",
+				"icon": "new",
+				"label": "CTA link"
+			},
+			"display": true,
+			"label": "Example label",
+			"varient": "auto-hide"
 		},
-		"display": true,
-		"label": "Example label",
-		"varient": "auto-hide"
-	},
-
-	"navigation": {
-		"cta": {
-			"href": "/",
-			"icon": "download",
-			"label": "CTA"
+		"navigation": {
+			"cta": {
+				"href": "/",
+				"icon": "download",
+				"label": "CTA"
+			},
+			"categories": [
+				{ "href": "/", "label": "Home" },
+				{ "href": "/blog", "label": "Blog", "collection": "blog" },
+				{ "href": "/about", "label": "About" },
+				{ "href": "/contact", "label": "Contact" }
+			],
+			"position": "left"
 		},
-		"categories": [
-			{ "href": "/", "label": "Home" },
-			{ "href": "/blog", "label": "Blog", "collection": "blog" },
-			{ "href": "/about", "label": "About" },
-			{ "href": "/contact", "label": "Contact" }
-		],
-		"position": "left"
-	},
-
-	"brand": {
-		"favicon": {
-			"fallback": "/favicon.ico",
-			"svg": "/favicon.svg"
+		"brand": {
+			"favicon": {
+				"fallback": "/favicon.ico",
+				"svg": "/favicon.svg"
+			},
+			"name": "Astro Starter"
 		},
-		"name": "Astro Starter"
-	},
-
-	"contact": {
-		"email": "contact@example.com"
-	},
-
-	"social": {
-		"bio": "Add a bio...",
-		"links": [
-			{ "href": "/", "icon": "youtube", "label": "YouTube" },
-			{ "href": "/", "icon": "bluesky", "label": "Bluesky" }
-		]
+		"contact": {
+			"email": "contact@example.com"
+		},
+		"social": {
+			"bio": "Add a bio...",
+			"links": [
+				{ "href": "/", "icon": "youtube", "label": "YouTube" },
+				{ "href": "/", "icon": "bluesky", "label": "Bluesky" }
+			]
+		}
 	}
 }

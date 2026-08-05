@@ -1,10 +1,14 @@
 ---
 import Button from "@components/ui/Button.astro";
 import Container from "../../layouts/Container.astro";
-import GLOBAL_DATA from "../../lib/config";
 import GlobalGrid from "../../layouts/GlobalGrid.astro";
+import { getEntry } from "astro:content";
+import type { TBanner } from "@lib/types";
 
-const { cta, display, label, varient } = GLOBAL_DATA.banner ?? {};
+const banner = await getEntry("global", "data");
+const data: TBanner = banner?.data.banner;
+
+const { cta, display, label, varient } = data ?? {};
 
 if (!display) {
 	return null;
@@ -22,13 +26,13 @@ if (!display) {
 				<span class="text-nowrap">{label}</span>
 				<span>&mdash;</span>
 			</small>
-			<Button data={cta} varient={["sm", "outline"]} />
+			<Button {...cta} varient={["sm", "outline"]} />
 		</div>
 		{
 			varient === "manual-hide" && (
 				<Button
 					class="absolute right-0"
-					data={{ label: "Close banner" }}
+					label="Close banner"
 					icon={["close"]}
 					iconOnly
 					id="dismiss-button"

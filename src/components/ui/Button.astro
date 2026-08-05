@@ -1,18 +1,19 @@
 ---
-import { setWarning } from "@lib/utils";
 import Icon, { type TIcon } from "./Icon.astro";
 
-type TCtaSize = "sm" | "md" | "lg";
-type TCtaDesign = "primary" | "secondary" | "ghost" | "outline" | "link";
+type TButtonSize = "sm" | "md" | "lg";
+type TButtonStyle = "primary" | "secondary" | "ghost" | "outline" | "link";
 type TIconPosition = "left" | "right";
 
 type Props = {
 	arriaCurrent?: "page" | undefined;
 	bgHover?: string;
-	varient?: [TCtaSize, TCtaDesign?];
+	varient?: [TButtonSize, TButtonStyle?];
 	class?: string;
-	data: { href?: string; icon?: TIcon; label: string; collection?: string };
-	icon?: [TIcon, TIconPosition?];
+	collection?: string;
+	href?: string;
+	label?: string;
+	icon?: TIcon | [TIcon, TIconPosition?];
 	icons?: [TIcon, TIconPosition?][];
 	iconOnly?: boolean;
 	id?: string;
@@ -25,8 +26,10 @@ const {
 	arriaCurrent,
 	varient = ["md", "primary"],
 	class: classAttribute,
-	data,
-	icon = data.collection ? ["chevron-down", "right"] : [data.icon || "none", "left"],
+	collection,
+	href,
+	label,
+	icon = collection ? ["chevron-down", "right"] : ["none", "left"],
 	icons,
 	iconOnly = false,
 	id,
@@ -35,22 +38,15 @@ const {
 	noIcon = false,
 } = Astro.props;
 
-if (!data || data === undefined) {
-	setWarning("Cta", "data");
-	return null;
-}
-
-const { href, label } = data ?? {};
-
 const size = varient[0];
-const design = varient[1] || "primary";
-const iconName = icon[0] || "at-sign";
-const iconPosition = icon[1] || "left";
+const style = varient[1] || "primary";
+const iconName = typeof icon === "string" ? icon : icon[0] || "at-sign";
+const iconPosition = typeof icon === "string" ? "left" : icon[1] || "left";
 const target = isExternal ? "_blank" : undefined;
 
-const ctaSizes: { [key in TCtaSize]: string } = {
+const buttonSizes: { [key in TButtonSize]: string } = {
 	sm: iconOnly ? "px-1 pb-0.25" : "px-2 pb-0.25 text-sm",
-	md: data.collection
+	md: collection
 		? "pl-3 pr-1 py-1.5 text-[0.875rem]"
 		: iconOnly
 			? "aspect-1/1 p-[calc(--spacing(1)+0.5px)]"
@@ -58,7 +54,7 @@ const ctaSizes: { [key in TCtaSize]: string } = {
 	lg: iconOnly ? "aspect-1/1 p-2" : "font-[500] px-4 py-2",
 };
 
-const ctaDesigns: { [key in TCtaDesign]: string } = {
+const buttonStyles: { [key in TButtonStyle]: string } = {
 	primary: "bg-cta-primary text-cta-primary-text hover:bg-cta-primary-hover outline-0.5",
 	secondary: "bg-cta-secondary text-cta-secondary-text hover:bg-cta-secondary-hover",
 	ghost: "hover:bg-cta-hover text-[0.875rem]",
@@ -71,7 +67,7 @@ const iconPositions: { [key in TIconPosition]: string } = {
 	right: "flex-row-reverse",
 };
 
-const iconStrokeWidths: { [key in TCtaSize]: string } = {
+const iconStrokeWidths: { [key in TButtonSize]: string } = {
 	sm: "[&_path]:stroke-[2px]",
 	md: "[&_path]:stroke-[2.5px]",
 	lg: "[&_path]:stroke-[2.8px]",
@@ -87,10 +83,10 @@ const LabelTag = size === "sm" ? "small" : "span";
 	{target}
 	class:list={[
 		"rounded-cta flex cursor-pointer items-center justify-center gap-1 text-nowrap [&_svg]:h-4",
-		ctaSizes[size],
+		buttonSizes[size],
 		isUnderlined && "underline",
 		iconPositions[iconPosition],
-		design !== "link" && `font-[450] ${ctaDesigns[design]}`,
+		style !== "link" && `font-[450] ${buttonStyles[style]}`,
 		classAttribute,
 	]}
 	aria-current={arriaCurrent}
@@ -116,7 +112,7 @@ const LabelTag = size === "sm" ? "small" : "span";
 	}
 	{
 		(!iconOnly || noIcon) && (
-			<LabelTag class:list={[design === "link" && ctaDesigns[design]]}>{label}</LabelTag>
+			<LabelTag class:list={[style === "link" && buttonStyles[style]]}>{label}</LabelTag>
 		)
 	}
 </CtaTag>
