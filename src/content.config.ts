@@ -10,9 +10,10 @@ import {
 const globalData = await getEntry("global", "data");
 export const data: TGlobalData = globalData?.data;
 
+export type TCollection = "blog" | "global";
+
 export type TBlog = CollectionEntry<"blog">;
 export type TGlobal = CollectionEntry<"global">;
-export type TAllCollections = CollectionEntry<"blog" | "global">;
 
 function string(_min: number, _max: number): z.ZodString {
 	if (data.brand) {

@@ -1,9 +1,10 @@
 ---
 import { setHref } from "@lib/utils";
+import { type TCollection } from "@src/content.config";
 import { getCollection } from "astro:content";
 import Button from "./ui/Button.astro";
 
-type Props = { collection?: "blog" | "global" };
+type Props = { collection?: TCollection };
 
 const { collection } = Astro.props;
 
