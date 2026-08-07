@@ -1,19 +1,24 @@
 ---
 import Button from "../ui/Button.astro";
-import GlobalGrid from "../../layouts/GlobalGrid.astro";
-import Container from "../../layouts/Container.astro";
+import GlobalGrid from "@layouts/GlobalGrid.astro";
+import Container from "@layouts/Container.astro";
 import type { TIcon } from "@components/ui/Icon.astro";
 import Icon from "@components/ui/Icon.astro";
 import Svg from "@components/ui/Svg.astro";
 import type { TCta } from "@lib/types";
-import GlobalData from "@lib/config";
+import { data } from "@src/content.config";
 import logo from "@assets/logo.svg";
 import { getCollection } from "astro:content";
-import { setHref } from "@lib/utils";
+import { setHref, setWarning } from "@lib/utils";
+
+if (!data) {
+	setWarning("Footer", "data");
+	return null;
+}
 
 type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
 
-const { brand, navigation } = GlobalData;
+const { brand, navigation } = data ?? {};
 
 const blogPosts = await getCollection("blog");
 const blogLinks = blogPosts.map((post) => ({ href: setHref(post), label: post.data.title }));
@@ -42,9 +47,7 @@ const footerGroups: TFooterGroup[] = [
 							<span>{label}</span>
 						</li>
 						{links.map((link) => (
-							<li>
-								{<Button {...link} varient={["md", "link"]} class="w-fit" noIcon />}
-							</li>
+							<li>{<Button {...link} varient="link" class="w-fit" noIcon />}</li>
 						))}
 					</ul>
 				))
@@ -55,7 +58,7 @@ const footerGroups: TFooterGroup[] = [
 		<div class="flex gap-1 text-current">
 			<span>Copyright &copy;</span>
 			<span id="copyright-text"></span>
-			<span>{brand.name}. All rights reserved.</span>
+			<span>{brand?.name}. All rights reserved.</span>
 		</div>
 	</Container>
 </GlobalGrid>

@@ -1,0 +1,73 @@
+---
+import Container from "@layouts/Container.astro";
+import GlobalGrid from "@layouts/GlobalGrid.astro";
+import GlobalLayout from "@layouts/GlobalLayout.astro";
+import { Content, frontmatter } from "./contact.md";
+import ContactForm from "@components/ContactForm.astro";
+import Element from "@components/Element.astro";
+import type { TIcon } from "@components/ui/Icon.astro";
+import type { TCta } from "@lib/types";
+import Icon from "@components/ui/Icon.astro";
+import Button from "@components/ui/Button.astro";
+import { data } from "@src/content.config";
+import { setWarning } from "@lib/utils";
+
+if (!data) {
+	setWarning("Footer", "data");
+	return null;
+}
+
+type TSidebarGroup = { icon: TIcon; label: string; links?: TCta[]; text?: string };
+
+const { description, email, location, title } = data.brand?.contact ?? {};
+const { socialLinks } = data.brand ?? {};
+
+const sidebarGroups: TSidebarGroup[] = [
+	{ icon: "mail", label: "Email", text: email },
+	{ icon: "location", label: "Location", text: location },
+	{ icon: "message", label: "Connect", links: socialLinks },
+];
+---
+
+<GlobalLayout {...frontmatter}>
+	<GlobalGrid>
+		<Container layout="content">
+			<Content />
+		</Container>
+		<Container layout="article">
+			<ContactForm {data} />
+		</Container>
+		<Container layout="sidebar">
+			<Element tag="aside">
+				<ul class="flex flex-col gap-4">
+					{
+						sidebarGroups.map(({ icon, label, links, text }) => (
+							<li>
+								<ul class="flex flex-col gap-1">
+									<li class="badge">
+										<Icon name={icon} />
+										<span>{label}</span>
+									</li>
+									{text && <li>{text}</li>}
+									<li>
+										<ul class="flex flex-wrap gap-2">
+											{links?.map((link) => (
+												<li>
+													<Button
+														class="w-fit"
+														{...link}
+														varient="secondary"
+													/>
+												</li>
+											))}
+										</ul>
+									</li>
+								</ul>
+							</li>
+						))
+					}
+				</ul>
+			</Element>
+		</Container>
+	</GlobalGrid>
+</GlobalLayout>

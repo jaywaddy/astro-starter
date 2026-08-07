@@ -1,10 +1,10 @@
 ---
 import type { TSeo } from "@components/AstroSeo.astro";
-import GlobalLayout from "../../layouts/GlobalLayout.astro";
-import GlobalGrid from "../../layouts/GlobalGrid.astro";
-import Container from "../../layouts/Container.astro";
+import GlobalLayout from "@layouts/GlobalLayout.astro";
+import GlobalGrid from "@layouts/GlobalGrid.astro";
+import Container from "@layouts/Container.astro";
 import { getCollection } from "astro:content";
-import { calcReadTime, formatDate } from "@lib/utils";
+import { calcReadTime, formatDate, setHref, slugify } from "@lib/utils";
 import Seperator from "@components/ui/Seperator.astro";
 
 const getPosts = await getCollection("blog");
@@ -27,15 +27,17 @@ const data: TSeo = {
 		<Container layout="content">
 			<ul class="flex flex-col gap-8">
 				{
-					posts.map(({ body, collection, data, id }) => (
+					posts.map((post) => (
 						<li class="flex flex-col gap-1">
-							<a class="w-fit hover:underline" href={`/${collection}/${id}`}>
-								<strong>{data.title}</strong>
+							<a class="w-fit hover:underline" href={setHref(post)}>
+								<strong>{post.data.title}</strong>
 							</a>
 							<div class="flex items-center gap-2">
-								<small class="opacity-50">{formatDate(data.dateCreated)}</small>
+								<small class="opacity-50">
+									{formatDate(post.data.dateCreated)}
+								</small>
 								<Seperator />
-								<small class="opacity-50">{calcReadTime(body)}</small>
+								<small class="opacity-50">{calcReadTime(post.body)}</small>
 							</div>
 						</li>
 					))

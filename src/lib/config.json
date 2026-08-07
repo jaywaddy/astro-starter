@@ -25,21 +25,21 @@
 			"position": "left"
 		},
 		"brand": {
+			"bio": "Add a bio...",
+			"contact": {
+				"location": "New York, NY",
+				"email": "contact@example.com",
+				"title": ""
+			},
 			"favicon": {
 				"fallback": "/favicon.ico",
 				"svg": "/favicon.svg"
 			},
-			"name": "Astro Starter"
-		},
-		"contact": {
-			"email": "contact@example.com"
-		},
-		"social": {
-			"bio": "Add a bio...",
-			"links": [
+			"socialLinks": [
 				{ "href": "/", "icon": "youtube", "label": "YouTube" },
 				{ "href": "/", "icon": "bluesky", "label": "Bluesky" }
-			]
+			],
+			"name": "Astro Starter"
 		}
 	}
 }

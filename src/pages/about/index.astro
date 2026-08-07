@@ -1,12 +1,17 @@
 ---
-import { getEntry } from "astro:content";
-import Container from "../../layouts/Container.astro";
-import GlobalGrid from "../../layouts/GlobalGrid.astro";
-import GlobalLayout from "../../layouts/GlobalLayout.astro";
-import { frontmatter } from "./about.md";
+import Container from "@layouts/Container.astro";
+import GlobalGrid from "@layouts/GlobalGrid.astro";
+import GlobalLayout from "@layouts/GlobalLayout.astro";
+import { Content, frontmatter } from "./about.md";
+import { data } from "@src/content.config";
+import { setWarning } from "@lib/utils";
 
-const data = await getEntry("global", "navigation");
+if (!data) {
+	setWarning("Footer", "data");
+	return null;
+}
 
+const { bio } = data.brand ?? {};
 const { title } = frontmatter;
 ---
 
@@ -14,7 +19,12 @@ const { title } = frontmatter;
 	<GlobalGrid>
 		<Container layout="content">
 			<h1>{title}</h1>
-			<p class="lead">This will be the bio...</p>
+			<p class="lead">{bio}</p>
+		</Container>
+		<Container layout="article">
+			<article class="mt-4 flex flex-col gap-8 [&>*>h2]:mt-8">
+				<Content />
+			</article>
 		</Container>
 	</GlobalGrid>
 </GlobalLayout>

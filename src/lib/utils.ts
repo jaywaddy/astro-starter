@@ -2,20 +2,20 @@ import { type CollectionEntry } from "astro:content";
 
 type Collection = CollectionEntry<"blog">;
 
-export function formatDate(
-	_date: Date,
-	_monthFormat?: "short" | "long",
-): string {
-	return new Date(_date).toLocaleString("en-US", {
-		timeZone: "UTC",
-		month: _monthFormat || "short",
-		day: "2-digit",
-		year: "numeric",
-	});
+export function calcReadTime(article: string | undefined): string {
+	const wordsPerMinute = 248;
+
+	if (!article) {
+		return "0 min. read";
+	}
+
+	const output = Math.ceil(calcWordCount(article) / wordsPerMinute);
+
+	return `${output} min. read`;
 }
 
-export function calcWordCount(_input: string): number {
-	const cleanInput = _input
+export function calcWordCount(input: string): number {
+	const cleanInput = input
 		.replace(/(^\s*)|(\s*$)/gi, "")
 		.replace(/[ ]{2,}/gi, " ")
 		.replace(/\n /, "\n");
@@ -23,43 +23,47 @@ export function calcWordCount(_input: string): number {
 	return cleanInput.split(" ").length;
 }
 
-export function calcReadTime(_article: string | undefined): string {
-	const wordsPerMinute = 248;
-
-	if (!_article) {
-		return "0 min. read";
-	}
-
-	const output = Math.ceil(calcWordCount(_article) / wordsPerMinute);
-
-	return `${output} min. read`;
+export function findContent(
+	contentArray: Array<Collection>,
+	id: string,
+): Collection {
+	return contentArray.find((content) => content.id === id) || contentArray[0];
 }
 
-export function titleCase(_input: string): string {
-	return _input
+export function formatDate(date: Date, monthFormat?: "short" | "long"): string {
+	return new Date(date).toLocaleString("en-US", {
+		timeZone: "UTC",
+		month: monthFormat || "short",
+		day: "2-digit",
+		year: "numeric",
+	});
+}
+
+export function titleCase(input: string): string {
+	return input
 		.split("-")
-		.map((_word) => _word.charAt(0).toUpperCase() + _word.slice(1))
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(" ");
 }
 
-export function findContent(
-	_contentArray: Array<Collection>,
-	_id: string,
-): Collection {
-	return (
-		_contentArray.find((_content) => _content.id === _id) ||
-		_contentArray[0]
-	);
+export function setHref(content: Collection): string {
+	const { collection, data, id } = content;
+
+	return `/${collection}/${slugify(data.title) || id}`;
 }
 
-export function setHref(_content: Collection): string {
-	const { collection, id } = _content;
-
-	return `/${collection}/${id}`;
-}
-
-export function setWarning(_element: string, _prop: string): void {
+export function setWarning(element: string, prop: string): void {
 	return console.warn(
-		`⚠️ <${_element} />: ${_prop} property is either missing or invalid.`,
+		`⚠️ <${element} />: ${prop} property is either missing or invalid.`,
 	);
+}
+
+export function slugify(input: string): string {
+	return input
+		.replace("&", " and ")
+		.replace(/^\s+|\s+$/g, "")
+		.toLowerCase()
+		.replace(/[^a-z0-9 -]/g, "")
+		.replace(/\s+/g, "-")
+		.replace(/-+/g, "-");
 }

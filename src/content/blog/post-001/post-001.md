@@ -8,6 +8,8 @@ dateCreated: 2026-08-01
 
 Aenean scelerisque elit enim, consequat auctor urna mollis nec. Nam orci odio, porttitor a tempor id, efficitur non eros. Aenean magna massa, vehicula eget quam nec, vulputate vestibulum lacus. Pellentesque fringilla ac orci at sollicitudin. Nullam tincidunt eleifend justo ut pretium. Nullam scelerisque vestibulum urna sed fringilla. Aenean porta suscipit lectus, ut cursus ipsum suscipit eget. Vivamus in ullamcorper sem. Pellentesque dictum, tellus sed pharetra imperdiet, purus nisi suscipit tortor, sit amet ultrices velit sem non felis.
 
+![Figure 1: Fallback Image](figure-1.png)
+
 Ut at maximus mauris. Cras quis nulla sed quam porttitor tincidunt at ut elit. Proin ac tortor bibendum, pretium orci vitae, vestibulum odio. Proin ut aliquam augue. Cras at elementum nisl. Sed gravida sem mauris, egestas fermentum dui iaculis vitae. Pellentesque tempor justo est, ac dictum metus convallis eget. Maecenas ligula mi, finibus sit amet urna in, feugiat placerat nulla.
 
 ## Aliquam condimentum sit amet lacus mattis aliquam

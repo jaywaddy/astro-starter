@@ -73,8 +73,11 @@
 
 	--easing: cubic-bezier(0.65, 0, 0.35, 1);
 
-	--radius-cta: 0.4rem;
-	--radius-element: calc(var(--radius-cta) + 1rem);
+	--radius-multiplier: 0.5;
+	--radius-cta: 0.275rem;
+	--radius-element: calc(
+		var(--radius-cta) + calc(var(--radius-multiplier) * 1rem)
+	);
 	--radius-pill: 100vw;
 
 	--site-gap: --spacing(8);
@@ -113,7 +116,6 @@
 	body {
 		margin: 0;
 		padding: 0;
-		width: 100%;
 	}
 
 	html {
@@ -127,7 +129,6 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: var(--site-gap);
 
 		min-height: 100dvh;
 
@@ -148,6 +149,23 @@
 	h3 {
 		@apply text-2xl;
 		font-weight: 500;
+	}
+}
+
+@utility content {
+	display: flex;
+	flex-direction: column;
+	gap: --spacing(8);
+
+	margin-top: --spacing(8);
+	max-width: 60ch;
+
+	h2 ~ h2 {
+		margin-top: --spacing(8);
+	}
+
+	img {
+		border-radius: var(--radius-cta);
 	}
 }
 

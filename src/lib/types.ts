@@ -8,29 +8,33 @@ export type TBanner = {
 };
 
 export type TBrand = {
+	bio?: string;
+	contact: {
+		description?: string;
+		email?: string;
+		location?: string;
+		phoneNumber?: string;
+		timeZone?: string;
+		title?: string;
+	};
 	favicon: {
 		fallback: string;
 		svg: string;
 	};
+	socialLinks?: TCta[];
 	name: string;
 };
 
-export type TContactt = {
-	email?: string;
-	timeZone?: string;
-	location?: string;
-	phoneNumber?: string;
-};
-
 export type TCta = {
-	href: string;
+	href?: string;
 	icon?: TIcon;
-	label: string;
+	label?: string;
 };
 
 export type TGlobalData = {
+	banner: TBanner;
+	brand?: TBrand;
 	navigation: TNavigation;
-	social?: TSocialData;
 	warn: (_element: string, _prop: string) => void;
 };
 
@@ -38,6 +42,31 @@ export type TImage = {
 	alt: string;
 	path: string;
 };
+
+export type TInputFieldType =
+	| "button"
+	| "checkbox"
+	| "color"
+	| "date"
+	| "datetime-local"
+	| "email"
+	| "file"
+	| "hidden"
+	| "image"
+	| "month"
+	| "number"
+	| "password"
+	| "radio"
+	| "range"
+	| "reset"
+	| "search"
+	| "submit"
+	| "tel"
+	| "text"
+	| "textarea"
+	| "time"
+	| "url"
+	| "week";
 
 export type TNavigation = {
 	cta: TCta;
@@ -47,9 +76,4 @@ export type TNavigation = {
 		collection?: string;
 	}[];
 	position: "left" | "center" | "right";
-};
-
-export type TSocialData = {
-	bio?: string;
-	links?: TCta[];
 };

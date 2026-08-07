@@ -8,14 +8,17 @@ import Banner from "@components/global/Banner.astro";
 import Navigation from "@components/global/Navigation.astro";
 import Footer from "@components/global/Footer.astro";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
-import { getEntry } from "astro:content";
+import { data } from "@src/content.config";
+import { setWarning } from "@lib/utils";
 
-const globalData = await getEntry("global", "data");
-const data = globalData?.data;
+if (!data) {
+	setWarning("Footer", "data");
+	return null;
+}
 
 type Props = TSeo;
 
-const { canonicalUrl, description, metaDescription, metaTitle, title } = Astro.props;
+const { title } = Astro.props;
 const { name } = data.brand ?? {};
 ---
 
@@ -84,7 +87,7 @@ const { name } = data.brand ?? {};
 			<Navigation />
 		</header>
 		<div class=""></div>
-		<main class="mt-48 flex flex-col gap-4">
+		<main class="mt-48 mb-32 flex flex-col gap-4">
 			<GlobalGrid>
 				<Container layout="content">
 					<Breadcrumbs path={Astro.url.pathname} {title} />

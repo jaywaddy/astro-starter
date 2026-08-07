@@ -2,7 +2,13 @@
 import type { TCta } from "@lib/types";
 import Button from "./ui/Button.astro";
 import Icon from "./ui/Icon.astro";
-import GlobalData from "@lib/config";
+import { data } from "@src/content.config";
+import { setWarning } from "@lib/utils";
+
+if (!data) {
+	setWarning("Bread Crumbs", "data");
+	return null;
+}
 
 type Props = { path: string; title: string | undefined };
 
@@ -34,9 +40,9 @@ const crumbList: TCta[] = crumbs.map((_crumb, _index) => {
 
 	return {
 		href: setHref(),
-		label: _crumb === "" ? GlobalData.brand.name : setLabel() || "",
+		label: _crumb === "" ? data.brand?.name : setLabel() || "",
 		icon: _index === 0 ? "home" : undefined,
-		varient: ["md", "ghost"],
+		varient: "ghost",
 		iconOnly: _index === 0,
 	};
 });

@@ -8,7 +8,7 @@ type TIconPosition = "left" | "right";
 type Props = {
 	arriaCurrent?: "page" | undefined;
 	bgHover?: string;
-	varient?: [TButtonSize, TButtonStyle?];
+	varient?: TButtonStyle | [TButtonStyle, TButtonSize];
 	class?: string;
 	collection?: string;
 	href?: string;
@@ -24,7 +24,7 @@ type Props = {
 
 const {
 	arriaCurrent,
-	varient = ["md", "primary"],
+	varient = "primary",
 	class: classAttribute,
 	collection,
 	href,
@@ -38,8 +38,8 @@ const {
 	noIcon = false,
 } = Astro.props;
 
-const size = varient[0];
-const style = varient[1] || "primary";
+const size = typeof varient === "string" ? "md" : varient[1];
+const style = typeof varient === "string" ? varient : varient[0] || "primary";
 const iconName = typeof icon === "string" ? icon : icon[0] || "at-sign";
 const iconPosition = typeof icon === "string" ? "left" : icon[1] || "left";
 const target = isExternal ? "_blank" : undefined;

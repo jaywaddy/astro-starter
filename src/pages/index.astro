@@ -1,17 +1,23 @@
 ---
-import Container from "../layouts/Container.astro";
-import GlobalGrid from "../layouts/GlobalGrid.astro";
-import GlobalLayout from "../layouts/GlobalLayout.astro";
-import GLOBAL_DATA from "../lib/config";
+import Container from "@layouts/Container.astro";
+import GlobalGrid from "@layouts/GlobalGrid.astro";
+import GlobalLayout from "@layouts/GlobalLayout.astro";
+import { data } from "@src/content.config";
+import { setWarning } from "@lib/utils";
 
-const { brand } = GLOBAL_DATA;
+if (!data) {
+	setWarning("Landing Page", "data");
+	return null;
+}
+
+const { brand } = data;
 const seo = { title: "Home" };
 ---
 
 <GlobalLayout {...seo}>
 	<GlobalGrid>
 		<Container layout="content">
-			<h1>{brand.name}</h1>
+			<h1>{brand?.name}</h1>
 		</Container>
 	</GlobalGrid>
 </GlobalLayout>

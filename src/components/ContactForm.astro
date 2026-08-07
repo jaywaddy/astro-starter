@@ -1,0 +1,57 @@
+---
+import Input from "@components/ui/Input.astro";
+import type { TGlobalData, TInputFieldType } from "@lib/types";
+import Button from "@components/ui/Button.astro";
+import Element from "./Element.astro";
+
+type Props = { data: TGlobalData };
+
+const { contact } = Astro.props.data.brand ?? {};
+
+type TFormField = {
+	name: string;
+	label: string;
+	type: TInputFieldType;
+	placeholder: string;
+	required: boolean;
+};
+
+const inputFields: TFormField[] = [
+	{ name: "name", label: "Name", type: "text", placeholder: "John Doe", required: true },
+	{ name: "email", label: "Email", type: "email", placeholder: "john@doe.com", required: true },
+	{
+		name: "message",
+		label: "Message",
+		type: "textarea",
+		placeholder: "Add a message...",
+		required: true,
+	},
+];
+---
+
+<Element tag="section">
+	<form action={import.meta.env.FORM_SUBMIT_URL} method="POST">
+		<input type="text" name="_honey" style="display:none" />
+		<input type="hidden" name="_subject" value="New submission!" />
+		<input type="hidden" name="_captcha" value="false" />
+		<ul class="flex flex-col gap-4">
+			{
+				inputFields.map((field) => (
+					<li>
+						<Input {...field} />
+					</li>
+				))
+			}
+			<li class="flex gap-2">
+				<Button label="Submit" icon="send" />
+				<Button
+					class="w-fit"
+					label="Write an email"
+					href={`mailto:${contact?.email}`}
+					icon="mail"
+					varient="secondary"
+				/>
+			</li>
+		</ul>
+	</form>
+</Element>
