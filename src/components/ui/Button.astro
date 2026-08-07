@@ -5,7 +5,7 @@ type TButtonSize = "sm" | "md" | "lg";
 type TButtonStyle = "primary" | "secondary" | "ghost" | "outline" | "link";
 type TIconPosition = "left" | "right";
 
-type Props = {
+export type TButton = {
 	arriaCurrent?: "page" | undefined;
 	bgHover?: string;
 	varient?: TButtonStyle | [TButtonStyle, TButtonSize];
@@ -21,6 +21,8 @@ type Props = {
 	isUnderlined?: boolean;
 	noIcon?: boolean;
 };
+
+type Props = TButton;
 
 const {
 	arriaCurrent,

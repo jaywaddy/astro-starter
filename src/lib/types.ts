@@ -73,7 +73,7 @@ export type TNavigation = {
 	categories: {
 		href: string;
 		label: string;
-		collection?: string;
+		collection?: "blog" | "global";
 	}[];
 	position: "left" | "center" | "right";
 };

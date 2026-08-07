@@ -8,6 +8,7 @@ import Svg from "@components/ui/Svg.astro";
 import logo from "@assets/logo.svg";
 import { setWarning } from "@lib/utils";
 import { data } from "@src/content.config";
+import Menu from "@components/Menu.astro";
 
 if (!data) {
 	setWarning("Footer", "data");
@@ -40,8 +41,9 @@ const navPosition = () => {
 			<ul class="flex items-center gap-2">
 				{
 					categories.map((link) => (
-						<li>
+						<li class="relative [&_.menu]:hidden hover:[&_.menu]:flex">
 							<Button class="nav-link" {...link} varient="ghost" />
+							<Menu collection={link.collection} />
 						</li>
 					))
 				}

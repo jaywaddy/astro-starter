@@ -12,6 +12,7 @@ export const data: TGlobalData = globalData?.data;
 
 export type TBlog = CollectionEntry<"blog">;
 export type TGlobal = CollectionEntry<"global">;
+export type TAllCollections = CollectionEntry<"blog" | "global">;
 
 function string(_min: number, _max: number): z.ZodString {
 	if (data.brand) {

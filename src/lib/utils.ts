@@ -1,6 +1,6 @@
 import { type CollectionEntry } from "astro:content";
 
-type Collection = CollectionEntry<"blog">;
+type Collection = CollectionEntry<"blog" | "global">;
 
 export function calcReadTime(article: string | undefined): string {
 	const wordsPerMinute = 248;
