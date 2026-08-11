@@ -69,6 +69,7 @@ export type TInputFieldType =
 	| "week";
 
 export type TNavigation = {
+	background: "dynamic" | "static";
 	cta: TCta;
 	categories: {
 		href: string;

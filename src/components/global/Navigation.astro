@@ -8,14 +8,19 @@ import Svg from "@components/ui/Svg.astro";
 import logo from "@assets/logo.svg";
 import { setWarning } from "@lib/utils";
 import { data } from "@src/content.config";
-import Menu from "@components/Menu.astro";
+import MegaMenu from "@components/MegaMenu.astro";
 
 if (!data) {
 	setWarning("Footer", "data");
 	return null;
 }
 
-const { categories, cta, position } = data.navigation ?? {};
+const { background, categories, cta, position } = data.navigation ?? {};
+
+const backgroundColors: { [key in typeof background]: string } = {
+	dynamic: "bg-base",
+	static: "bg-primary",
+};
 
 const navPosition = () => {
 	switch (position) {
@@ -32,7 +37,7 @@ const navPosition = () => {
 };
 ---
 
-<GlobalGrid class="bg-base py-4" id="navigation">
+<GlobalGrid class:list={["relative py-4", backgroundColors[background]]} id="navigation">
 	<Container class="flex items-center gap-12" layout="body">
 		<a aria-label="Home" class="hover:text-50" href="/">
 			<Svg class="[&_svg]:h-8" src={logo} />
@@ -41,9 +46,9 @@ const navPosition = () => {
 			<ul class="flex items-center gap-2">
 				{
 					categories.map((link) => (
-						<li class="relative [&_.menu]:hidden hover:[&_.menu]:flex">
+						<li class="[--menu-y:-100%] hover:[--menu-y:0%] [&_.mega-menu-container]:pointer-events-none hover:[&_.mega-menu-container]:pointer-events-auto hover:[&_.collection]:[&_svg]:-rotate-90">
 							<Button class="nav-link" {...link} varient="ghost" />
-							<Menu collection={link.collection} />
+							<MegaMenu collection={link.collection} />
 						</li>
 					))
 				}

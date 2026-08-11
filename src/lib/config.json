@@ -11,6 +11,7 @@
 			"varient": "auto-hide"
 		},
 		"navigation": {
+			"background": "static",
 			"cta": {
 				"href": "/",
 				"icon": "download",
@@ -18,7 +19,13 @@
 			},
 			"categories": [
 				{ "href": "/", "label": "Home" },
+				{
+					"href": "/gallery",
+					"label": "Gallery",
+					"collection": "gallery"
+				},
 				{ "href": "/blog", "label": "Blog", "collection": "blog" },
+				{ "href": "/pricing", "label": "Pricing" },
 				{ "href": "/about", "label": "About" },
 				{ "href": "/contact", "label": "Contact" }
 			],

@@ -82,7 +82,12 @@ const { name } = data.brand ?? {};
 		<Font cssVariable="--font-inter" preload />
 	</head>
 	<body>
-		<header class="fixed top-0 z-999 w-full" data-toggle="show" id="header">
+		<header
+			class="fixed top-0 z-999 w-full"
+			data-background={data.navigation.background}
+			data-toggle="show"
+			id="header"
+		>
 			<Banner />
 			<Navigation />
 		</header>
@@ -108,17 +113,14 @@ const { name } = data.brand ?? {};
 
 	if (banner) {
 		window.addEventListener("scroll", (): void => {
-			const bgBase = navigation.classList.contains("bg-base");
-			const bgPrimary = navigation.classList.contains("bg-primary");
-
 			const duration = 300;
 			const durationClass = "duration-300";
 
-			if (bgBase && window.pageYOffset > 5) {
+			if (window.pageYOffset > 5) {
 				bgTransition("hide", duration, durationClass);
 			}
 
-			if (bgPrimary && window.pageYOffset <= 5) {
+			if (window.pageYOffset <= 5) {
 				bgTransition("reset", duration, durationClass);
 			}
 
@@ -137,43 +139,46 @@ const { name } = data.brand ?? {};
 					}
 				});
 			});
-
-			function bgTransition(
-				_variation: "hide" | "reset",
-				_duration: number,
-				_durationClass: string,
-			): void {
-				const transitionClasses = {
-					header: ["transition-[top]", _durationClass, "ease-(--easing)"],
-					nav: ["transition-[background-color]", _durationClass, "ease-(--easing)"],
-				};
-
-				if (_variation === "hide") {
-					navigation.classList.remove("bg-base");
-					navigation.classList.add("bg-primary");
-				}
-
-				if (_variation === "hide" && autoHideEnabled) {
-					header.classList.add(...transitionClasses["header"]);
-					header.style.top = `-${bannerHeight}px`;
-				}
-
-				if (_variation === "reset") {
-					navigation.classList.remove("bg-primary");
-					navigation.classList.add("bg-base");
-				}
-
-				if (_variation === "reset" && autoHideEnabled) {
-					header.classList.add(...transitionClasses["header"]);
-					header.style.top = "0px";
-				}
-
-				navigation.classList.add(...transitionClasses["nav"]);
-				setTimeout(() => {
-					navigation.classList.remove(...transitionClasses["nav"]);
-					header.classList.remove(...transitionClasses["header"]);
-				}, _duration);
-			}
 		});
+	}
+
+	function bgTransition(
+		_variation: "hide" | "reset",
+		_duration: number,
+		_durationClass: string,
+	): void {
+		const bgAuto = header.dataset.background === "dynamic";
+		const bgBase = navigation.classList.contains("bg-base");
+		const bgPrimary = navigation.classList.contains("bg-primary");
+		const transitionClasses = {
+			header: ["transition-[top]", _durationClass, "ease-(--easing)"],
+			nav: ["transition-[background-color]", _durationClass, "ease-(--easing)"],
+		};
+
+		if (bgAuto && bgBase && _variation === "hide") {
+			navigation.classList.remove("bg-base");
+			navigation.classList.add("bg-primary");
+		}
+
+		if (_variation === "hide" && autoHideEnabled) {
+			header.classList.add(...transitionClasses["header"]);
+			header.style.top = `-${bannerHeight}px`;
+		}
+
+		if (bgAuto && bgPrimary && _variation === "reset") {
+			navigation.classList.remove("bg-primary");
+			navigation.classList.add("bg-base");
+		}
+
+		if (_variation === "reset" && autoHideEnabled) {
+			header.classList.add(...transitionClasses["header"]);
+			header.style.top = "0px";
+		}
+
+		navigation.classList.add(...transitionClasses["nav"]);
+		setTimeout(() => {
+			navigation.classList.remove(...transitionClasses["nav"]);
+			header.classList.remove(...transitionClasses["header"]);
+		}, _duration);
 	}
 </script>

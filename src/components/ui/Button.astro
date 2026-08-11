@@ -18,7 +18,6 @@ export type TButton = {
 	iconOnly?: boolean;
 	id?: string;
 	isExternal?: boolean;
-	isUnderlined?: boolean;
 	noIcon?: boolean;
 };
 
@@ -36,7 +35,6 @@ const {
 	iconOnly = false,
 	id,
 	isExternal,
-	isUnderlined,
 	noIcon = false,
 } = Astro.props;
 
@@ -59,9 +57,9 @@ const buttonSizes: { [key in TButtonSize]: string } = {
 const buttonStyles: { [key in TButtonStyle]: string } = {
 	primary: "bg-cta-primary text-cta-primary-text hover:bg-cta-primary-hover outline-0.5",
 	secondary: "bg-cta-secondary text-cta-secondary-text hover:bg-cta-secondary-hover",
-	ghost: "hover:bg-cta-hover text-[0.875rem]",
+	ghost: "hover:bg-cta-hover",
 	outline: "outline-outline outline hover:bg-cta-hover",
-	link: "relative hover:after:absolute hover:after:-bottom-1 hover:after:left-0 hover:after:h-0.25 hover:after:w-full hover:after:bg-current hover:after:content-['']",
+	link: "relative text-[0.875rem] py-1 my-0.5 after:pointer-events-none after:transition-colors after:duration-150 after:ease-in-out after:absolute  after:-bottom-1 after:left-0 after:h-0.25 after:w-full hover:after:bg-current after:content-['']",
 };
 
 const iconPositions: { [key in TIconPosition]: string } = {
@@ -75,21 +73,22 @@ const iconStrokeWidths: { [key in TButtonSize]: string } = {
 	lg: "[&_path]:stroke-[2.8px]",
 };
 
-const CtaTag = href ? "a" : "button";
+const CtaTag = collection ? "span" : href ? "a" : "button";
 const LabelTag = size === "sm" ? "small" : "span";
 ---
 
 <CtaTag
 	{id}
-	{href}
+	href={collection ? undefined : href}
 	{target}
 	class:list={[
 		"rounded-cta flex cursor-pointer items-center justify-center gap-1 text-nowrap [&_svg]:h-4",
-		buttonSizes[size],
-		isUnderlined && "underline",
-		iconPositions[iconPosition],
-		style !== "link" && `font-[450] ${buttonStyles[style]}`,
+		buttonStyles[style],
+		style !== "link" && "font-[450]",
 		classAttribute,
+		collection && "collection",
+		iconPositions[iconPosition],
+		style !== "link" && buttonSizes[size],
 	]}
 	aria-current={arriaCurrent}
 >
@@ -112,9 +111,5 @@ const LabelTag = size === "sm" ? "small" : "span";
 				</span>
 			))
 	}
-	{
-		(!iconOnly || noIcon) && (
-			<LabelTag class:list={[style === "link" && buttonStyles[style]]}>{label}</LabelTag>
-		)
-	}
+	{iconOnly ? null : <LabelTag>{label}</LabelTag>}
 </CtaTag>
