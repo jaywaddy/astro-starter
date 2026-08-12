@@ -6,10 +6,11 @@ import type { TIcon } from "@components/ui/Icon.astro";
 import Icon from "@components/ui/Icon.astro";
 import Svg from "@components/ui/Svg.astro";
 import type { TCta } from "@lib/types";
-import { data } from "@src/content.config";
+import { data, allCollections } from "@src/content.config";
 import logo from "@assets/logo.svg";
-import { getCollection } from "astro:content";
 import { setHref, setWarning } from "@lib/utils";
+import type { CollectionEntry } from "astro:content";
+import type { TCollection } from "@lib/types";
 
 if (!data) {
 	setWarning("Footer", "data");
@@ -20,13 +21,21 @@ type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
 
 const { brand, navigation } = data ?? {};
 
-const blogPosts = await getCollection("blog");
-const blogLinks = blogPosts.map((post) => ({ href: setHref(post), label: post.data.title }));
-const maxLinks = 5;
+const populateFooterGroups = (...data: CollectionEntry<TCollection>[][]) => {
+	const maxLinks = 5;
+
+	return data
+		.slice(0, maxLinks)
+		.map((entries) => ({
+			icon: entries[0]?.collection,
+			label: entries[0]?.collection,
+			links: entries.map((entry) => ({ href: setHref(entry), label: entry.data.title })),
+		}));
+};
 
 const footerGroups: TFooterGroup[] = [
 	{ icon: "navigation", label: "Navigation", links: navigation.categories },
-	{ icon: "resource", label: "Blog", links: blogLinks },
+	...populateFooterGroups(...allCollections),
 ];
 ---
 
@@ -40,7 +49,7 @@ const footerGroups: TFooterGroup[] = [
 		</div>
 		<div class="grid grid-cols-5 gap-16 py-8">
 			{
-				footerGroups.slice(0, maxLinks).map(({ icon, label, links }) => (
+				footerGroups.map(({ icon, label, links }) => (
 					<ul class="flex flex-col gap-2">
 						<li class="badge">
 							<Icon name={icon} />

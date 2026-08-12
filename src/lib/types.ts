@@ -1,3 +1,4 @@
+import type { CollectionEntry } from "astro:content";
 import type { TIcon } from "@components/ui/Icon.astro";
 
 export type TBanner = {
@@ -6,6 +7,8 @@ export type TBanner = {
 	label: string;
 	varient: "auto-hide" | "constant" | "manual-hide";
 };
+
+export type TBlog = CollectionEntry<"blog">;
 
 export type TBrand = {
 	bio?: string;
@@ -25,11 +28,17 @@ export type TBrand = {
 	name: string;
 };
 
+export type TCollection = "blog" | "gallery" | "global";
+
 export type TCta = {
 	href?: string;
 	icon?: TIcon;
 	label?: string;
 };
+
+export type TGallery = CollectionEntry<"gallery">;
+
+export type TGlobal = CollectionEntry<"global">;
 
 export type TGlobalData = {
 	banner: TBanner;
@@ -74,7 +83,7 @@ export type TNavigation = {
 	categories: {
 		href: string;
 		label: string;
-		collection?: "blog" | "global";
+		collection?: TCollection;
 	}[];
 	position: "left" | "center" | "right";
 };
