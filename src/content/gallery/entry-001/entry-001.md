@@ -4,17 +4,7 @@ description: Aenean scelerisque elit enim, consequat auctor urna mollis nec.
 dateCreated: 2026-08-01
 ---
 
-## Aenean magna massa
-
-Aenean scelerisque elit enim, consequat auctor urna mollis nec. Nam orci odio, porttitor a tempor id, efficitur non eros. Aenean magna massa, vehicula eget quam nec, vulputate vestibulum lacus. Pellentesque fringilla ac orci at sollicitudin. Nullam tincidunt eleifend justo ut pretium. Nullam scelerisque vestibulum urna sed fringilla. Aenean porta suscipit lectus, ut cursus ipsum suscipit eget. Vivamus in ullamcorper sem. Pellentesque dictum, tellus sed pharetra imperdiet, purus nisi suscipit tortor, sit amet ultrices velit sem non felis.
-
-Ut at maximus mauris. Cras quis nulla sed quam porttitor tincidunt at ut elit. Proin ac tortor bibendum, pretium orci vitae, vestibulum odio. Proin ut aliquam augue. Cras at elementum nisl. Sed gravida sem mauris, egestas fermentum dui iaculis vitae. Pellentesque tempor justo est, ac dictum metus convallis eget. Maecenas ligula mi, finibus sit amet urna in, feugiat placerat nulla.
-
-## Aliquam condimentum sit amet lacus mattis aliquam
-
-Curabitur cursus neque ex, in dapibus nisl fringilla vulputate. Duis quis rhoncus tellus. Integer vehicula luctus eros id mollis. Fusce convallis libero et rutrum vehicula. Phasellus in dapibus enim. Aliquam condimentum sit amet lacus mattis aliquam. Donec sed odio in arcu iaculis facilisis. Morbi est sem, aliquet nec eleifend in, consequat nec justo. Phasellus scelerisque lacinia est vitae pharetra.
-
-Suspendisse in lorem varius orci viverra vulputate nec in mauris. Maecenas ipsum ipsum, mollis eu scelerisque lacinia, ultrices in mi. Vestibulum a neque non metus ultrices suscipit. Donec eget lacinia mauris. Sed sollicitudin tempus enim. Donec ultrices semper quam a congue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+![Heading Image](./thumbnail.png)
 
 ## Praesent eu nisi nisi
 

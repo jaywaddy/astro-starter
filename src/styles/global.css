@@ -73,6 +73,8 @@
 
 	--easing: cubic-bezier(0.65, 0, 0.35, 1);
 
+	--spacing-element: --spacing(4);
+
 	--radius-multiplier: 0.5;
 	--radius-cta: 0.275rem;
 	--radius-element: calc(
@@ -120,7 +122,7 @@
 
 	html {
 		scrollbar-gutter: stable;
-		background-color: var(--color-banner);
+		background-color: rgba(0, 0, 0, 0);
 	}
 
 	body {
@@ -195,6 +197,13 @@
 	& svg {
 		width: --spacing(4);
 	}
+}
+
+@utility grid {
+	--col-size: min(var(--min-col-size, 360px), 100%);
+
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(var(--col-size), 1fr));
 }
 
 @utility lead {

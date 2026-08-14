@@ -13,7 +13,7 @@ type Props = {
 	quality?: number;
 	responsive?: boolean;
 	sizes?: string;
-	src?: ImageMetadata | undefined;
+	src?: ImageMetadata | string | undefined;
 	width?: number;
 };
 
@@ -54,7 +54,7 @@ const responsiveSizes =
 const responsiveWidths = responsive ? [240, 540, 720, width] : undefined;
 ---
 
-<div class:list={["overflow-clip", className]}>
+<div class:list={["rounded-cta overflow-clip", className]}>
 	<AstroImage
 		alt={safeAlt}
 		class:list={[

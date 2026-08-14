@@ -1,0 +1,19 @@
+---
+import type { HTMLTag } from "astro/types";
+
+type Props = { class?: string; size: "sm" | "md" | "lg" | "full"; tag?: HTMLTag };
+
+const { class: className, size = "lg", tag = "div" } = Astro.props;
+
+const Tag = tag;
+const colSizes: { [key in typeof size]: string } = {
+	sm: "[--min-col-size:240px]",
+	md: "[--min-col-size:360px]",
+	lg: "[--min-col-size:480px]",
+	full: "[--min-col-size:100%]",
+};
+---
+
+<Tag class:list={["grid", colSizes[size], className]}>
+	<slot />
+</Tag>

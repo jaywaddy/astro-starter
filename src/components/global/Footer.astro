@@ -21,7 +21,7 @@ type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
 
 const { brand, navigation } = data ?? {};
 
-const populateFooterGroups = (...data: CollectionEntry<TCollection>[][]) => {
+const populateFooterGroups = (...data: CollectionEntry<TCollection>[][]): TFooterGroup[] => {
 	const maxLinks = 5;
 
 	return data

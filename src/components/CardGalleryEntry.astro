@@ -1,0 +1,30 @@
+---
+import { formatDate, setHref } from "@lib/utils";
+import type { CollectionEntry } from "astro:content";
+import Element from "./ui/Element.astro";
+import type { TCollection } from "@lib/types";
+import Img from "./ui/Img.astro";
+import type { ImageMetadata } from "astro";
+
+type Props = { entry: CollectionEntry<TCollection> };
+
+const { entry } = Astro.props;
+const thumbnailPath = entry.rendered?.metadata?.imagePaths[0];
+const thumbnail = import.meta.glob<{ default: ImageMetadata }>(
+	"./src/content/gallery/**/thumbnail.png",
+);
+
+console.log(thumbnail);
+---
+
+<Element>
+	<Img src={thumbnail[thumbnailPath]} />
+	<a class="w-fit hover:underline" href={setHref(entry)}>
+		<strong>{entry.data.title}</strong>
+	</a>
+	<div class="flex items-center gap-2">
+		<small class="opacity-50">
+			{formatDate(entry.data.dateCreated)}
+		</small>
+	</div>
+</Element>

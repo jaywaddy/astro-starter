@@ -1,11 +1,11 @@
-import type { TGlobalData } from "@lib/types";
+import type { TBlog, TGallery, TGlobalData } from "@lib/types";
 import { glob, file } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection, getCollection, getEntry } from "astro:content";
 
 const globalData = await getEntry("global", "data");
-const blogPosts = await getCollection("blog");
-const galleryEntries = await getCollection("gallery");
+const blogPosts: TBlog[] = await getCollection("blog");
+const galleryEntries: TGallery[] = await getCollection("gallery");
 
 export const data: TGlobalData = globalData?.data;
 export const allCollections = [
@@ -26,7 +26,7 @@ const collectionSchema = {
 
 function seoString(_min: number, _max: number): z.ZodString {
 	if (data.brand) {
-		const siteTitleLength = data.brand?.name.length;
+		const siteTitleLength = data.brand.name.length;
 		const newMin = _min - siteTitleLength;
 		const newMax = _max - siteTitleLength;
 

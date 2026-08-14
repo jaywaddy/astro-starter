@@ -1,0 +1,16 @@
+---
+import type { HTMLTag } from "astro/types";
+
+type Props = {
+	class?: string;
+	tag?: HTMLTag;
+	//
+};
+
+const { class: className, tag = "div" } = Astro.props;
+const Tag = tag;
+---
+
+<Tag class:list={["p-element bg-primary rounded-element flex flex-col gap-4", className]}>
+	<slot />
+</Tag>
