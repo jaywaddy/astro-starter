@@ -1,15 +1,16 @@
 ---
 import type { HTMLTag } from "astro/types";
 
-type Props = { class?: string; size: "sm" | "md" | "lg" | "full"; tag?: HTMLTag };
+export type TGridSizes = "sm" | "md" | "lg" | "full";
+type Props = { class?: string; size: TGridSizes; tag?: HTMLTag };
 
 const { class: className, size = "lg", tag = "div" } = Astro.props;
 
 const Tag = tag;
 const colSizes: { [key in typeof size]: string } = {
-	sm: "[--min-col-size:240px]",
-	md: "[--min-col-size:360px]",
-	lg: "[--min-col-size:480px]",
+	sm: "[--min-col-size:20rem]",
+	md: "[--min-col-size:24rem]",
+	lg: "[--min-col-size:28rem]",
 	full: "[--min-col-size:100%]",
 };
 ---

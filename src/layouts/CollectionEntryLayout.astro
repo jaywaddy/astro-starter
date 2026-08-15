@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import Container from "@layouts/Container.astro";
+import GlobalGrid from "@layouts/GlobalGrid.astro";
+import GlobalLayout from "@layouts/GlobalLayout.astro";
+import { calcReadTime, formatDate, slugify } from "@lib/utils";
+import Seperator from "@components/ui/Seperator.astro";
+import Image from "@components/ui/Img.astro";
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import type { TCollection } from "@lib/types";
+
+type Props = { entry: CollectionEntry<TCollection> };
+
+const { entry } = Astro.props ?? {};
+
+const { Content } = await render(entry);
+const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?? {};
+---
+
+<GlobalLayout {...entry.data}>
+	<GlobalGrid>
+		<Container class="flex flex-col gap-8" layout="article">
+			<Image src={thumbnail} class="rounded-cta" />
+			<div class="flex flex-col gap-4">
+				<h1>{title}</h1>
+				<p class="lead">{description}</p>
+				<div class="items center flex gap-2">
+					<small>{formatDate(dateUpdated || dateCreated)}</small>
+					<Seperator />
+					<small>{calcReadTime(entry.body)}</small>
+				</div>
+			</div>
+		</Container>
+		<Container class="content" layout="article" tag="article">
+			<Content />
+		</Container>
+	</GlobalGrid>
+</GlobalLayout>

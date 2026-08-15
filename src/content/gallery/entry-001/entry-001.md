@@ -1,10 +1,9 @@
 ---
-title: Welcome to the Astro Starter Template
+title: Shooting Stars, Planets, and Astro.js
 description: Aenean scelerisque elit enim, consequat auctor urna mollis nec.
 dateCreated: 2026-08-01
+thumbnail: thumbnail.png
 ---
-
-![Heading Image](./thumbnail.png)
 
 ## Praesent eu nisi nisi
 

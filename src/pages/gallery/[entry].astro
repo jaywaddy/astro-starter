@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import CollectionEntryLayout from "@layouts/CollectionEntryLayout.astro";
+import type { TGallery } from "@lib/types";
+import { slugify } from "@lib/utils";
+
+export async function getStaticPaths() {
+	const entries: TGallery[] = await getCollection("gallery");
+
+	return entries.map((entry) => ({
+		params: { entry: slugify(entry.data.title) },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props ?? {};
+---
+
+<CollectionEntryLayout entry={entry} />

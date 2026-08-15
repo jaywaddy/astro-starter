@@ -2,6 +2,7 @@
 title: Welcome to the Astro Starter Template
 description: Aenean scelerisque elit enim, consequat auctor urna mollis nec.
 dateCreated: 2026-08-01
+thumbnail: thumbnail.png
 ---
 
 ## Aenean magna massa

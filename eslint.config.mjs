@@ -5,8 +5,6 @@ export default [
 	{
 		rules: {
 			quotes: ["warn", "double"],
-			"no-undef": "warn",
-			"quote-props": ["warn", "consistent-as-needed"],
 		},
 	},
 ];

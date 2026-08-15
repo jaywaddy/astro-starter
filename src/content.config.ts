@@ -1,13 +1,13 @@
-import type { TBlog, TGallery, TGlobalData } from "@lib/types";
+import type { TBlog, TGallery, TConfig, TGlobalConfig } from "@lib/types";
 import { glob, file } from "astro/loaders";
 import { z } from "astro/zod";
-import { defineCollection, getCollection, getEntry } from "astro:content";
+import { defineCollection, getCollection } from "astro:content";
+import globalConfig from "@lib/config.json";
 
-const globalData = await getEntry("global", "data");
-const blogPosts: TBlog[] = await getCollection("blog");
-const galleryEntries: TGallery[] = await getCollection("gallery");
+export const data = globalConfig.data; // JSON cannot be have custom types
+export const blogPosts: TBlog[] = await getCollection("blog");
+export const galleryEntries: TGallery[] = await getCollection("gallery");
 
-export const data: TGlobalData = globalData?.data;
 export const allCollections = [
 	blogPosts,
 	galleryEntries,
@@ -39,21 +39,29 @@ function seoString(_min: number, _max: number): z.ZodString {
 const blog = defineCollection({
 	loader: glob({
 		base: "./src/content/blog",
-		pattern: "**/*.(md|mdx)",
+		pattern: "**/*.md",
 	}),
-	schema: z.object(collectionSchema),
+	schema: ({ image }) =>
+		z.object({
+			...collectionSchema,
+			thumbnail: image().optional(),
+		}),
 });
 
 const gallery = defineCollection({
 	loader: glob({
 		base: "./src/content/gallery",
-		pattern: "**/*.(md|mdx)",
+		pattern: "**/*.md",
 	}),
-	schema: z.object(collectionSchema),
+	schema: ({ image }) =>
+		z.object({
+			...collectionSchema,
+			thumbnail: image().optional(),
+		}),
 });
 
-const global = defineCollection({
+const config = defineCollection({
 	loader: file("./src/lib/config.json"),
 });
 
-export const collections = { blog, gallery, global };
+export const collections = { blog, gallery, config };

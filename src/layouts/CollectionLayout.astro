@@ -7,7 +7,7 @@ import { getCollection } from "astro:content";
 import type { TCollection } from "@lib/types";
 import CardBlogPost from "@components/CardBlogPost.astro";
 import CardGalleryEntry from "@components/CardGalleryEntry.astro";
-import Grid from "@components/ui/Grid.astro";
+import Grid, { type TGridSizes } from "@components/ui/Grid.astro";
 
 type Props = { collection: TCollection; data: TSeo };
 
@@ -18,11 +18,12 @@ const entries = getEntries.sort((older, newer) => {
 	return newer.data.dateCreated.valueOf() - older.data.dateCreated.valueOf();
 });
 
-const gridLayouts: { [key in TCollection]: "sm" | "md" | "lg" | "full" } = {
+const gridLayouts: { [key in TCollection]: TGridSizes } = {
 	blog: "full",
 	gallery: "lg",
-	global: "sm",
+	config: "full",
 };
+
 const Card = collection === "blog" ? CardBlogPost : CardGalleryEntry;
 ---
 

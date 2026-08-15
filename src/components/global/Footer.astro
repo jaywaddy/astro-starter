@@ -11,6 +11,7 @@ import logo from "@assets/logo.svg";
 import { setHref, setWarning } from "@lib/utils";
 import type { CollectionEntry } from "astro:content";
 import type { TCollection } from "@lib/types";
+import Grid from "@components/ui/Grid.astro";
 
 if (!data) {
 	setWarning("Footer", "data");
@@ -47,7 +48,8 @@ const footerGroups: TFooterGroup[] = [
 			</a>
 			<div class="w-full"></div>
 		</div>
-		<div class="grid grid-cols-5 gap-16 py-8">
+		<!-- <div class="grid grid-cols-5 gap-16 py-8"> -->
+		<Grid class="gap-8 py-8" size="sm">
 			{
 				footerGroups.map(({ icon, label, links }) => (
 					<ul class="flex flex-col gap-2">
@@ -71,7 +73,8 @@ const footerGroups: TFooterGroup[] = [
 					</ul>
 				))
 			}
-		</div>
+		</Grid>
+		<!-- </div> -->
 	</Container>
 	<Container layout="full" tag="small" class="bg-banner flex justify-center py-4 text-[white]">
 		<div class="flex gap-1 text-current">

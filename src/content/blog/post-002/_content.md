@@ -2,6 +2,7 @@
 title: An Update to the Astro Starter Template
 description: Nam ac consectetur elit. Nullam varius lacinia mauris tempor.
 dateCreated: 2026-08-02
+thumbnail: thumbnail.png
 ---
 
 ## In at mauris non massa hendrerit suscipit
