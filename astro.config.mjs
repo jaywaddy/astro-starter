@@ -1,5 +1,4 @@
 // @ts-check
-import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 
@@ -19,6 +18,4 @@ export default defineConfig({
 			styles: ["italic", "normal"],
 		},
 	],
-
-	integrations: [mdx()],
 });
