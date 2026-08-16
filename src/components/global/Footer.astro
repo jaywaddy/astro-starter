@@ -6,23 +6,25 @@ import type { TIcon } from "@components/ui/Icon.astro";
 import Icon from "@components/ui/Icon.astro";
 import Svg from "@components/ui/Svg.astro";
 import type { TCta } from "@lib/types";
-import { data, allCollections } from "@src/content.config";
+import { allCollections } from "@src/content.config";
+
+import globalConfig from "@lib/config";
 import logo from "@assets/logo.svg";
 import { setHref, setWarning } from "@lib/utils";
 import type { CollectionEntry } from "astro:content";
 import type { TCollection } from "@lib/types";
 import Grid from "@components/ui/Grid.astro";
 
-if (!data) {
-	setWarning("Footer", "data");
+if (!globalConfig) {
+	setWarning("Footer", "globalConfig");
 	return null;
 }
 
 type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
 
-const { brand, navigation } = data ?? {};
+const { brand, navigation } = globalConfig ?? {};
 
-const populateFooterGroups = (...data: CollectionEntry<TCollection>[][]): TFooterGroup[] => {
+function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TFooterGroup[] {
 	const maxLinks = 5;
 
 	return data
@@ -32,26 +34,27 @@ const populateFooterGroups = (...data: CollectionEntry<TCollection>[][]): TFoote
 			label: entries[0]?.collection,
 			links: entries.map((entry) => ({ href: setHref(entry), label: entry.data.title })),
 		}));
-};
+}
 
-const footerGroups: TFooterGroup[] = [
-	{ icon: "navigation", label: "Navigation", links: navigation.categories },
-	...populateFooterGroups(...allCollections),
-];
+const navLinks = navigation.categories.filter((link) => {
+	return link.href !== "/" && !link.collection;
+});
 ---
 
-<GlobalGrid class="bg-primary mt-auto">
-	<Container layout="body">
-		<div class="border-outline border-b py-8">
-			<a href="/" aria-label="Home" class="hover:text-50 inline-block">
+<GlobalGrid class="bg-primary mt-auto gap-y-8 pt-8">
+	<Container layout="footer-info">
+		<div class="border-outline mr-8 flex flex-col gap-2 py-4 pr-8 lg:border-r">
+			<a href="/" aria-label="Home" class="hover:text-50 flex flex-wrap items-center gap-2">
 				<Svg class="[&_svg]:h-8" src={logo} />
+				<span class="font-bold">{globalConfig.brand?.name}</span>
 			</a>
-			<div class="w-full"></div>
+			{navLinks.map((link) => <Button {...link} varient="link" />)}
 		</div>
-		<!-- <div class="grid grid-cols-5 gap-16 py-8"> -->
-		<Grid class="gap-8 py-8" size="sm">
+	</Container>
+	<Container layout="footer-links">
+		<Grid class="gap-8 py-4" size="sm">
 			{
-				footerGroups.map(({ icon, label, links }) => (
+				[...populateFooterGroups(...allCollections)].map(({ icon, label, links }) => (
 					<ul class="flex flex-col gap-2">
 						<li class="badge">
 							<Icon name={icon} />
@@ -64,7 +67,6 @@ const footerGroups: TFooterGroup[] = [
 										href={link.href}
 										label={link.label}
 										varient="link"
-										class="w-fit"
 										noIcon
 									/>
 								}
@@ -74,7 +76,6 @@ const footerGroups: TFooterGroup[] = [
 				))
 			}
 		</Grid>
-		<!-- </div> -->
 	</Container>
 	<Container layout="full" tag="small" class="bg-banner flex justify-center py-4 text-[white]">
 		<div class="flex gap-1 text-current">

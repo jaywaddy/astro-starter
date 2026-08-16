@@ -1,0 +1,209 @@
+---
+import Container from "@layouts/Container.astro";
+import GlobalGrid from "@layouts/GlobalGrid.astro";
+
+type Props = { enable: boolean; showGrid: boolean; showLayouts: boolean };
+
+const { enable, showGrid, showLayouts } = Astro.props;
+
+if (!enable) {
+	return null;
+}
+
+const breakpoints = {
+	sm: "max-sm:[--display:none]",
+	md: "max-lg:[--display:none]",
+	lg: "max-2xl:[--display:none]",
+};
+---
+
+<div class="pointer-events-none fixed inset-0 z-99999">
+	{
+		showGrid && (
+			<div
+				class:list={[
+					"visual-grid absolute grid h-full w-full grid-cols-(--visual-grid) gap-4",
+					"[--display:flex] [--visual-grid:auto_1fr_auto]",
+					"sm:[--visual-grid:var(--grid-sm)]",
+					"lg:[--visual-grid:var(--grid-md)]",
+					"2xl:[--visual-grid:var(--grid-lg)]",
+				]}
+			>
+				<div class="grid-span auto" />
+				<div class:list={["grid-span fraction group-1"]}>1</div>
+
+				{/* <!-- sm --> */}
+				<div class:list={["grid-span fraction group-1", breakpoints["sm"]]}>2</div>
+				<div class:list={["grid-span fraction group-1", breakpoints["sm"]]}>3</div>
+				<div class:list={["grid-span fraction group-1", breakpoints["sm"]]}>4</div>
+
+				{/* <!-- md --> */}
+				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>5</div>
+				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>6</div>
+				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>7</div>
+				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>8</div>
+
+				{/* <!-- lg --> */}
+				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>9</div>
+				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>10</div>
+				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>11</div>
+				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>12</div>
+
+				<div class="grid-span auto" />
+			</div>
+		)
+	}
+	{
+		showLayouts && (
+			<div class="z-10 mt-4 flex w-full flex-col gap-4 [--display:grid]">
+				{/* <!-- Full Layout --> */}
+				<GlobalGrid>
+					<Container layout="full">
+						<div class="grid-span layout-full">Full</div>
+					</Container>
+				</GlobalGrid>
+
+				{/* <!-- Body Layout --> */}
+				<GlobalGrid>
+					<Container layout="left-margin">
+						<div class="grid-span layout-margin">LM</div>
+					</Container>
+					<Container layout="body">
+						<div class="grid-span layout-body">Body</div>
+					</Container>
+					<Container layout="right-margin">
+						<div class="grid-span layout-margin">RM</div>
+					</Container>
+				</GlobalGrid>
+
+				{/* <!-- Content Layout --> */}
+				<GlobalGrid>
+					<Container layout="left-margin">
+						<div class="grid-span layout-margin">LM</div>
+					</Container>
+					<Container class="max-lg:hidden" layout="left-gutter">
+						<div class="grid-span layout-gutter">LG</div>
+					</Container>
+					<Container layout="content">
+						<div class="grid-span layout-content">Content</div>
+					</Container>
+					<Container class="max-lg:hidden" layout="right-gutter">
+						<div class="grid-span layout-gutter">RG</div>
+					</Container>
+					<Container layout="right-margin">
+						<div class="grid-span layout-margin">RM</div>
+					</Container>
+				</GlobalGrid>
+
+				{/* <!-- Inner Element Layouts --> */}
+				<GlobalGrid>
+					<Container layout="left-margin">
+						<div class="grid-span layout-margin">LM</div>
+					</Container>
+					<Container layout="left-gutter">
+						<div class="grid-span layout-gutter">LG</div>
+					</Container>
+					<Container layout="sidebar">
+						<div class="grid-span layout-sidebar">Sidebar</div>
+					</Container>
+					<Container layout="article">
+						<div class="grid-span layout-article">Article</div>
+					</Container>
+					<Container layout="right-gutter">
+						<div class="grid-span layout-gutter">RG</div>
+					</Container>
+					<Container layout="right-margin">
+						<div class="grid-span layout-margin">RM</div>
+					</Container>
+				</GlobalGrid>
+
+				{/* <!-- Footer Layouts --> */}
+				<GlobalGrid>
+					<Container layout="left-margin">
+						<div class="grid-span layout-margin">LM</div>
+					</Container>
+					<Container layout="footer-info">
+						<div class="grid-span layout-footer">Footer Info</div>
+					</Container>
+					<Container layout="footer-links">
+						<div class="grid-span layout-footer">Footer Links</div>
+					</Container>
+					<Container layout="right-margin">
+						<div class="grid-span layout-margin">RM</div>
+					</Container>
+				</GlobalGrid>
+			</div>
+		)
+	}
+</div>
+<style>
+	.grid-span {
+		display: var(--display);
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		min-height: 4rem;
+
+		color: var(--color);
+		font-weight: bold;
+		outline: var(--border-style, solid) currentColor 1px;
+		background: color-mix(var(--bg) 30%, transparent);
+	}
+
+	.auto {
+		--bg: var(--color-pink-400);
+		--color: var(--color-pink-500);
+		--border-style: dashed;
+
+		opacity: 0.5;
+	}
+
+	.fraction {
+		--bg: var(--color-text);
+		--color: var(--color-text);
+		--border-style: dashed;
+
+		opacity: 0.3;
+	}
+
+	.layout-article {
+		--bg: var(--color-cyan-400);
+		--color: var(--color-cyan-500);
+	}
+
+	.layout-body {
+		--bg: var(--color-yellow-400);
+		--color: var(--color-yellow-500);
+	}
+
+	.layout-content {
+		--bg: var(--color-lime-400);
+		--color: var(--color-lime-500);
+	}
+
+	.layout-footer {
+		--bg: var(--color-indigo-400);
+		--color: var(--color-indigo-500);
+	}
+
+	.layout-full {
+		--bg: var(--color-orange-400);
+		--color: var(--color-orange-500);
+	}
+
+	.layout-gutter {
+		--bg: var(--color-red-400);
+		--color: var(--color-red-500);
+	}
+
+	.layout-margin {
+		--bg: var(--color-purple-400);
+		--color: var(--color-purple-500);
+	}
+
+	.layout-sidebar {
+		--bg: var(--color-teal-400);
+		--color: var(--color-teal-500);
+	}
+</style>

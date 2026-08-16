@@ -28,7 +28,7 @@ export type TBrand = {
 	name: string;
 };
 
-export type TCollection = "blog" | "gallery" | "config";
+export type TCollection = "blog" | "gallery";
 
 export type TCta = {
 	href?: string;
@@ -36,13 +36,18 @@ export type TCta = {
 	label?: string;
 };
 
-export type TConfig = CollectionEntry<"config">;
+export type TDev = {
+	enable: boolean;
+	showGrid: boolean;
+	showLayouts: boolean;
+};
 
 export type TGallery = CollectionEntry<"gallery">;
 
 export type TGlobalConfig = {
 	banner: TBanner;
 	brand?: TBrand;
+	dev: TDev;
 	navigation: TNavigation;
 };
 

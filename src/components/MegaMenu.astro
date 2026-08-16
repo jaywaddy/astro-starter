@@ -29,7 +29,6 @@ const collectionList = await getCollection(collection);
 							collectionList.map((enrty) => (
 								<li>
 									<Button
-										class="w-fit"
 										label={enrty.data.title}
 										href={setHref(enrty)}
 										varient="link"
@@ -40,7 +39,6 @@ const collectionList = await getCollection(collection);
 						}
 					</ul>
 					<Button
-						class="w-fit"
 						href={`/${collection}`}
 						label="View all"
 						varient="secondary"

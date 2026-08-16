@@ -8,18 +8,19 @@ import Banner from "@components/global/Banner.astro";
 import Navigation from "@components/global/Navigation.astro";
 import Footer from "@components/global/Footer.astro";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
-import { data } from "@src/content.config";
+import globalConfig from "@lib/config";
 import { setWarning } from "@lib/utils";
+import ShowSiteGrid from "@components/ShowSiteGrid.astro";
 
-if (!data) {
-	setWarning("Footer", "data");
+if (!globalConfig) {
+	setWarning("GlobalLayout", "globalConfig");
 	return null;
 }
 
 type Props = TSeo;
 
 const { title } = Astro.props;
-const { name } = data.brand ?? {};
+const { name } = globalConfig.brand ?? {};
 ---
 
 <!doctype html>
@@ -77,21 +78,21 @@ const { name } = data.brand ?? {};
 		<script type="module" src="/scripts/toggleMobileMenu.js" defer></script>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
-		<AstroSeo {...Astro.props} {name} />
+		<AstroSeo {...Astro.props} name={globalConfig.brand?.name} />
 		<Font cssVariable="--font-inter" preload />
 	</head>
 	<body>
 		<header
 			class="fixed top-0 z-999 w-full"
-			data-background={data.navigation.background}
+			data-background={globalConfig.navigation.background}
 			data-toggle="show"
 			id="header"
 		>
 			<Banner />
 			<Navigation />
 		</header>
-		<div class=""></div>
 		<main class="mt-48 mb-32 flex flex-col gap-4">
 			<GlobalGrid>
 				<Container layout="content">
@@ -101,6 +102,7 @@ const { name } = data.brand ?? {};
 			<slot />
 		</main>
 		<Footer />
+		<ShowSiteGrid {...globalConfig.dev} />
 	</body>
 </html>
 <script>

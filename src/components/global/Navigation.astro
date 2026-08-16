@@ -7,15 +7,15 @@ import Svg from "@components/ui/Svg.astro";
 
 import logo from "@assets/logo.svg";
 import { setWarning } from "@lib/utils";
-import { data } from "@src/content.config";
+import globalConfig from "@lib/config";
 import MegaMenu from "@components/MegaMenu.astro";
 
-if (!data) {
-	setWarning("Footer", "data");
+if (!globalConfig) {
+	setWarning("Navigation", "globalConfig");
 	return null;
 }
 
-const { background, categories, cta, position } = data.navigation ?? {};
+const { background, categories, cta, position } = globalConfig.navigation ?? {};
 
 const backgroundColors: { [key in typeof background]: string } = {
 	dynamic: "bg-base",

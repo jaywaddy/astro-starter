@@ -4,23 +4,23 @@ import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
 import { Content, frontmatter } from "./contact.md";
 import ContactForm from "@components/ContactForm.astro";
-import Element from "@components/Element.astro";
+import Element from "@components/ui/Element.astro";
 import type { TIcon } from "@components/ui/Icon.astro";
 import type { TCta } from "@lib/types";
 import Icon from "@components/ui/Icon.astro";
 import Button from "@components/ui/Button.astro";
-import { data } from "@src/content.config";
+import globalConfig from "@lib/config";
 import { setWarning } from "@lib/utils";
 
-if (!data) {
-	setWarning("Footer", "data");
+if (!globalConfig) {
+	setWarning("Contact - index.astro", "globalConfig");
 	return null;
 }
 
 type TSidebarGroup = { icon: TIcon; label: string; links?: TCta[]; text?: string };
 
-const { description, email, location, title } = data.brand?.contact ?? {};
-const { socialLinks } = data.brand ?? {};
+const { description, email, location, title } = globalConfig.brand?.contact ?? {};
+const { socialLinks } = globalConfig.brand ?? {};
 
 const sidebarGroups: TSidebarGroup[] = [
 	{ icon: "mail", label: "Email", text: email },
@@ -30,44 +30,42 @@ const sidebarGroups: TSidebarGroup[] = [
 ---
 
 <GlobalLayout {...frontmatter}>
-	<GlobalGrid>
-		<Container layout="content">
-			<Content />
-		</Container>
-		<Container layout="article">
-			<ContactForm {data} />
-		</Container>
+	<GlobalGrid class="gap-y-8">
 		<Container layout="sidebar">
-			<Element tag="aside">
-				<ul class="flex flex-col gap-4">
-					{
-						sidebarGroups.map(({ icon, label, links, text }) => (
-							<li>
-								<ul class="flex flex-col gap-1">
-									<li class="badge">
-										<Icon name={icon} />
-										<span>{label}</span>
-									</li>
-									{text && <li>{text}</li>}
+			<!-- <Element tag="aside"> -->
+			<ul class="flex flex-col gap-4">
+				{
+					sidebarGroups.map(({ icon, label, links, text }) => (
+						<li>
+							<ul class="flex flex-col gap-1">
+								<li class="badge">
+									<Icon name={icon} />
+									<span>{label}</span>
+								</li>
+								{text && <li>{text}</li>}
+								{links && (
 									<li>
-										<ul class="flex flex-wrap gap-2">
-											{links?.map((link) => (
+										<ul class="flex flex-wrap gap-2 [--color-cta-secondary:var(--color-primary)]">
+											{links.map((link) => (
 												<li>
-													<Button
-														class="w-fit"
-														{...link}
-														varient="secondary"
-													/>
+													<Button {...link} varient="secondary" />
 												</li>
 											))}
 										</ul>
 									</li>
-								</ul>
-							</li>
-						))
-					}
-				</ul>
-			</Element>
+								)}
+							</ul>
+						</li>
+					))
+				}
+			</ul>
+			<!-- </Element> -->
+		</Container>
+		<Container class="flex flex-col gap-8" layout="article">
+			<div>
+				<Content />
+			</div>
+			<ContactForm data={globalConfig} />
 		</Container>
 	</GlobalGrid>
 </GlobalLayout>

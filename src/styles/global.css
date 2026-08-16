@@ -4,6 +4,8 @@
 @theme {
 	--font-sans: var(--font-inter), sans-serif;
 
+	--breakpoint-xs: 30rem;
+
 	--color-brand-50: var(--color-purple-50);
 	--color-brand-100: var(--color-purple-100);
 	--color-brand-200: var(--color-purple-200);
@@ -73,7 +75,9 @@
 
 	--easing: cubic-bezier(0.65, 0, 0.35, 1);
 
-	--spacing-element: --spacing(4);
+	--grid-sm: 2rem repeat(4, 1fr) 2rem;
+	--grid-md: auto repeat(8, min(9.5rem, 9.4vw)) auto;
+	--grid-lg: auto repeat(12, min(6rem, 6vw)) auto;
 
 	--radius-multiplier: 0.5;
 	--radius-cta: 0.275rem;
@@ -82,7 +86,8 @@
 	);
 	--radius-pill: 100vw;
 
-	--site-gap: --spacing(8);
+	--site-gap: --spacing(4);
+	--spacing-element: --spacing(4);
 
 	/* Gradients */
 	--intensity: 0.25;
@@ -169,17 +174,6 @@
 	img {
 		border-radius: var(--radius-cta);
 	}
-}
-
-@utility site-grid {
-	--col-width: min(--spacing(48), 10%);
-	--gutter-width: 6rem;
-
-	display: grid;
-	grid-template-columns:
-		auto var(--gutter-width) repeat(6, var(--col-width))
-		var(--gutter-width) auto;
-	gap: var(--site-gap);
 }
 
 /* --- Components --- */

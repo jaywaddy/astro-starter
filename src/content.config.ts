@@ -1,10 +1,9 @@
-import type { TBlog, TGallery, TConfig, TGlobalConfig } from "@lib/types";
-import { glob, file } from "astro/loaders";
+import type { TBlog, TGallery } from "@lib/types";
+import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection, getCollection } from "astro:content";
-import globalConfig from "@lib/config.json";
+import globalConfig from "@lib/config";
 
-export const data = globalConfig.data; // JSON cannot be have custom types
 export const blogPosts: TBlog[] = await getCollection("blog");
 export const galleryEntries: TGallery[] = await getCollection("gallery");
 
@@ -25,8 +24,8 @@ const collectionSchema = {
 };
 
 function seoString(_min: number, _max: number): z.ZodString {
-	if (data.brand) {
-		const siteTitleLength = data.brand.name.length;
+	if (globalConfig.brand) {
+		const siteTitleLength = globalConfig.brand.name.length;
 		const newMin = _min - siteTitleLength;
 		const newMax = _max - siteTitleLength;
 
@@ -60,8 +59,4 @@ const gallery = defineCollection({
 		}),
 });
 
-const config = defineCollection({
-	loader: file("./src/lib/config.json"),
-});
-
-export const collections = { blog, gallery, config };
+export const collections = { blog, gallery };

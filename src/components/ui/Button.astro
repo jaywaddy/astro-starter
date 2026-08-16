@@ -11,6 +11,7 @@ export type TButton = {
 	varient?: TButtonStyle | [TButtonStyle, TButtonSize];
 	class?: string;
 	collection?: string;
+	full?: boolean;
 	href?: string;
 	label?: string;
 	icon?: TIcon | [TIcon, TIconPosition?];
@@ -28,6 +29,7 @@ const {
 	varient = "primary",
 	class: classAttribute,
 	collection,
+	full = false,
 	href,
 	label,
 	icon = collection ? ["chevron-down", "right"] : ["none", "left"],
@@ -84,11 +86,11 @@ const LabelTag = size === "sm" ? "small" : "span";
 	class:list={[
 		"rounded-cta flex cursor-pointer items-center justify-center gap-1 text-nowrap [&_svg]:h-4",
 		buttonStyles[style],
-		style !== "link" && "font-[450]",
 		classAttribute,
 		collection && "collection",
+		!full && "w-fit",
 		iconPositions[iconPosition],
-		style !== "link" && buttonSizes[size],
+		style !== "link" && `font-[450] ${buttonSizes[size]}`,
 	]}
 	aria-current={arriaCurrent}
 >

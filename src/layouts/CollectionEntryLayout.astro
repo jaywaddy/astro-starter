@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
@@ -20,16 +19,18 @@ const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?
 
 <GlobalLayout {...entry.data}>
 	<GlobalGrid>
-		<Container class="flex flex-col gap-8" layout="article">
+		<Container layout="content">
 			<Image src={thumbnail} class="rounded-cta" />
-			<div class="flex flex-col gap-4">
-				<h1>{title}</h1>
-				<p class="lead">{description}</p>
-				<div class="items center flex gap-2">
-					<small>{formatDate(dateUpdated || dateCreated)}</small>
-					<Seperator />
-					<small>{calcReadTime(entry.body)}</small>
-				</div>
+		</Container>
+	</GlobalGrid>
+	<GlobalGrid class="mt-16">
+		<Container class="flex flex-col gap-4" layout="article">
+			<h1>{title}</h1>
+			<p class="lead">{description}</p>
+			<div class="items center flex gap-2">
+				<small>{formatDate(dateUpdated || dateCreated)}</small>
+				<Seperator />
+				<small>{calcReadTime(entry.body)}</small>
 			</div>
 		</Container>
 		<Container class="content" layout="article" tag="article">

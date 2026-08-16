@@ -2,15 +2,15 @@
 import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
-import { data } from "@src/content.config";
+import globalConfig from "@lib/config";
 import { setWarning } from "@lib/utils";
 
-if (!data) {
-	setWarning("Landing Page", "data");
+if (!globalConfig) {
+	setWarning("Landing Page", "globalConfig");
 	return null;
 }
 
-const { brand } = data;
+const { brand } = globalConfig;
 const seo = { title: "Home" };
 ---
 

@@ -3,15 +3,15 @@ import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
 import { Content, frontmatter } from "./about.md";
-import { data } from "@src/content.config";
+import globalConfig from "@lib/config";
 import { setWarning } from "@lib/utils";
 
-if (!data) {
-	setWarning("Footer", "data");
+if (!globalConfig) {
+	setWarning("About - index.astro", "globalConfig");
 	return null;
 }
 
-const { bio } = data.brand ?? {};
+const { bio } = globalConfig.brand ?? {};
 const { title } = frontmatter;
 ---
 

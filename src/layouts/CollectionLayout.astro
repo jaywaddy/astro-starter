@@ -18,11 +18,7 @@ const entries = getEntries.sort((older, newer) => {
 	return newer.data.dateCreated.valueOf() - older.data.dateCreated.valueOf();
 });
 
-const gridLayouts: { [key in TCollection]: TGridSizes } = {
-	blog: "full",
-	gallery: "lg",
-	config: "full",
-};
+const gridLayouts: { [key in TCollection]: TGridSizes } = { blog: "full", gallery: "lg" };
 
 const Card = collection === "blog" ? CardBlogPost : CardGalleryEntry;
 ---

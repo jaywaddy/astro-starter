@@ -1,10 +1,10 @@
 ---
 import Input from "@components/ui/Input.astro";
-import type { TGlobalData, TInputFieldType } from "@lib/types";
+import type { TGlobalConfig, TInputFieldType } from "@lib/types";
 import Button from "@components/ui/Button.astro";
-import Element from "./Element.astro";
+import Element from "./ui/Element.astro";
 
-type Props = { data: TGlobalData };
+type Props = { data: TGlobalConfig };
 
 const { contact } = Astro.props.data.brand ?? {};
 
@@ -45,7 +45,6 @@ const inputFields: TFormField[] = [
 			<li class="flex gap-2">
 				<Button label="Submit" icon="send" />
 				<Button
-					class="w-fit"
 					label="Write an email"
 					href={`mailto:${contact?.email}`}
 					icon="mail"

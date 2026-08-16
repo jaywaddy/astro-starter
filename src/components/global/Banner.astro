@@ -3,15 +3,15 @@ import Button from "@components/ui/Button.astro";
 import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 
-import { data } from "@src/content.config";
+import globalConfig from "@lib/config";
 import { setWarning } from "@lib/utils";
 
-if (!data) {
-	setWarning("Footer", "data");
+if (!globalConfig) {
+	setWarning("Banner", "globalConfig");
 	return null;
 }
 
-const { cta, display, label, varient } = data.banner ?? {};
+const { cta, display, label, varient } = globalConfig.banner ?? {};
 
 if (!display) {
 	return null;
