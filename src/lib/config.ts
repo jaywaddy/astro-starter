@@ -15,7 +15,7 @@ const globalConfig: TGlobalConfig = {
 		bio: "Add a bio...",
 		contact: {
 			location: "New York, NY",
-			email: "contact@example.com",
+			email: "Contact@example.com",
 			title: "",
 		},
 		favicon: {
@@ -29,8 +29,9 @@ const globalConfig: TGlobalConfig = {
 		name: "Astro Starter",
 	},
 	dev: {
-		enable: false,
-		showGrid: true,
+		enableGrid: false,
+		hidePage: false,
+		showGridLines: true,
 		showLayouts: false,
 	},
 	navigation: {

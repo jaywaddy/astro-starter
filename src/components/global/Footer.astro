@@ -43,12 +43,26 @@ const navLinks = navigation.categories.filter((link) => {
 
 <GlobalGrid class="bg-primary mt-auto gap-y-8 pt-8">
 	<Container layout="footer-info">
-		<div class="border-outline mr-8 flex flex-col gap-2 py-4 pr-8 lg:border-r">
-			<a href="/" aria-label="Home" class="hover:text-50 flex flex-wrap items-center gap-2">
+		<div class="border-outline mr-8 flex flex-col gap-8 py-4 pr-8 lg:border-r">
+			<a
+				href="/"
+				aria-label="Home"
+				class="hover:text-50 flex flex-wrap items-center gap-2 text-sm"
+			>
 				<Svg class="[&_svg]:h-8" src={logo} />
 				<span class="font-bold">{globalConfig.brand?.name}</span>
 			</a>
-			{navLinks.map((link) => <Button {...link} varient="link" />)}
+			<ul>
+				{
+					navLinks.map(({ href, label }) => (
+						<li>
+							<a class="w-fit text-sm hover:underline" {href}>
+								{label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
 		</div>
 	</Container>
 	<Container layout="footer-links">
@@ -56,20 +70,15 @@ const navLinks = navigation.categories.filter((link) => {
 			{
 				[...populateFooterGroups(...allCollections)].map(({ icon, label, links }) => (
 					<ul class="flex flex-col gap-2">
-						<li class="badge">
+						<li class="badge text-brand text-sm">
 							<Icon name={icon} />
 							<span>{label}</span>
 						</li>
-						{links.map((link) => (
+						{links.map(({ href, label }) => (
 							<li>
-								{
-									<Button
-										href={link.href}
-										label={link.label}
-										varient="link"
-										noIcon
-									/>
-								}
+								<a class="text-sm hover:underline" {href}>
+									{label}
+								</a>
 							</li>
 						))}
 					</ul>
@@ -78,7 +87,7 @@ const navLinks = navigation.categories.filter((link) => {
 		</Grid>
 	</Container>
 	<Container layout="full" tag="small" class="bg-banner flex justify-center py-4 text-[white]">
-		<div class="flex gap-1 text-current">
+		<div class="flex flex-wrap gap-1 px-4 text-current">
 			<span>Copyright &copy;</span>
 			<span id="copyright-text"></span>
 			<span>{brand?.name}. All rights reserved.</span>

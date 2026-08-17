@@ -2,9 +2,10 @@
 import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
-import { Content, frontmatter } from "./about.md";
+import { Content, getHeadings, frontmatter } from "./about.md";
 import globalConfig from "@lib/config";
 import { setWarning } from "@lib/utils";
+import TableOfContents from "@components/TableOfContents.astro";
 
 if (!globalConfig) {
 	setWarning("About - index.astro", "globalConfig");
@@ -16,15 +17,18 @@ const { title } = frontmatter;
 ---
 
 <GlobalLayout {...frontmatter}>
-	<GlobalGrid>
-		<Container layout="content">
-			<h1>{title}</h1>
-			<p class="lead">{bio}</p>
+	<GlobalGrid class="mt-8">
+		<Container layout="sidebar">
+			<TableOfContents headings={getHeadings()} />
 		</Container>
-		<Container layout="article">
-			<article class="mt-4 flex flex-col gap-8 [&>*>h2]:mt-8">
+		<Container class="flex flex-col gap-16" layout="article">
+			<div>
+				<h1>{title}</h1>
+				<p class="lead">{bio}</p>
+			</div>
+			<div class="content mt-4 flex flex-col gap-8 [&>*>h2]:mt-8">
 				<Content />
-			</article>
+			</div>
 		</Container>
 	</GlobalGrid>
 </GlobalLayout>

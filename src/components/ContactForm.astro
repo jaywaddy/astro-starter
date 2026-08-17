@@ -29,7 +29,7 @@ const inputFields: TFormField[] = [
 ];
 ---
 
-<Element tag="section">
+<section>
 	<form action={import.meta.env.FORM_SUBMIT_URL} method="POST">
 		<input type="text" name="_honey" style="display:none" />
 		<input type="hidden" name="_subject" value="New submission!" />
@@ -42,7 +42,7 @@ const inputFields: TFormField[] = [
 					</li>
 				))
 			}
-			<li class="flex gap-2">
+			<li class="flex gap-2 [--color-cta-secondary:var(--color-secondary)]">
 				<Button label="Submit" icon="send" />
 				<Button
 					label="Write an email"
@@ -53,4 +53,4 @@ const inputFields: TFormField[] = [
 			</li>
 		</ul>
 	</form>
-</Element>
+</section>

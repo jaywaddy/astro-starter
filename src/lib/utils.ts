@@ -24,6 +24,15 @@ export function calcWordCount(input: string): number {
 	return cleanInput.split(" ").length;
 }
 
+export function capitalize(input: string) {
+	return input
+		.split("-")
+		.map((word) => {
+			return word.charAt(0).toUpperCase() + String(word).slice(1);
+		})
+		.join("");
+}
+
 export function findContent(
 	contentArray: Array<Collection>,
 	id: string,

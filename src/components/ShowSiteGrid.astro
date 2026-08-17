@@ -2,11 +2,11 @@
 import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 
-type Props = { enable: boolean; showGrid: boolean; showLayouts: boolean };
+type Props = { enableGrid: boolean; showGridLines: boolean; showLayouts: boolean };
 
-const { enable, showGrid, showLayouts } = Astro.props;
+const { enableGrid, showGridLines, showLayouts } = Astro.props;
 
-if (!enable) {
+if (!enableGrid) {
 	return null;
 }
 
@@ -19,35 +19,37 @@ const breakpoints = {
 
 <div class="pointer-events-none fixed inset-0 z-99999">
 	{
-		showGrid && (
+		showGridLines && (
 			<div
 				class:list={[
 					"visual-grid absolute grid h-full w-full grid-cols-(--visual-grid) gap-4",
 					"[--display:flex] [--visual-grid:auto_1fr_auto]",
+					"max-sm:[--visual-grid:var(--grid-xs)]",
 					"sm:[--visual-grid:var(--grid-sm)]",
 					"lg:[--visual-grid:var(--grid-md)]",
-					"2xl:[--visual-grid:var(--grid-lg)]",
+					"xl:[--visual-grid:var(--grid-lg)]",
+					"2xl:[--visual-grid:var(--grid-xl)]",
 				]}
 			>
 				<div class="grid-span auto" />
 				<div class:list={["grid-span fraction group-1"]}>1</div>
+				<div class:list={["grid-span fraction group-1"]}>2</div>
+				<div class:list={["grid-span fraction group-1"]}>3</div>
 
 				{/* <!-- sm --> */}
-				<div class:list={["grid-span fraction group-1", breakpoints["sm"]]}>2</div>
-				<div class:list={["grid-span fraction group-1", breakpoints["sm"]]}>3</div>
 				<div class:list={["grid-span fraction group-1", breakpoints["sm"]]}>4</div>
+				<div class:list={["grid-span fraction group-2", breakpoints["sm"]]}>5</div>
+				<div class:list={["grid-span fraction group-2", breakpoints["sm"]]}>6</div>
 
 				{/* <!-- md --> */}
-				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>5</div>
-				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>6</div>
 				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>7</div>
 				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>8</div>
 
 				{/* <!-- lg --> */}
-				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>9</div>
+				{/* <div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>9</div>
 				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>10</div>
 				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>11</div>
-				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>12</div>
+				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>12</div> */}
 
 				<div class="grid-span auto" />
 			</div>
@@ -81,13 +83,13 @@ const breakpoints = {
 					<Container layout="left-margin">
 						<div class="grid-span layout-margin">LM</div>
 					</Container>
-					<Container class="max-lg:hidden" layout="left-gutter">
+					<Container layout="left-gutter">
 						<div class="grid-span layout-gutter">LG</div>
 					</Container>
 					<Container layout="content">
 						<div class="grid-span layout-content">Content</div>
 					</Container>
-					<Container class="max-lg:hidden" layout="right-gutter">
+					<Container layout="right-gutter">
 						<div class="grid-span layout-gutter">RG</div>
 					</Container>
 					<Container layout="right-margin">
@@ -142,6 +144,7 @@ const breakpoints = {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		overflow: clip;
 
 		min-height: 4rem;
 
@@ -183,8 +186,8 @@ const breakpoints = {
 	}
 
 	.layout-footer {
-		--bg: var(--color-indigo-400);
-		--color: var(--color-indigo-500);
+		--bg: var(--color-blue-400);
+		--color: var(--color-blue-500);
 	}
 
 	.layout-full {
@@ -193,8 +196,8 @@ const breakpoints = {
 	}
 
 	.layout-gutter {
-		--bg: var(--color-red-400);
-		--color: var(--color-red-500);
+		--bg: var(--color-indigo-400);
+		--color: var(--color-indigo-500);
 	}
 
 	.layout-margin {

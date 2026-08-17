@@ -84,24 +84,28 @@ const { name } = globalConfig.brand ?? {};
 		<Font cssVariable="--font-inter" preload />
 	</head>
 	<body>
-		<header
-			class="fixed top-0 z-999 w-full"
-			data-background={globalConfig.navigation.background}
-			data-toggle="show"
-			id="header"
-		>
-			<Banner />
-			<Navigation />
-		</header>
-		<main class="mt-48 mb-32 flex flex-col gap-4">
-			<GlobalGrid>
-				<Container layout="content">
-					<Breadcrumbs path={Astro.url.pathname} {title} />
-				</Container>
-			</GlobalGrid>
-			<slot />
-		</main>
-		<Footer />
+		{
+			!globalConfig.dev.hidePage && ( 
+				<header
+					class="fixed top-0 z-999 w-full"
+					data-background={globalConfig.navigation.background}
+					data-toggle="show"
+					id="header"
+				>
+					<Banner />
+					<Navigation />
+				</header>
+				<main class="mt-48 mb-32 flex flex-col gap-4">
+					<GlobalGrid>
+						<Container layout="content">
+							<Breadcrumbs path={Astro.url.pathname} {title} />
+						</Container>
+					</GlobalGrid>
+					<slot />
+				</main>
+				<Footer />
+			)
+		}
 		<ShowSiteGrid {...globalConfig.dev} />
 	</body>
 </html>

@@ -8,33 +8,39 @@ import Image from "@components/ui/Img.astro";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import type { TCollection } from "@lib/types";
+import TableOfContents from "@components/TableOfContents.astro";
 
 type Props = { entry: CollectionEntry<TCollection> };
 
 const { entry } = Astro.props ?? {};
 
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?? {};
 ---
 
 <GlobalLayout {...entry.data}>
-	<GlobalGrid>
+	<GlobalGrid class="mt-8">
 		<Container layout="content">
 			<Image src={thumbnail} class="rounded-cta" />
 		</Container>
 	</GlobalGrid>
 	<GlobalGrid class="mt-16">
-		<Container class="flex flex-col gap-4" layout="article">
-			<h1>{title}</h1>
-			<p class="lead">{description}</p>
-			<div class="items center flex gap-2">
-				<small>{formatDate(dateUpdated || dateCreated)}</small>
-				<Seperator />
-				<small>{calcReadTime(entry.body)}</small>
-			</div>
+		<Container layout="sidebar">
+			<TableOfContents {headings} />
 		</Container>
-		<Container class="content" layout="article" tag="article">
-			<Content />
+		<Container class="flex flex-col gap-8" layout="article" tag="article">
+			<div class="flex flex-col gap-4">
+				<h1>{title}</h1>
+				<p class="lead">{description}</p>
+				<div class="items center flex gap-2">
+					<small>{formatDate(dateUpdated || dateCreated)}</small>
+					<Seperator />
+					<small>{calcReadTime(entry.body)}</small>
+				</div>
+			</div>
+			<div class="content">
+				<Content />
+			</div>
 		</Container>
 	</GlobalGrid>
 </GlobalLayout>

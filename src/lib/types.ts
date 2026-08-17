@@ -37,8 +37,9 @@ export type TCta = {
 };
 
 export type TDev = {
-	enable: boolean;
-	showGrid: boolean;
+	enableGrid: boolean;
+	hidePage: boolean;
+	showGridLines: boolean;
 	showLayouts: boolean;
 };
 

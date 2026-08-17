@@ -3,7 +3,7 @@ import type { TCta } from "@lib/types";
 import Button from "./ui/Button.astro";
 import Icon from "./ui/Icon.astro";
 import globalConfig from "@lib/config";
-import { setWarning } from "@lib/utils";
+import { capitalize, setWarning } from "@lib/utils";
 
 if (!globalConfig) {
 	setWarning("Bread Crumbs", "globalConfig");
@@ -32,10 +32,10 @@ const crumbList: TCta[] = crumbs.map((_crumb, _index) => {
 		}
 
 		if (_index === 0) {
-			return "home";
+			return "Home";
 		}
 
-		return _crumb.replace("-", " ");
+		return capitalize(_crumb);
 	};
 
 	return {
@@ -54,10 +54,7 @@ const crumbList: TCta[] = crumbs.map((_crumb, _index) => {
 			<li class:list={["flex items-center gap-2"]}>
 				{index > 0 && <Icon class="text-50 w-4" name="chevron-right" />}
 				<Button
-					class:list={[
-						"w-fit capitalize",
-						index !== lastCrumb && "text-50 hover:text-100",
-					]}
+					class:list={["w-fit", index !== lastCrumb && "text-50 hover:text-100"]}
 					{...crumb}
 				/>
 			</li>
