@@ -1,9 +1,9 @@
 ---
 import Icon, { type TIcon } from "./Icon.astro";
 
-type TButtonSize = "sm" | "md" | "lg";
-type TButtonStyle = "primary" | "secondary" | "ghost" | "outline" | "link";
-type TIconPosition = "left" | "right";
+export type TButtonSize = "sm" | "md" | "lg";
+export type TButtonStyle = "primary" | "secondary" | "ghost" | "outline" | "link";
+export type TIconPosition = "left" | "right";
 
 export type TButton = {
 	arriaCurrent?: "page" | undefined;
@@ -75,13 +75,13 @@ const iconStrokeWidths: { [key in TButtonSize]: string } = {
 	lg: "[&_path]:stroke-[2.8px]",
 };
 
-const CtaTag = collection ? "span" : href ? "a" : "button";
+const CtaTag = href ? "a" : "button";
 const LabelTag = size === "sm" ? "small" : "span";
 ---
 
 <CtaTag
 	{id}
-	href={collection ? undefined : href}
+	{href}
 	{target}
 	class:list={[
 		"rounded-cta flex cursor-pointer items-center justify-center gap-1 text-nowrap [&_svg]:h-4",

@@ -1,0 +1,66 @@
+---
+import type { TCta } from "@lib/types";
+import type { TIcon } from "./ui/Icon.astro";
+import globalConfig from "@lib/config";
+import Button, { type TButtonStyle, type TButtonSize } from "./ui/Button.astro";
+
+type Props = {
+	class?: string;
+	iconOnly?: boolean;
+	varient?: TButtonStyle | [TButtonStyle, TButtonSize];
+	//
+};
+
+type TSidebarGroup = {
+	email?: string;
+	icon: TIcon;
+	label: string;
+	links?: TCta[];
+	text?: string;
+	//
+};
+
+const { class: className, iconOnly, varient = "secondary" } = Astro.props ?? {};
+const { email, location, socialLinks } = globalConfig.brand?.contact ?? {};
+
+const sidebarGroups: TSidebarGroup[] = [
+	{ icon: "mail", label: "Email", email: email },
+	{ icon: "location", label: "Location", text: location },
+	{ icon: "message", label: "Connect", links: socialLinks },
+];
+---
+
+<ul class:list={["flex flex-col gap-8", className]}>
+	{
+		sidebarGroups.map(({ email, label, links, text }) => (
+			<li class="flex flex-col gap-2">
+				<small class="eyebrow">{label}</small>
+				<ul class="border-brand flex flex-col">
+					{email && (
+						<li>
+							<a class="link" href={`mailto:${email.toLowerCase()}`}>
+								{email}
+							</a>
+						</li>
+					)}
+					{links && (
+						<li>
+							<ul class="flex flex-wrap gap-2">
+								{links.map((link) => (
+									<li class="h-8.25">
+										<Button class="h-full" {...link} {iconOnly} {varient} />
+									</li>
+								))}
+							</ul>
+						</li>
+					)}
+					{text && (
+						<li>
+							<span class="text-70 text-sm">{text}</span>
+						</li>
+					)}
+				</ul>
+			</li>
+		))
+	}
+</ul>

@@ -9,13 +9,13 @@ const { headings } = Astro.props;
 ---
 
 <aside class:list={["sticky top-32 flex flex-col gap-2", globalConfig.banner.display]}>
-	<span class="badge text-brand text-sm">On this page</span>
+	<span class="text-brand eyebrow">On this page</span>
 	<ol class="border-brand flex flex-col gap-2 border-l-2 pr-4 pl-4 text-sm">
 		{
 			headings.map(({ depth, slug, text }) =>
 				depth === 2 ? (
 					<li>
-						<a class="hover:underline" href={`#${slug}`}>
+						<a class="text-balance hover:underline" href={`#${slug}`}>
 							{text}
 						</a>
 					</li>

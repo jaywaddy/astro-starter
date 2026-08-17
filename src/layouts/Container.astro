@@ -11,9 +11,7 @@ type TGridLayout =
 	| "left-gutter"
 	| "right-gutter"
 	| "right-margin"
-	| "left-margin"
-	| "footer-info"
-	| "footer-links";
+	| "left-margin";
 
 type Props = {
 	class?: string;
@@ -79,20 +77,6 @@ const layouts: { [layout in TGridLayout]: string[] } = {
 		"max-lg:hidden",
 		"lg:col-start-10 lg:col-end-11",
 		// "2xl:col-start-14 2xl:col-end-15",
-	],
-	"footer-info": [
-		"col-start-2 col-end-5",
-		"xs:col-start-3 xs:col-end-3",
-		"sm:col-start-3 sm:col-end-7",
-		"lg:col-start-2 lg:col-end-4",
-		// "2xl:col-start-2 2xl:col-end-5",
-	],
-	"footer-links": [
-		"col-start-2 col-end-5",
-		"xs:col-start-3 xs:col-end-3",
-		"sm:col-start-3 sm:col-end-7",
-		"lg:col-start-4 lg:col-end-10",
-		// "2xl:col-start-5 2xl:col-end-14",
 	],
 };
 ---

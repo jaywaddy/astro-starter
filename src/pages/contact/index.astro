@@ -4,13 +4,12 @@ import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
 import { Content, frontmatter } from "./contact.md";
 import ContactForm from "@components/ContactForm.astro";
-import Element from "@components/ui/Element.astro";
 import type { TIcon } from "@components/ui/Icon.astro";
 import type { TCta } from "@lib/types";
-import Icon from "@components/ui/Icon.astro";
 import Button from "@components/ui/Button.astro";
 import globalConfig from "@lib/config";
 import { setWarning } from "@lib/utils";
+import ContactSidebar from "@components/ContactSidebar.astro";
 
 if (!globalConfig) {
 	setWarning("Contact - index.astro", "globalConfig");
@@ -19,8 +18,7 @@ if (!globalConfig) {
 
 type TSidebarGroup = { icon: TIcon; label: string; links?: TCta[]; text?: string };
 
-const { email, location } = globalConfig.brand?.contact ?? {};
-const { socialLinks } = globalConfig.brand ?? {};
+const { email, location, socialLinks } = globalConfig.brand?.contact ?? {};
 
 const sidebarGroups: TSidebarGroup[] = [
 	{ icon: "mail", label: "Email", text: email },
@@ -32,33 +30,7 @@ const sidebarGroups: TSidebarGroup[] = [
 <GlobalLayout {...frontmatter}>
 	<GlobalGrid class="mt-8 gap-y-8">
 		<Container layout="sidebar" tag="aside">
-			<ul class="flex flex-col gap-4">
-				{
-					sidebarGroups.map(({ label, links, text }) => (
-						<li class="flex flex-col gap-2">
-							<small class="badge">{label}</small>
-							<ul class="border-brand flex flex-col border-l-2 pl-4">
-								{text && (
-									<li>
-										<small>{text}</small>
-									</li>
-								)}
-								{links && (
-									<li>
-										<ul class="flex flex-wrap gap-2 [--color-cta-secondary:var(--color-primary)]">
-											{links.map((link) => (
-												<li>
-													<Button {...link} varient="secondary" />
-												</li>
-											))}
-										</ul>
-									</li>
-								)}
-							</ul>
-						</li>
-					))
-				}
-			</ul>
+			<ContactSidebar class="[--color-cta-secondary:var(--color-primary)]" />
 		</Container>
 		<Container class="flex flex-col gap-8" layout="article">
 			<div>

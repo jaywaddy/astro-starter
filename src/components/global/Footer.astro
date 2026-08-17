@@ -14,15 +14,27 @@ import { setHref, setWarning } from "@lib/utils";
 import type { CollectionEntry } from "astro:content";
 import type { TCollection } from "@lib/types";
 import Grid from "@components/ui/Grid.astro";
+import ContactSidebar from "@components/ContactSidebar.astro";
 
 if (!globalConfig) {
 	setWarning("Footer", "globalConfig");
 	return null;
 }
 
-type TFooterGroup = { icon: TIcon; label: string; links: TCta[] };
+type TFooterGroup = { icon?: TIcon; label: string; links: TCta[] };
 
 const { brand, navigation } = globalConfig ?? {};
+const {} = brand ?? {};
+
+const navLinks: TCta[] = navigation.categories.filter((link) => {
+	return link.href !== "/" && !link.collection;
+});
+
+const footerGroups = [
+	{ label: "Information", links: [...navLinks] },
+	...populateFooterGroups(...allCollections),
+	//
+];
 
 function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TFooterGroup[] {
 	const maxLinks = 5;
@@ -35,56 +47,43 @@ function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TFoote
 			links: entries.map((entry) => ({ href: setHref(entry), label: entry.data.title })),
 		}));
 }
-
-const navLinks = navigation.categories.filter((link) => {
-	return link.href !== "/" && !link.collection;
-});
 ---
 
 <GlobalGrid class="bg-primary mt-auto gap-y-8 pt-8">
-	<Container layout="footer-info">
-		<div class="border-outline mr-8 flex flex-col gap-8 py-4 pr-8 lg:border-r">
-			<a
-				href="/"
-				aria-label="Home"
-				class="hover:text-50 flex flex-wrap items-center gap-2 text-sm"
+	<Container layout="body">
+		<div class="grid grid-cols-(--grid-footer) gap-8 max-md:grid-cols-1">
+			<div
+				class="border-outline mr-8 flex flex-col gap-8 py-4 pr-8 max-md:border-b max-md:pb-16 md:border-r"
 			>
-				<Svg class="[&_svg]:h-8" src={logo} />
-				<span class="font-bold">{globalConfig.brand?.name}</span>
-			</a>
-			<ul>
+				<a
+					href="/"
+					aria-label="Home"
+					class="hover:text-50 flex flex-wrap items-center gap-2 text-sm"
+				>
+					<Svg class="[&_svg]:h-8" src={logo} />
+					<span class="font-bold">{globalConfig.brand?.name}</span>
+				</a>
+				<ContactSidebar iconOnly varient="secondary" />
+			</div>
+			<Grid class="gap-x-8 gap-y-16 py-4" size="sm">
 				{
-					navLinks.map(({ href, label }) => (
-						<li>
-							<a class="w-fit text-sm hover:underline" {href}>
-								{label}
-							</a>
-						</li>
+					footerGroups.map(({ label, links }) => (
+						<ul class="flex flex-col gap-2">
+							<li>
+								<span class="eyebrow">{label}</span>
+							</li>
+							{links.map(({ href, label }) => (
+								<li class="">
+									<a class="link" {href}>
+										{label}
+									</a>
+								</li>
+							))}
+						</ul>
 					))
 				}
-			</ul>
+			</Grid>
 		</div>
-	</Container>
-	<Container layout="footer-links">
-		<Grid class="gap-8 py-4" size="sm">
-			{
-				[...populateFooterGroups(...allCollections)].map(({ icon, label, links }) => (
-					<ul class="flex flex-col gap-2">
-						<li class="badge text-brand text-sm">
-							<Icon name={icon} />
-							<span>{label}</span>
-						</li>
-						{links.map(({ href, label }) => (
-							<li>
-								<a class="text-sm hover:underline" {href}>
-									{label}
-								</a>
-							</li>
-						))}
-					</ul>
-				))
-			}
-		</Grid>
 	</Container>
 	<Container layout="full" tag="small" class="bg-banner flex justify-center py-4 text-[white]">
 		<div class="flex flex-wrap gap-1 px-4 text-current">

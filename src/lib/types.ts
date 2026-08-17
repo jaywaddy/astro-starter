@@ -18,13 +18,13 @@ export type TBrand = {
 		location?: string;
 		phoneNumber?: string;
 		timeZone?: string;
+		socialLinks?: TCta[];
 		title?: string;
 	};
 	favicon: {
 		fallback: string;
 		svg: string;
 	};
-	socialLinks?: TCta[];
 	name: string;
 };
 

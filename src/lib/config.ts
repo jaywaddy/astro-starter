@@ -16,16 +16,17 @@ const globalConfig: TGlobalConfig = {
 		contact: {
 			location: "New York, NY",
 			email: "Contact@example.com",
+			socialLinks: [
+				{ href: "/", icon: "youtube", label: "YouTube" },
+				{ href: "/", icon: "bluesky", label: "Bluesky" },
+			],
 			title: "",
 		},
 		favicon: {
 			fallback: "/favicon.ico",
 			svg: "/favicon.svg",
 		},
-		socialLinks: [
-			{ href: "/", icon: "youtube", label: "YouTube" },
-			{ href: "/", icon: "bluesky", label: "Bluesky" },
-		],
+
 		name: "Astro Starter",
 	},
 	dev: {

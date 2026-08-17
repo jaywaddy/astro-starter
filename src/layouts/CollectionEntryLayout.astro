@@ -19,12 +19,16 @@ const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?
 ---
 
 <GlobalLayout {...entry.data}>
+	{
+		thumbnail && (
+			<GlobalGrid class="mt-8">
+				<Container layout="content">
+					<Image src={thumbnail} class="rounded-cta" />
+				</Container>
+			</GlobalGrid>
+		)
+	}
 	<GlobalGrid class="mt-8">
-		<Container layout="content">
-			<Image src={thumbnail} class="rounded-cta" />
-		</Container>
-	</GlobalGrid>
-	<GlobalGrid class="mt-16">
 		<Container layout="sidebar">
 			<TableOfContents {headings} />
 		</Container>
@@ -32,7 +36,7 @@ const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?
 			<div class="flex flex-col gap-4">
 				<h1>{title}</h1>
 				<p class="lead">{description}</p>
-				<div class="items center flex gap-2">
+				<div class="items center text-70 flex gap-2">
 					<small>{formatDate(dateUpdated || dateCreated)}</small>
 					<Seperator />
 					<small>{calcReadTime(entry.body)}</small>
