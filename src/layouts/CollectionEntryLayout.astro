@@ -9,6 +9,7 @@ import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import type { TCollection } from "@lib/types";
 import TableOfContents from "@components/TableOfContents.astro";
+import ContactLinks from "@components/ContactLinks.astro";
 
 type Props = { entry: CollectionEntry<TCollection> };
 
@@ -29,8 +30,11 @@ const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?
 		)
 	}
 	<GlobalGrid class="mt-8">
-		<Container layout="sidebar">
-			<TableOfContents {headings} />
+		<Container class="flex flex-col gap-8" layout="sidebar">
+			<div class="sticky top-32 grid gap-8">
+				<TableOfContents {headings} />
+				<ContactLinks groups={["socialLinks"]} />
+			</div>
 		</Container>
 		<Container class="flex flex-col gap-8" layout="article" tag="article">
 			<div class="flex flex-col gap-4">

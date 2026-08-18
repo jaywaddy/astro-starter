@@ -26,14 +26,17 @@ const collectionList = await getCollection(collection);
 				<Container class="flex flex-col gap-4 py-4" layout="body">
 					<ul class="menu border-outline flex w-fit flex-col gap-2 border-b py-4">
 						{
-							collectionList.map((enrty) => (
+							collectionList.map((entry) => (
 								<li>
-									<Button
+									{/* <Button
 										label={enrty.data.title}
 										href={setHref(enrty)}
 										varient="link"
 										icon={collection}
-									/>
+									/> */}
+									<a class="link" href={setHref(entry)}>
+										{entry.data.title}
+									</a>
 								</li>
 							))
 						}

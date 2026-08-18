@@ -8,7 +8,7 @@ type Props = { headings: THeadings[] };
 const { headings } = Astro.props;
 ---
 
-<aside class:list={["sticky top-32 flex flex-col gap-2", globalConfig.banner.display]}>
+<aside class:list={["flex flex-col gap-2", globalConfig.banner.display]}>
 	<span class="text-brand eyebrow">On this page</span>
 	<ol class="border-brand flex flex-col gap-2 border-l-2 pr-4 pl-4 text-sm">
 		{

@@ -30,7 +30,9 @@ const sidebarGroups: TSidebarGroup[] = [
 <GlobalLayout {...frontmatter}>
 	<GlobalGrid class="mt-8 gap-y-8">
 		<Container layout="sidebar" tag="aside">
-			<ContactLinks class="[--color-cta-secondary:var(--color-tertiary)]" />
+			<div class="sticky top-32 grid gap-8">
+				<ContactLinks />
+			</div>
 		</Container>
 		<Container class="flex flex-col gap-8" layout="article">
 			<div>

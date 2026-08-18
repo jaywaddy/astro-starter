@@ -19,8 +19,12 @@ const globalConfig: TGlobalConfig = {
 			socialLinks: [
 				{ href: "/", icon: "youtube", label: "YouTube" },
 				{ href: "/", icon: "bluesky", label: "Bluesky" },
+				{
+					href: "mailto:contact@example.com",
+					icon: "mail",
+					label: "Email",
+				},
 			],
-			title: "",
 		},
 		favicon: {
 			fallback: "/favicon.ico",

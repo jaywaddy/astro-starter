@@ -19,7 +19,6 @@ export type TBrand = {
 		phoneNumber?: string;
 		timeZone?: string;
 		socialLinks?: TCta[];
-		title?: string;
 	};
 	favicon: {
 		fallback: string;

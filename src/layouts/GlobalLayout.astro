@@ -117,33 +117,42 @@ const { title } = Astro.props;
 	const navigation = document.getElementById("navigation") as HTMLElement;
 	const autoHideEnabled = banner.dataset.varient === "auto-hide";
 
+	let prevScrollPos = window.pageYOffset;
+
 	if (banner) {
+		const duration = 300;
+		const durationClass = "duration-300";
+
 		window.addEventListener("scroll", (): void => {
-			const duration = 300;
-			const durationClass = "duration-300";
+			let currentScrollPos = window.pageYOffset;
 
-			if (window.pageYOffset > 5) {
+			if (currentScrollPos > 5 && prevScrollPos > 5) return;
+			if (currentScrollPos <= 5 && prevScrollPos <= 5) return;
+
+			if (currentScrollPos > 5) {
 				bgTransition("hide", duration, durationClass);
+				prevScrollPos = currentScrollPos;
 			}
 
-			if (window.pageYOffset <= 5) {
+			if (currentScrollPos <= 5) {
 				bgTransition("reset", duration, durationClass);
+				prevScrollPos = currentScrollPos;
 			}
+		});
 
-			[...links].forEach((_link) => {
-				_link.addEventListener("click", (_event) => {
-					const eventDuration = 100;
-					const eventDurationClass = "duration-100";
+		[...links].forEach((_link) => {
+			_link.addEventListener("click", (_event) => {
+				const eventDuration = 100;
+				const eventDurationClass = "duration-100";
 
-					if (banner.dataset.varient === "auto-hide" && window.pageYOffset > 5) {
-						_event.preventDefault();
-						bgTransition("reset", eventDuration, eventDurationClass);
+				if (banner.dataset.varient === "auto-hide" && window.pageYOffset > 5) {
+					_event.preventDefault();
+					bgTransition("reset", eventDuration, eventDurationClass);
 
-						setTimeout(() => {
-							window.location.href = _link.href;
-						}, eventDuration);
-					}
-				});
+					setTimeout(() => {
+						window.location.href = _link.href;
+					}, eventDuration);
+				}
 			});
 		});
 	}

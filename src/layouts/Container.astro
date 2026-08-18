@@ -17,12 +17,11 @@ type Props = {
 	class?: string;
 	id?: string;
 	layout: TGridLayout;
-	style?: string;
 	tag?: HTMLTag;
 	//
 };
 
-const { class: className, id, layout, style, tag: Tag = "div" } = Astro.props;
+const { class: className, id, layout, tag: Tag = "div" } = Astro.props;
 
 if (!layout) {
 	setWarning("Container", "layout");
@@ -81,6 +80,6 @@ const layouts: { [layout in TGridLayout]: string[] } = {
 };
 ---
 
-<Tag {id} {style} class:list={[...layouts[layout], className]}>
+<Tag {id} class:list={[...layouts[layout], className]}>
 	<slot />
 </Tag>
