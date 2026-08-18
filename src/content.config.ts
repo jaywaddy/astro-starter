@@ -8,8 +8,8 @@ export const blogPosts: TBlog[] = await getCollection("blog");
 export const galleryEntries: TGallery[] = await getCollection("gallery");
 
 export const allCollections = [
-	blogPosts,
 	galleryEntries,
+	blogPosts,
 	//
 ];
 

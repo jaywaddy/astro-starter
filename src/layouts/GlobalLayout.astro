@@ -20,7 +20,6 @@ if (!globalConfig) {
 type Props = TSeo;
 
 const { title } = Astro.props;
-const { name } = globalConfig.brand ?? {};
 ---
 
 <!doctype html>
@@ -31,24 +30,13 @@ const { name } = globalConfig.brand ?? {};
 		<script type="module" is:inline defer>
 			const systemTheme =
 				window.matchMedia && window.matchMedia("(prefers-color-scheme: light").matches;
-			const themeToggleButton = document.getElementById("theme-toggle-button");
-			const banner = document.getElementById("banner");
-			const hideBanner = localStorage.getItem("hideBanner");
-			const hideBannerTimestamp = localStorage.getItem("hideBannerTimestamp");
-			const timer = 604800000;
+			const themeToggleButton = document.querySelectorAll(".theme-toggle-button");
+			const checkboxes = document.querySelectorAll(".theme-toggle-button .button-checkbox");
 
 			const body = document.body;
 			const lightMode = systemTheme === true;
 			const defaultTheme = "dark";
 			let selectedTheme = localStorage.getItem("theme");
-
-			if (hideBanner === "true") {
-				if (Math.abs(hideBannerTimestamp - Date.now()) > timer) {
-					banner.style.display = "block";
-				} else {
-					banner.style.display = "none";
-				}
-			}
 
 			if (!selectedTheme) {
 				localStorage.setItem("theme", lightMode ? "light" : "dark");
@@ -56,26 +44,38 @@ const { name } = globalConfig.brand ?? {};
 
 			if (body) {
 				body.setAttribute("data-theme", selectedTheme ?? defaultTheme);
-				themeToggleButton.setAttribute("data-theme", selectedTheme ?? defaultTheme);
-				themeToggleButton.addEventListener("click", toggleTheme);
-			}
+				themeToggleButton.forEach(button => {
+					button.addEventListener("click", event => toggleTheme(event));
+				});
 
-			function toggleTheme() {
+				if (selectedTheme === "dark") {
+					checkboxes.forEach(checkbox => checkbox.checked = true);
+				} else {
+					checkboxes.forEach(checkbox => checkbox.checked = false);
+				}
+			}
+			
+			function toggleTheme(event) {
+				event.preventDefault()
 				selectedTheme = localStorage.getItem("theme");
 
 				if (selectedTheme === "light") {
 					localStorage.setItem("theme", "dark");
 					body.setAttribute("data-theme", "dark");
-					themeToggleButton.setAttribute("data-theme", "dark");
-					return;
+					checkboxes.forEach(checkbox => checkbox.checked = true);
+					themeToggleButton.forEach(button => {
+						button.dataset.theme = "dark";
+					});
+				} else {
+					localStorage.setItem("theme", "light");
+					body.setAttribute("data-theme", "light");
+					checkboxes.forEach(checkbox => checkbox.checked = false);
+					themeToggleButton.forEach(button => {
+						button.dataset.theme = "light";
+					});
 				}
-
-				localStorage.setItem("theme", "light");
-				body.setAttribute("data-theme", "light");
-				themeToggleButton.setAttribute("data-theme", "light");
 			}
 		</script>
-		<script type="module" src="/scripts/toggleMobileMenu.js" defer></script>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />

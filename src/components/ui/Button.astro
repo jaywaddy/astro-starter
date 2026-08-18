@@ -58,7 +58,7 @@ const buttonSizes: { [key in TButtonSize]: string } = {
 
 const buttonStyles: { [key in TButtonStyle]: string } = {
 	primary: "bg-cta-primary text-cta-primary-text hover:bg-cta-primary-hover outline-0.5",
-	secondary: "bg-cta-secondary text-cta-secondary-text hover:bg-cta-secondary-hover",
+	secondary: "bg-cta-hover text-cta-secondary-text hover:bg-cta-secondary-hover",
 	ghost: "hover:bg-cta-hover",
 	outline: "outline-outline outline hover:bg-cta-hover",
 	link: "relative text-[0.875rem] py-1 my-0.5 after:pointer-events-none after:transition-colors after:duration-150 after:ease-in-out after:absolute  after:-bottom-1 after:left-0 after:h-0.25 after:w-full hover:after:bg-current after:content-['']",
@@ -75,7 +75,7 @@ const iconStrokeWidths: { [key in TButtonSize]: string } = {
 	lg: "[&_path]:stroke-[2.8px]",
 };
 
-const CtaTag = href ? "a" : "button";
+const CtaTag = href ? "a" : "label";
 const LabelTag = size === "sm" ? "small" : "span";
 ---
 
@@ -83,8 +83,10 @@ const LabelTag = size === "sm" ? "small" : "span";
 	{id}
 	{href}
 	{target}
+	data-toggle={iconOnly ? "false" : undefined}
 	class:list={[
-		"rounded-cta flex cursor-pointer items-center justify-center gap-1 text-nowrap [&_svg]:h-4",
+		"rounded-cta relative flex cursor-pointer items-center justify-center gap-1 text-nowrap [&_svg]:h-4",
+
 		buttonStyles[style],
 		classAttribute,
 		collection && "collection",
@@ -102,16 +104,34 @@ const LabelTag = size === "sm" ? "small" : "span";
 		)
 	}
 	{
-		icons &&
-			!noIcon &&
-			icons.map((_icon) => (
-				<span
-					id={`${_icon[0]}-icon`}
-					class:list={[iconStrokeWidths[size], size === "sm" && "[&_svg]:w-3"]}
-				>
-					<Icon name={_icon[0]} />
-				</span>
-			))
+		icons && !noIcon && (
+			<div
+				class:list={[
+					"[&_.icon-2]:hidden",
+					"has-checked:[&_.icon-1]:hidden",
+					"has-checked:[&_.icon-2]:block",
+					//
+				]}
+			>
+				{icons.map((_icon, index) => (
+					<span
+						id={`${_icon[0]}-icon`}
+						class:list={[
+							iconStrokeWidths[size],
+							size === "sm" && "[&_svg]:w-3",
+							`icon-${index + 1}`,
+							//
+						]}
+					>
+						<Icon name={_icon[0]} />
+					</span>
+				))}
+				<input
+					class:list={["button-checkbox absolute h-0 w-0 opacity-0"]}
+					type="checkbox"
+				/>
+			</div>
+		)
 	}
 	{iconOnly ? null : <LabelTag>{label}</LabelTag>}
 </CtaTag>

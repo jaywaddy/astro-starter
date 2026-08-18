@@ -1,59 +1,64 @@
 ---
-import Button from "../ui/Button.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import Container from "@layouts/Container.astro";
 import type { TIcon } from "@components/ui/Icon.astro";
-import Icon from "@components/ui/Icon.astro";
 import Svg from "@components/ui/Svg.astro";
-import type { TCta } from "@lib/types";
 import { allCollections } from "@src/content.config";
 
 import globalConfig from "@lib/config";
 import logo from "@assets/logo.svg";
 import { setHref, setWarning } from "@lib/utils";
 import type { CollectionEntry } from "astro:content";
-import type { TCollection } from "@lib/types";
-import Grid from "@components/ui/Grid.astro";
-import ContactSidebar from "@components/ContactSidebar.astro";
+import type { TCategory, TCollection, TCollectionGroup } from "@lib/types";
+import ContactLinks from "@components/ContactLinks.astro";
+import CollectionLinks from "@components/CollectionLinks.astro";
 
 if (!globalConfig) {
 	setWarning("Footer", "globalConfig");
 	return null;
 }
 
-type TFooterGroup = { icon?: TIcon; label: string; links: TCta[] };
+type TFooterGroup = {
+	icon?: TIcon;
+	label: string;
+	links: TCategory[];
+	plural?: string;
+	//
+};
 
 const { brand, navigation } = globalConfig ?? {};
 const {} = brand ?? {};
 
-const navLinks: TCta[] = navigation.categories.filter((link) => {
+const navLinks: typeof navigation.categories = navigation.categories.filter((link) => {
 	return link.href !== "/" && !link.collection;
 });
 
 const footerGroups = [
-	{ label: "Information", links: [...navLinks] },
 	...populateFooterGroups(...allCollections),
-	//
+	{ label: "Information", links: [...navLinks] },
 ];
 
-function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TFooterGroup[] {
+function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TCollectionGroup[] {
 	const maxLinks = 5;
 
-	return data
-		.slice(0, maxLinks)
-		.map((entries) => ({
-			icon: entries[0]?.collection,
-			label: entries[0]?.collection,
+	return data.slice(0, maxLinks).map((entries) => {
+		const name = entries[0]?.collection;
+		return {
+			icon: name,
+			label: name,
 			links: entries.map((entry) => ({ href: setHref(entry), label: entry.data.title })),
-		}));
+			plural:
+				navigation.categories.filter((link) => link.collection === name)[0].plural || "",
+		};
+	});
 }
 ---
 
 <GlobalGrid class="bg-primary mt-auto gap-y-8 pt-8">
 	<Container layout="body">
-		<div class="grid grid-cols-(--grid-footer) gap-8 max-md:grid-cols-1">
+		<div class="grid grid-cols-(--grid-footer) gap-x-16 gap-y-8 max-md:grid-cols-1">
 			<div
-				class="border-outline mr-8 flex flex-col gap-8 py-4 pr-8 max-md:border-b max-md:pb-16 md:border-r"
+				class="border-outline flex flex-col gap-8 py-4 max-md:border-b max-md:pb-16 md:border-r"
 			>
 				<a
 					href="/"
@@ -63,26 +68,9 @@ function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TFoote
 					<Svg class="[&_svg]:h-8" src={logo} />
 					<span class="font-bold">{globalConfig.brand?.name}</span>
 				</a>
-				<ContactSidebar iconOnly varient="secondary" />
+				<ContactLinks iconOnly varient="secondary" />
 			</div>
-			<Grid class="gap-x-8 gap-y-16 py-4" size="sm">
-				{
-					footerGroups.map(({ label, links }) => (
-						<ul class="flex flex-col gap-2">
-							<li>
-								<span class="eyebrow">{label}</span>
-							</li>
-							{links.map(({ href, label }) => (
-								<li class="">
-									<a class="link" {href}>
-										{label}
-									</a>
-								</li>
-							))}
-						</ul>
-					))
-				}
-			</Grid>
+			<CollectionLinks class="py-4" />
 		</div>
 	</Container>
 	<Container layout="full" tag="small" class="bg-banner flex justify-center py-4 text-[white]">

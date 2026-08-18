@@ -6,33 +6,39 @@ import Button, { type TButtonStyle, type TButtonSize } from "./ui/Button.astro";
 
 type Props = {
 	class?: string;
+	groups?: string[];
 	iconOnly?: boolean;
 	varient?: TButtonStyle | [TButtonStyle, TButtonSize];
 	//
 };
 
-type TSidebarGroup = {
+type TContactGroup = {
 	email?: string;
 	icon: TIcon;
 	label: string;
 	links?: TCta[];
+	name: string;
 	text?: string;
 	//
 };
 
-const { class: className, iconOnly, varient = "secondary" } = Astro.props ?? {};
+const { class: className, iconOnly, groups, varient = "secondary" } = Astro.props ?? {};
 const { email, location, socialLinks } = globalConfig.brand?.contact ?? {};
 
-const sidebarGroups: TSidebarGroup[] = [
-	{ icon: "mail", label: "Email", email: email },
-	{ icon: "location", label: "Location", text: location },
-	{ icon: "message", label: "Connect", links: socialLinks },
+const contactGroups: TContactGroup[] = [
+	{ icon: "mail", label: "Email", name: "email", email: email },
+	{ icon: "location", label: "Location", name: "location", text: location },
+	{ icon: "message", label: "Connect", name: "socialLinks", links: socialLinks },
 ];
+
+const specifiedGroups: TContactGroup[] = groups
+	? contactGroups.filter((group) => groups?.includes(group.name))
+	: contactGroups;
 ---
 
 <ul class:list={["flex flex-col gap-8", className]}>
 	{
-		sidebarGroups.map(({ email, label, links, text }) => (
+		specifiedGroups.map(({ email, label, links, text }) => (
 			<li class="flex flex-col gap-2">
 				<small class="eyebrow">{label}</small>
 				<ul class="border-brand flex flex-col">

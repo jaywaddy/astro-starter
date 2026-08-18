@@ -11,9 +11,12 @@ if (!enableGrid) {
 }
 
 const breakpoints = {
-	sm: "max-sm:[--display:none]",
-	md: "max-lg:[--display:none]",
-	lg: "max-2xl:[--display:none]",
+	"xs": "max-xs:[--display:none]",
+	"sm": "max-sm:[--display:none]",
+	"md": "max-md:[--display:none]",
+	"lg": "max-lg:[--display:none]",
+	"xl": "max-xl:[--display:none]",
+	"2xl": "max-2xl:[--display:none]",
 };
 ---
 
@@ -32,26 +35,26 @@ const breakpoints = {
 				]}
 			>
 				<div class="grid-span auto" />
-				<div class:list={["grid-span fraction group-1"]}>1</div>
-				<div class:list={["grid-span fraction group-1"]}>2</div>
-				<div class:list={["grid-span fraction group-1"]}>3</div>
+				<div class:list={["grid-span fraction"]}>1</div>
+				<div class:list={["grid-span fraction"]}>2</div>
+				<div class:list={["grid-span fraction"]}>3</div>
 
-				{/* <!-- sm --> */}
-				<div class:list={["grid-span fraction group-1", breakpoints["sm"]]}>4</div>
-				<div class:list={["grid-span fraction group-2", breakpoints["sm"]]}>5</div>
-				<div class:list={["grid-span fraction group-2", breakpoints["sm"]]}>6</div>
+				<div class:list={["grid-span fraction", breakpoints["sm"]]}>4</div>
+				<div class:list={["grid-span fraction", breakpoints["sm"]]}>5</div>
+				<div class:list={["grid-span fraction", breakpoints["sm"]]}>6</div>
 
-				{/* <!-- md --> */}
-				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>7</div>
-				<div class:list={["grid-span fraction group-2", breakpoints["md"]]}>8</div>
-
-				{/* <!-- lg --> */}
-				{/* <div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>9</div>
-				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>10</div>
-				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>11</div>
-				<div class:list={["grid-span fraction group-3", breakpoints["lg"]]}>12</div> */}
+				<div class:list={["grid-span fraction", breakpoints["lg"]]}>7</div>
+				<div class:list={["grid-span fraction", breakpoints["lg"]]}>8</div>
 
 				<div class="grid-span auto" />
+				<div class="absolute right-0 bottom-0 p-8">
+					<span class="grid-label sm:hidden">xs</span>
+					<span class="grid-label max-sm:hidden md:hidden">sm</span>
+					<span class="grid-label max-md:hidden lg:hidden">md</span>
+					<span class="grid-label max-lg:hidden xl:hidden">lg</span>
+					<span class="grid-label max-xl:hidden 2xl:hidden">xl</span>
+					<span class="grid-label max-2xl:hidden">2xl</span>
+				</div>
 			</div>
 		)
 	}
@@ -118,22 +121,6 @@ const breakpoints = {
 						<div class="grid-span layout-margin">RM</div>
 					</Container>
 				</GlobalGrid>
-
-				{/* <!-- Footer Layouts --> */}
-				<GlobalGrid>
-					<Container layout="left-margin">
-						<div class="grid-span layout-margin">LM</div>
-					</Container>
-					<Container layout="footer-info">
-						<div class="grid-span layout-footer">Footer Info</div>
-					</Container>
-					<Container layout="footer-links">
-						<div class="grid-span layout-footer">Footer Links</div>
-					</Container>
-					<Container layout="right-margin">
-						<div class="grid-span layout-margin">RM</div>
-					</Container>
-				</GlobalGrid>
 			</div>
 		)
 	}
@@ -148,10 +135,10 @@ const breakpoints = {
 
 		min-height: 4rem;
 
-		color: var(--color);
-		font-weight: bold;
-		outline: var(--border-style, solid) currentColor 1px;
+		border-radius: vaR(--radius-cta);
+		outline: var(--border-style, solid) var(--color) 1px;
 		background: color-mix(var(--bg) 30%, transparent);
+		backdrop-filter: blur(100px);
 	}
 
 	.auto {
@@ -163,11 +150,20 @@ const breakpoints = {
 	}
 
 	.fraction {
-		--bg: var(--color-text);
-		--color: var(--color-text);
+		--bg: var(--color-cyan-300);
+		--color: var(--color-cyan-400);
 		--border-style: dashed;
 
-		opacity: 0.3;
+		color: var(--color);
+		opacity: 0.2;
+	}
+
+	.grid-label {
+		padding: 1rem;
+
+		border: solid 1px var(--color-brand);
+		border-radius: var(--radius-cta);
+		background: color-mix(var(--color-brand) 50%, transparent);
 	}
 
 	.layout-article {

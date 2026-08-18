@@ -28,7 +28,23 @@ export type TBrand = {
 	name: string;
 };
 
+export type TCategory = {
+	collection?: TCollection;
+	href: string;
+	label: string;
+	plural?: string;
+	singular?: string;
+};
+
 export type TCollection = "blog" | "gallery";
+
+export type TCollectionGroup = {
+	icon?: TIcon;
+	label: string;
+	links?: TCategory[];
+	plural?: string;
+	singular?: string;
+};
 
 export type TCta = {
 	href?: string;
@@ -85,10 +101,6 @@ export type TInputFieldType =
 export type TNavigation = {
 	background: "dynamic" | "static";
 	cta: TCta;
-	categories: {
-		href: string;
-		label: string;
-		collection?: TCollection;
-	}[];
+	categories: TCategory[];
 	position: "left" | "center" | "right";
 };

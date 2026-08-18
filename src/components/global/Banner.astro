@@ -45,9 +45,12 @@ if (!display) {
 		}
 	</Container>
 </GlobalGrid>
-<script>
+<script is:inline>
 	const banner = document.getElementById("banner");
 	const dismissButton = document.getElementById("dismiss-button");
+	const hideBanner = localStorage.getItem("hideBanner");
+	const hideBannerTimestamp = localStorage.getItem("hideBannerTimestamp");
+	const timer = 604800000;
 
 	if (banner && dismissButton) {
 		const timestamp = Date.now().toString();
@@ -58,5 +61,13 @@ if (!display) {
 			localStorage.setItem("hideBanner", "true");
 			localStorage.setItem("hideBannerTimestamp", timestamp);
 		});
+	}
+
+	if (hideBanner === "true") {
+		if (Math.abs(Number(hideBannerTimestamp) - Date.now()) > timer) {
+			banner.style.display = "block";
+		} else {
+			banner.style.display = "none";
+		}
 	}
 </script>
