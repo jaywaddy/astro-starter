@@ -1,9 +1,11 @@
 ---
-import { formatDate, setHref } from "@lib/utils";
 import type { CollectionEntry } from "astro:content";
 import Element from "./ui/Element.astro";
-import type { TCollection } from "@lib/types";
+import type { TCollection } from "@lib/utils/types";
 import Img from "./ui/Img.astro";
+import globalConfig from "@lib/config";
+
+const { formatDate, setHref } = globalConfig.utils ?? {};
 
 type Props = { entry: CollectionEntry<TCollection> };
 

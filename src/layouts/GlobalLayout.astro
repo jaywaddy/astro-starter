@@ -9,8 +9,10 @@ import Navigation from "@components/global/Navigation.astro";
 import Footer from "@components/global/Footer.astro";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
 import globalConfig from "@lib/config";
-import { setWarning } from "@lib/utils";
 import ShowSiteGrid from "@components/ShowSiteGrid.astro";
+
+const { setWarning } = globalConfig.utils ?? {};
+
 
 if (!globalConfig) {
 	setWarning("GlobalLayout", "globalConfig");
@@ -95,7 +97,7 @@ const { title } = Astro.props;
 					<Banner />
 					<Navigation />
 				</header>
-				<main class="mt-48 mb-32 flex flex-col gap-4">
+				<main class="mt-40 max-lg:mt-32 max-lg:mb-16 mb-32 flex flex-col gap-8">
 					<GlobalGrid>
 						<Container layout="content">
 							<Breadcrumbs path={Astro.url.pathname} {title} />

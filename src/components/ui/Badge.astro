@@ -1,6 +1,8 @@
 ---
+import globalConfig from "@lib/config";
 import Icon, { type TIcon } from "./Icon.astro";
-import { setWarning } from "../../lib/utils";
+
+const { setWarning } = globalConfig.utils ?? {};
 
 type Props = { class?: string; badge?: TBadge };
 export type TBadge = { icon: TIcon; label: string };

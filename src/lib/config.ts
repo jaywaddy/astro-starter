@@ -1,73 +1,37 @@
-import type { TGlobalConfig } from "./types";
+import Banner, { type TBanner } from "./base/banner";
+import Brand, { type TBrand } from "./base/brand";
+import Navigation, { type TNavigation } from "./base/navigation";
+import Services, { type TPricePlan } from "./ext/services";
+import Utils, { type TUtils } from "./utils/utils";
+
+type TDev = {
+	enableGrid: boolean;
+	hidePage: boolean;
+	showGridLines: boolean;
+	showLayouts: boolean;
+};
+
+export type TGlobalConfig = {
+	banner: TBanner;
+	brand?: TBrand;
+	dev: TDev;
+	navigation: TNavigation;
+	services: TPricePlan[];
+	utils: TUtils;
+};
 
 const globalConfig: TGlobalConfig = {
-	banner: {
-		cta: {
-			href: "/",
-			icon: "new",
-			label: "CTA link",
-		},
-		display: true,
-		label: "Example label",
-		varient: "auto-hide",
-	},
-	brand: {
-		bio: "Add a bio...",
-		contact: {
-			location: "New York, NY",
-			email: "Contact@example.com",
-			socialLinks: [
-				{ href: "/", icon: "youtube", label: "YouTube" },
-				{ href: "/", icon: "bluesky", label: "Bluesky" },
-				{
-					href: "mailto:contact@example.com",
-					icon: "mail",
-					label: "Email",
-				},
-			],
-		},
-		favicon: {
-			fallback: "/favicon.ico",
-			svg: "/favicon.svg",
-		},
-
-		name: "Astro Starter",
-	},
+	banner: Banner,
+	brand: Brand,
 	dev: {
 		enableGrid: false,
 		hidePage: false,
 		showGridLines: true,
 		showLayouts: false,
 	},
-	navigation: {
-		background: "static",
-		cta: {
-			href: "/",
-			icon: "download",
-			label: "CTA",
-		},
-		categories: [
-			{ href: "/", label: "Home" },
-			{
-				href: "/gallery",
-				label: "Gallery",
-				collection: "gallery",
-				singular: "entry",
-				plural: "entries",
-			},
-			{
-				href: "/blog",
-				label: "Blog",
-				collection: "blog",
-				singular: "post",
-				plural: "posts",
-			},
-			{ href: "/pricing", label: "Pricing" },
-			{ href: "/about", label: "About" },
-			{ href: "/contact", label: "Contact" },
-		],
-		position: "left",
-	},
+	services: Services,
+	navigation: Navigation,
+	utils: Utils,
 };
 
 export default globalConfig;

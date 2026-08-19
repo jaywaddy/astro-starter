@@ -4,7 +4,8 @@ import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 
 import globalConfig from "@lib/config";
-import { setWarning } from "@lib/utils";
+
+const { setWarning } = globalConfig.utils ?? {};
 
 if (!globalConfig) {
 	setWarning("Banner", "globalConfig");

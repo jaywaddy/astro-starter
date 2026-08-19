@@ -4,10 +4,11 @@ import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
 import { Content, getHeadings, frontmatter } from "./about.md";
 import globalConfig from "@lib/config";
-import { setWarning } from "@lib/utils";
 import TableOfContents from "@components/TableOfContents.astro";
 import ContactLinks from "@components/ContactLinks.astro";
 import Img from "@components/ui/Img.astro";
+
+const { setWarning } = globalConfig.utils ?? {};
 
 if (!globalConfig) {
 	setWarning("About - index.astro", "globalConfig");

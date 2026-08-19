@@ -2,14 +2,16 @@
 import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
-import { calcReadTime, formatDate, slugify } from "@lib/utils";
 import Seperator from "@components/ui/Seperator.astro";
 import Image from "@components/ui/Img.astro";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import type { TCollection } from "@lib/types";
+import type { TCollection } from "@lib/utils/types";
 import TableOfContents from "@components/TableOfContents.astro";
 import ContactLinks from "@components/ContactLinks.astro";
+import globalConfig from "@lib/config";
+
+const { calcReadTime, formatDate } = globalConfig.utils ?? {};
 
 type Props = { entry: CollectionEntry<TCollection> };
 
@@ -22,21 +24,21 @@ const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?
 <GlobalLayout {...entry.data}>
 	{
 		thumbnail && (
-			<GlobalGrid class="mt-8">
+			<GlobalGrid>
 				<Container layout="content">
 					<Image src={thumbnail} class="rounded-cta" />
 				</Container>
 			</GlobalGrid>
 		)
 	}
-	<GlobalGrid class="mt-8">
+	<GlobalGrid>
 		<Container class="flex flex-col gap-8" layout="sidebar">
 			<div class="sticky top-32 grid gap-8">
 				<TableOfContents {headings} />
 				<ContactLinks groups={["socialLinks"]} />
 			</div>
 		</Container>
-		<Container class="flex flex-col gap-8" layout="article" tag="article">
+		<Container class="flex flex-col gap-8 max-lg:mt-8" layout="article" tag="article">
 			<div class="flex flex-col gap-4">
 				<h1>{title}</h1>
 				<p class="lead">{description}</p>
@@ -46,7 +48,7 @@ const { dateCreated, dateUpdated, title, description, thumbnail } = entry.data ?
 					<small>{calcReadTime(entry.body)}</small>
 				</div>
 			</div>
-			<div class="content">
+			<div class="content max-lg:[&_h2~h2]:mt-4">
 				<Content />
 			</div>
 		</Container>

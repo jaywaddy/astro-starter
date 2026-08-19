@@ -1,10 +1,12 @@
 ---
-import { setHref } from "@lib/utils";
-import { type TCollection } from "@lib/types";
+import { type TCollection } from "@lib/utils/types";
 import { getCollection } from "astro:content";
 import Button from "./ui/Button.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import Container from "@layouts/Container.astro";
+import globalConfig from "@lib/config";
+
+const { setHref } = globalConfig.utils ?? {};
 
 type Props = { collection?: TCollection };
 

@@ -1,8 +1,8 @@
-import type { TBlog, TGallery } from "@lib/types";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection, getCollection } from "astro:content";
 import globalConfig from "@lib/config";
+import type { TBlog, TGallery } from "@lib/utils/types";
 
 export const blogPosts: TBlog[] = await getCollection("blog");
 export const galleryEntries: TGallery[] = await getCollection("gallery");

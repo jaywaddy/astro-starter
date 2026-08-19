@@ -7,11 +7,12 @@ import { allCollections } from "@src/content.config";
 
 import globalConfig from "@lib/config";
 import logo from "@assets/logo.svg";
-import { setHref, setWarning } from "@lib/utils";
 import type { CollectionEntry } from "astro:content";
-import type { TCategory, TCollection, TCollectionGroup } from "@lib/types";
+import type { TCategory, TCollection, TCollectionGroup } from "@lib/utils/types";
 import ContactLinks from "@components/ContactLinks.astro";
 import CollectionLinks from "@components/CollectionLinks.astro";
+
+const { setHref, setWarning } = globalConfig.utils ?? {};
 
 if (!globalConfig) {
 	setWarning("Footer", "globalConfig");

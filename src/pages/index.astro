@@ -3,7 +3,8 @@ import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
 import globalConfig from "@lib/config";
-import { setWarning } from "@lib/utils";
+
+const { setWarning } = globalConfig.utils ?? {};
 
 if (!globalConfig) {
 	setWarning("Landing Page", "globalConfig");
@@ -15,7 +16,7 @@ const seo = { title: "Home" };
 ---
 
 <GlobalLayout {...seo}>
-	<GlobalGrid class="mt-8 gap-y-16">
+	<GlobalGrid class="gap-y-16">
 		<Container layout="content">
 			<h1>{brand?.name}</h1>
 		</Container>

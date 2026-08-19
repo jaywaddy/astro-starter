@@ -1,6 +1,4 @@
 ---
-import type { TInputFieldType } from "@lib/types";
-
 type Props = {
 	id?: string;
 	name?: string;
@@ -11,7 +9,33 @@ type Props = {
 	required?: boolean;
 };
 
-const { id, name, label, class: className, placeholder, required, type } = Astro.props;
+const { id, name, label, class: className, placeholder, required, type } = Astro.props ?? {};
+
+type TInputFieldType =
+	| "button"
+	| "checkbox"
+	| "color"
+	| "date"
+	| "datetime-local"
+	| "email"
+	| "file"
+	| "hidden"
+	| "image"
+	| "month"
+	| "number"
+	| "password"
+	| "radio"
+	| "range"
+	| "reset"
+	| "search"
+	| "submit"
+	| "tel"
+	| "text"
+	| "textarea"
+	| "time"
+	| "url"
+	| "week";
+
 const defaultStyles = "bg-primary rounded-cta w-full resize-none px-4 py-2 placeholder:opacity-50";
 ---
 

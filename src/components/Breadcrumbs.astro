@@ -1,9 +1,10 @@
 ---
-import type { TCta } from "@lib/types";
+import type { TCta } from "@lib/utils/types";
 import Button from "./ui/Button.astro";
 import Icon from "./ui/Icon.astro";
 import globalConfig from "@lib/config";
-import { capitalize, setWarning } from "@lib/utils";
+
+const { capitalize, setWarning } = globalConfig.utils ?? {};
 
 if (!globalConfig) {
 	setWarning("Bread Crumbs", "globalConfig");
@@ -12,7 +13,7 @@ if (!globalConfig) {
 
 type Props = { path: string; title: string | undefined };
 
-const { path, title } = Astro.props;
+const { path, title } = Astro.props ?? {};
 
 const crumbs = path.split("/");
 const lastCrumb = crumbs.length - 1;
@@ -48,17 +49,41 @@ const crumbList: TCta[] = crumbs.map((_crumb, _index) => {
 });
 ---
 
-<ul class="flex gap-2">
+<ul class="scrollbar-thumb-brand flex scrollbar-auto items-center overflow-x-scroll lg:gap-2">
 	{
 		crumbList.map((crumb, index) => (
-			<li class:list={["flex items-center gap-2"]}>
-				{index > 0 && <Icon class="text-50 w-4" name="chevron-right" />}
-				<Button
-					class:list={["w-fit", index !== lastCrumb && "text-50 hover:text-100"]}
-					{...crumb}
-				/>
-			</li>
-			//
+			<Fragment>
+				{index > 0 && (
+					<lil>
+						<Icon class="text-50 w-4" name="chevron-right" />
+					</lil>
+				)}
+				<li
+					class:list={[
+						"max-md:[&_.bcrumb]:p-[0.5px_1px] max-md:[&_.bcrumb]:text-xs max-md:[&_.bcrumb]:[&_svg]:w-3",
+					]}
+				>
+					<Button
+						class:list={[
+							"bcrumb w-fit",
+							index !== lastCrumb && "text-50 hover:text-100",
+							index !== 0 && index !== lastCrumb && "max-md:hidden md:flex",
+						]}
+						{...crumb}
+					/>
+					{index !== 0 && index !== lastCrumb && (
+						<Button
+							class:list={[
+								"bcrumb w-fit",
+								index !== lastCrumb && "text-50 hover:text-100",
+								"max-md:flex md:hidden",
+							]}
+							{...crumb}
+							label={"..."}
+						/>
+					)}
+				</li>
+			</Fragment>
 		))
 	}
 </ul>

@@ -1,6 +1,8 @@
 ---
 import type { HTMLTag } from "astro/types";
-import { setWarning } from "../lib/utils";
+import globalConfig from "@lib/config";
+
+const { setWarning } = globalConfig.utils ?? {};
 
 type TGridLayout =
 	| "full"

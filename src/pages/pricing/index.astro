@@ -2,10 +2,9 @@
 import Container from "@layouts/Container.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import GlobalLayout from "@layouts/GlobalLayout.astro";
-import { Content, frontmatter } from "./contact.md";
-import ContactForm from "@components/ContactForm.astro";
+import { frontmatter } from "./pricing.md";
 import globalConfig from "@lib/config";
-import ContactLinks from "@components/ContactLinks.astro";
+import Tabs from "@components/ui/Tabs.astro";
 
 const { setWarning } = globalConfig.utils ?? {};
 
@@ -13,20 +12,20 @@ if (!globalConfig) {
 	setWarning("Contact - index.astro", "globalConfig");
 	return null;
 }
+
+const { title, description } = frontmatter ?? {};
+
+const plans = globalConfig.services;
 ---
 
 <GlobalLayout {...frontmatter}>
 	<GlobalGrid class="gap-y-8">
-		<Container layout="sidebar" tag="aside">
-			<div class="sticky top-32 grid gap-8">
-				<ContactLinks />
+		<Container class="flex flex-col items-center gap-8" layout="content">
+			<div class="grid max-w-[60ch] gap-4 text-center">
+				<h1>{title}</h1>
+				<p class="lead">{description}</p>
 			</div>
-		</Container>
-		<Container class="flex flex-col gap-8" layout="article">
-			<div>
-				<Content />
-			</div>
-			<ContactForm data={globalConfig} />
+			<Tabs id="pricing-tabs" tabs={["Monthly", ["Annually", true], "Single/OTP"]} />
 		</Container>
 	</GlobalGrid>
 </GlobalLayout>

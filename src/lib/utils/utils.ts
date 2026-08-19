@@ -3,6 +3,20 @@ import { type CollectionEntry } from "astro:content";
 
 type Collection = CollectionEntry<TCollection>;
 
+const utils = {
+	calcReadTime,
+	calcWordCount,
+	capitalize,
+	findContent,
+	formatDate,
+	setHref,
+	setWarning,
+	slugify,
+	titleCase,
+};
+
+export type TUtils = typeof utils;
+
 export function calcReadTime(article: string | undefined): string {
 	const wordsPerMinute = 248;
 
@@ -49,13 +63,6 @@ export function formatDate(date: Date, monthFormat?: "short" | "long"): string {
 	});
 }
 
-export function titleCase(input: string): string {
-	return input
-		.split("-")
-		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(" ");
-}
-
 export function setHref(content: Collection): string {
 	const { collection, data, id } = content;
 
@@ -70,10 +77,20 @@ export function setWarning(element: string, prop: string): void {
 
 export function slugify(input: string): string {
 	return input
-		.replace("&", " and ")
-		.replace(/^\s+|\s+$/g, "")
 		.toLowerCase()
+		.replace("&", "-and-")
+		.replace("/", "-")
+		.replace(/^\s+|\s+$/g, "")
 		.replace(/[^a-z0-9 -]/g, "")
 		.replace(/\s+/g, "-")
 		.replace(/-+/g, "-");
 }
+
+export function titleCase(input: string): string {
+	return input
+		.split("-")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
+}
+
+export default utils;

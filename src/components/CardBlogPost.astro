@@ -1,8 +1,10 @@
 ---
-import type { TCollection } from "@lib/types";
-import { calcReadTime, formatDate, setHref } from "@lib/utils";
+import type { TCollection } from "@lib/utils/types";
 import type { CollectionEntry } from "astro:content";
 import Seperator from "./ui/Seperator.astro";
+import globalConfig from "@lib/config";
+
+const { calcReadTime, formatDate, setHref } = globalConfig.utils ?? {};
 
 type Props = { entry: CollectionEntry<TCollection> };
 

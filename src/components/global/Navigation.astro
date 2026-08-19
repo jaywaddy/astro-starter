@@ -2,15 +2,14 @@
 import Button from "../ui/Button.astro";
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import Container from "@layouts/Container.astro";
-import Seperator from "@components/ui/Seperator.astro";
 import Svg from "@components/ui/Svg.astro";
-
 import logo from "@assets/logo.svg";
-import { setWarning } from "@lib/utils";
 import globalConfig from "@lib/config";
 import MegaMenu from "@components/MegaMenu.astro";
 import CollectionLinks from "@components/CollectionLinks.astro";
 import ContactLinks from "@components/ContactLinks.astro";
+
+const { setWarning } = globalConfig.utils ?? {};
 
 if (!globalConfig) {
 	setWarning("Navigation", "globalConfig");
