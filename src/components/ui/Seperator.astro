@@ -1,1 +1,12 @@
-<span class="bg-outline h-4 w-px content-['']"></span>
+---
+type Props = { axis?: "x" | "y"; class?: string };
+
+const { axis = "x", class: className } = Astro.props;
+---
+
+<span
+	class:list={[
+		"bg-outline content-['']",
+		axis === "x" ? "h-full w-px" : "h-px w-full",
+		className,
+	]}></span>

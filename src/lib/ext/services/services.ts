@@ -5,8 +5,9 @@ export type TPricePlan = {
 	discount: number;
 	features: { asterisk?: string; name: string; list: boolean }[];
 	featureTitle: string;
-	highlighted: boolean;
-	name: string;
+	id: string;
+	isFeatured: boolean;
+	label: string;
 	note?: string;
 	price: {
 		annual: number;
@@ -16,11 +17,22 @@ export type TPricePlan = {
 };
 
 const discount = 0.1;
+const calPrices = (base: number) => {
+	const savingsRate = 0.05;
+	const savingsAmount = base * savingsRate;
 
-const pricing: TPricePlan[] = [
+	return {
+		annual: Math.round(base - savingsAmount),
+		month: base,
+		once: base * 12 * 5,
+	};
+};
+
+const services: TPricePlan[] = [
 	{
-		name: "Basic",
+		label: "Basic",
 		description: "This is the most basic plan.",
+		id: "p_1",
 		discount: discount,
 		features: [
 			{ name: features["f_1"], list: true },
@@ -28,14 +40,14 @@ const pricing: TPricePlan[] = [
 			{ name: features["f_3"], list: true },
 		],
 		featureTitle: featureTitle(),
-		highlighted: false,
-		price: { annual: 1997, month: 197, once: 4997 },
+		isFeatured: false,
+		price: calPrices(197),
 		note: "+$6/per seat",
 	},
-
 	{
-		name: "Premium",
+		label: "Premium",
 		description: "This is the most premium plan.",
+		id: "p_2",
 		discount: discount,
 		features: [
 			{ name: features["f_1"], list: false },
@@ -57,8 +69,8 @@ const pricing: TPricePlan[] = [
 			},
 		],
 		featureTitle: featureTitle("Basic"),
-		highlighted: true,
-		price: { annual: 2997, month: 297, once: -1 },
+		isFeatured: true,
+		price: calPrices(297),
 		note: "+$12/per seat",
 	},
 ];
@@ -71,4 +83,4 @@ function featureTitle(prevPlan?: string) {
 	return "All features";
 }
 
-export default pricing;
+export default services;

@@ -3,52 +3,53 @@ import Element from "./ui/Element.astro";
 import globalConfig from "@lib/config";
 import Icon from "./ui/Icon.astro";
 import Button from "./ui/Button.astro";
+import Seperator from "./ui/Seperator.astro";
 
 type Props = { plan: (typeof globalConfig.services)[0] };
 
-const { slugify } = globalConfig.utils;
-const { description, discount, features, featureTitle, highlighted, name, note, price } =
-	Astro.props.plan;
-const prices = {
-	"pricing-tabs-pay-monthly": price.month,
-	"pricing-tabs-pay-yearly": Math.round(price.annual / 12),
-	"pricing-tabs-pay-once": price.annual,
-};
-const priceId = `service-${slugify(name)}`;
+const { plan } = Astro.props;
+const { description, discount, features, featureTitle, isFeatured, id, label, note, price } = plan;
 ---
 
 <Element
-	bg={highlighted
+	bg={isFeatured
 		? "bg-[color-mix(var(--color-brand)_25%,transparent)] border border-brand"
 		: undefined}
-	class="relative h-full"
+	class:list={["price-card relative h-full", id]}
+	{id}
 >
 	{
-		highlighted && (
-			<small class="bg-brand text-cta-primary-text rounded-bl-cta rounded-tr-element absolute top-0 right-0 flex items-center gap-1 px-2 py-1">
+		isFeatured && (
+			<span class="bg-brand text-cta-primary-text rounded-bl-cta rounded-tr-element absolute top-0 right-0 flex items-center gap-1 px-2 py-1 text-sm">
 				<Icon class="w-4 [&_path]:stroke-2" name="thumbs-up" /> Recommended
-			</small>
+			</span>
 		)
 	}
-	<strong>{name}</strong>
+	<strong>{label}</strong>
 	<p>{description}</p>
 	<div class="flex flex-col gap-1">
-		<div class="flex items-end gap-2">
-			<span class="text-3xl" id={`service-${slugify(name)}`}
-				>${price.month.toLocaleString()} /mo</span
-			>
+		<div class="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+			<p class="flex items-baseline gap-1">
+				<span class="text-3xl" id={`${id}-price`}>{price.month.toLocaleString()}</span>
+				<span id={`${id}-price-unit`}>/mo</span>
+			</p>
 			{discount > 0 && <small class="text-50">{discount * 100}% discount</small>}
 		</div>
 		{
 			discount > 0 && (
-				<span class="text-50 line-through" id={`service-${slugify(name)}-original`}>
-					${price.month.toLocaleString()} /mo
-				</span>
+				<p class="text-50 line-through">
+					<span id={`${id}-og-price`}>${price.month.toLocaleString()}</span>
+					<span id={`${id}-og-price-unit`}>/mo</span>
+				</p>
 			)
 		}
 		{note && <small>{note}</small>}
 	</div>
-	<Button label="Get Started" />
+	<Button label="Choose plan" full varient={[isFeatured ? "primary" : "secondary", "lg"]} />
+	<Seperator
+		axis="y"
+		class:list={["my-4", isFeatured && "bg-[color-mix(var(--color-brand)_25%,transparent)]!"]}
+	/>
 	<div class="flex flex-col gap-1">
 		<strong>{featureTitle}</strong>
 		<ul>
@@ -65,33 +66,3 @@ const priceId = `service-${slugify(name)}`;
 		</ul>
 	</div>
 </Element>
-<script define:vars={{ discount, priceId, prices }}>
-	const tabs = document.querySelectorAll("#pricing-tabs input[name='button-group']");
-	const discountedPrice = document.getElementById(priceId);
-	const originalPrice = document.getElementById(`${priceId}-original`);
-
-	if (tabs) {
-		tabs.forEach((tab) => {
-			updatePrice(tab);
-			tab.addEventListener("click", () => updatePrice(tab));
-		});
-
-		function updatePrice(tab) {
-			if (tab.checked) {
-				const id = tab.id;
-
-				discountedPrice
-					? (discountedPrice.innerText = `$${discountPrice(prices[id]).toLocaleString()}${id !== "pricing-tabs-pay-once" ? " /mo" : ""}`)
-					: null;
-				originalPrice
-					? (originalPrice.innerText = `$${prices[id].toLocaleString()}${id !== "pricing-tabs-pay-once" ? " /mo" : ""}`)
-					: null;
-			}
-		}
-	}
-
-	function discountPrice(price) {
-		const discountAmount = price * discount;
-		return Math.round(price - discountAmount);
-	}
-</script>

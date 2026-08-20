@@ -1,37 +1,36 @@
 ---
-import globalConfig from "@lib/config";
+import Seperator from "./Seperator.astro";
 
-const { slugify } = globalConfig.utils ?? {};
+export type TTab = { label: string; id: string; isFeatured?: boolean };
 
-type Props = { tabs: Array<string | [string, boolean]>; class?: string; id?: string };
+type Props = { tabs: TTab[]; class?: string; id?: string };
 
 const { tabs, class: className, id } = Astro.props;
 ---
 
 <ul {id} class:list={["flex items-center", className]}>
 	{
-		tabs.map((tab, index) => (
-			<li class="py-1.25">
+		tabs.map(({ id: tabId, isFeatured, label }, index) => (
+			<li class="items-center justify-center">
 				<label
 					class:list={[
-						"bg-secondary border-outline cursor-pointer border-x px-4 py-2 text-sm",
+						"bg-secondary relative cursor-pointer px-4 py-2 text-sm",
 						"has-checked:bg-cta-primary has-checked:text-cta-primary-text",
 						"hover:bg-primary-hover",
-						index === 0 && "rounded-l-cta border-l border-none",
-						index === tabs.length - 1 && "rounded-r-cta border-none",
+						index === 0 && "rounded-l-cta",
+						index === tabs.length - 1 && "rounded-r-cta",
 					]}
-					for={`${id}-${typeof tab === "string" ? slugify(tab) : slugify(tab[0])}`}
+					for={`${id}-${tabId}`}
 				>
-					{typeof tab === "string" ? tab : tab[0]}
+					{label}
 					<input
-						checked={
-							typeof tabs === "string" ? undefined : typeof tab !== "string" && tab[1]
-						}
+						checked={isFeatured}
 						class="h-0 w-0 appearance-none"
-						id={`${id}-${typeof tab === "string" ? slugify(tab) : slugify(tab[0])}`}
-						name="button-group"
+						id={`${id}-${tabId}`}
+						name={`${id}-button-group`}
 						type="radio"
 					/>
+					{index > 0 && <Seperator class="absolute inset-0" />}
 				</label>
 			</li>
 		))
