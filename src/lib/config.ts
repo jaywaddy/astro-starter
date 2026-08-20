@@ -1,7 +1,7 @@
 import Banner, { type TBanner } from "./base/banner";
 import Brand, { type TBrand } from "./base/brand";
 import Navigation, { type TNavigation } from "./base/navigation";
-import Services, { type TPricePlan } from "./ext/services";
+import Services, { type TPricePlan } from "./ext/services/services";
 import Utils, { type TUtils } from "./utils/utils";
 
 type TDev = {
@@ -13,10 +13,10 @@ type TDev = {
 
 export type TGlobalConfig = {
 	banner: TBanner;
-	brand?: TBrand;
+	brand: TBrand;
 	dev: TDev;
 	navigation: TNavigation;
-	services: TPricePlan[];
+	services: TPricePlan[] | [];
 	utils: TUtils;
 };
 

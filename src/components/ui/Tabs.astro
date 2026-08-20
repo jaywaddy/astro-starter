@@ -8,42 +8,32 @@ type Props = { tabs: Array<string | [string, boolean]>; class?: string; id?: str
 const { tabs, class: className, id } = Astro.props;
 ---
 
-<div
-	{id}
-	class:list={[
-		"bg-primary rounded-element border-outline flex items-center justify-center border p-2",
-		className,
-	]}
->
-	<ul class="flex">
-		{
-			tabs.map((tab, index) => (
-				<li class="py-1.25">
-					<label
-						class:list={[
-							"bg-secondary border-outline cursor-pointer border-y border-r px-4 py-2",
-							"has-checked:bg-cta-primary has-checked:text-cta-primary-text",
-							"hover:bg-primary-hover",
-							index === 0 && "rounded-l-cta border-l",
-							index === tabs.length - 1 && "rounded-r-cta",
-						]}
-						for={`${id}-${typeof tab === "string" ? slugify(tab) : slugify(tab[0])}`}
-					>
-						{typeof tab === "string" ? tab : tab[0]}
-						<input
-							checked={
-								typeof tabs === "string"
-									? undefined
-									: typeof tab !== "string" && tab[1]
-							}
-							class="h-0 w-0 appearance-none"
-							id={`${id}-${typeof tab === "string" ? slugify(tab) : slugify(tab[0])}`}
-							name="button-group"
-							type="radio"
-						/>
-					</label>
-				</li>
-			))
-		}
-	</ul>
-</div>
+<ul {id} class:list={["flex items-center", className]}>
+	{
+		tabs.map((tab, index) => (
+			<li class="py-1.25">
+				<label
+					class:list={[
+						"bg-secondary border-outline cursor-pointer border-x px-4 py-2 text-sm",
+						"has-checked:bg-cta-primary has-checked:text-cta-primary-text",
+						"hover:bg-primary-hover",
+						index === 0 && "rounded-l-cta border-l border-none",
+						index === tabs.length - 1 && "rounded-r-cta border-none",
+					]}
+					for={`${id}-${typeof tab === "string" ? slugify(tab) : slugify(tab[0])}`}
+				>
+					{typeof tab === "string" ? tab : tab[0]}
+					<input
+						checked={
+							typeof tabs === "string" ? undefined : typeof tab !== "string" && tab[1]
+						}
+						class="h-0 w-0 appearance-none"
+						id={`${id}-${typeof tab === "string" ? slugify(tab) : slugify(tab[0])}`}
+						name="button-group"
+						type="radio"
+					/>
+				</label>
+			</li>
+		))
+	}
+</ul>

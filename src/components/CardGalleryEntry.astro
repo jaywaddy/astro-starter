@@ -12,14 +12,14 @@ type Props = { entry: CollectionEntry<TCollection> };
 const { entry } = Astro.props;
 ---
 
-<Element>
+<div class="flex flex-col gap-4">
 	<Img src={entry.data.thumbnail} />
-	<a class="w-fit hover:underline" href={setHref(entry)}>
-		<strong>{entry.data.title}</strong>
-	</a>
-	<div class="flex items-center gap-2">
+	<div class="flex flex-col gap-1">
+		<a class="w-fit hover:underline" href={setHref(entry)}>
+			<strong>{entry.data.title}</strong>
+		</a>
 		<small class="opacity-50">
 			{formatDate(entry.data.dateCreated)}
 		</small>
 	</div>
-</Element>
+</div>

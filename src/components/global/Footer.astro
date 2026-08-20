@@ -1,58 +1,13 @@
 ---
 import GlobalGrid from "@layouts/GlobalGrid.astro";
 import Container from "@layouts/Container.astro";
-import type { TIcon } from "@components/ui/Icon.astro";
 import Svg from "@components/ui/Svg.astro";
-import { allCollections } from "@src/content.config";
-
 import globalConfig from "@lib/config";
 import logo from "@assets/logo.svg";
-import type { CollectionEntry } from "astro:content";
-import type { TCategory, TCollection, TCollectionGroup } from "@lib/utils/types";
 import ContactLinks from "@components/ContactLinks.astro";
 import CollectionLinks from "@components/CollectionLinks.astro";
 
-const { setHref, setWarning } = globalConfig.utils ?? {};
-
-if (!globalConfig) {
-	setWarning("Footer", "globalConfig");
-	return null;
-}
-
-type TFooterGroup = {
-	icon?: TIcon;
-	label: string;
-	links: TCategory[];
-	plural?: string;
-	//
-};
-
-const { brand, navigation } = globalConfig ?? {};
-const {} = brand ?? {};
-
-const navLinks: typeof navigation.categories = navigation.categories.filter((link) => {
-	return link.href !== "/" && !link.collection;
-});
-
-const footerGroups = [
-	...populateFooterGroups(...allCollections),
-	{ label: "Information", links: [...navLinks] },
-];
-
-function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TCollectionGroup[] {
-	const maxLinks = 5;
-
-	return data.slice(0, maxLinks).map((entries) => {
-		const name = entries[0]?.collection;
-		return {
-			icon: name,
-			label: name,
-			links: entries.map((entry) => ({ href: setHref(entry), label: entry.data.title })),
-			plural:
-				navigation.categories.filter((link) => link.collection === name)[0].plural || "",
-		};
-	});
-}
+const { brand } = globalConfig ?? {};
 ---
 
 <GlobalGrid class="bg-primary mt-auto gap-y-8 pt-8">
@@ -67,7 +22,7 @@ function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TColle
 					class="hover:text-50 flex flex-wrap items-center gap-2 text-sm"
 				>
 					<Svg class="[&_svg]:h-8" src={logo} />
-					<span class="font-bold">{globalConfig.brand?.name}</span>
+					<span class="font-bold">{brand.name}</span>
 				</a>
 				<ContactLinks iconOnly varient="secondary" />
 			</div>
@@ -78,7 +33,7 @@ function populateFooterGroups(...data: CollectionEntry<TCollection>[][]): TColle
 		<div class="flex flex-wrap gap-1 px-4 text-current">
 			<span>Copyright &copy;</span>
 			<span id="copyright-text"></span>
-			<span>{brand?.name}. All rights reserved.</span>
+			<span>{brand.name}. All rights reserved.</span>
 		</div>
 	</Container>
 </GlobalGrid>

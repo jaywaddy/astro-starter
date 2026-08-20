@@ -5,6 +5,8 @@ import GlobalLayout from "@layouts/GlobalLayout.astro";
 import { frontmatter } from "./pricing.md";
 import globalConfig from "@lib/config";
 import Tabs from "@components/ui/Tabs.astro";
+import CardPlan from "@components/CardPlan.astro";
+import Grid from "@components/ui/Grid.astro";
 
 const { setWarning } = globalConfig.utils ?? {};
 
@@ -15,17 +17,26 @@ if (!globalConfig) {
 
 const { title, description } = frontmatter ?? {};
 
-const plans = globalConfig.services;
+const services = globalConfig.services;
 ---
 
 <GlobalLayout {...frontmatter}>
 	<GlobalGrid class="gap-y-8">
-		<Container class="flex flex-col items-center gap-8" layout="content">
-			<div class="grid max-w-[60ch] gap-4 text-center">
+		<Container class="flex flex-col gap-8" layout="content">
+			<div class="flex max-w-[60ch] flex-col gap-4">
 				<h1>{title}</h1>
 				<p class="lead">{description}</p>
 			</div>
-			<Tabs id="pricing-tabs" tabs={["Monthly", ["Annually", true], "Single/OTP"]} />
+			<Tabs id="pricing-tabs" tabs={["Pay Monthly", ["Pay Yearly", true], "Pay Once"]} />
+			<Grid class="w-full gap-4" size="sm" tag="ul">
+				{
+					services.map((service) => (
+						<li class="w-full">
+							<CardPlan plan={service} />
+						</li>
+					))
+				}
+			</Grid>
 		</Container>
 	</GlobalGrid>
 </GlobalLayout>

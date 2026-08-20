@@ -29,7 +29,7 @@ const brand: TBrand = {
 			{ href: "/", icon: "bluesky", label: "Bluesky" },
 			{
 				href: `mailto:${email.toLowerCase()}`,
-				icon: "mail",
+				icon: "at-sign",
 				label: "Email",
 			},
 		],

@@ -40,11 +40,12 @@ const blog = defineCollection({
 		base: "./src/content/blog",
 		pattern: "**/*.md",
 	}),
-	schema: ({ image }) =>
-		z.object({
+	schema: ({ image }) => {
+		return z.object({
 			...collectionSchema,
 			thumbnail: image().optional(),
-		}),
+		});
+	},
 });
 
 const gallery = defineCollection({
@@ -52,11 +53,12 @@ const gallery = defineCollection({
 		base: "./src/content/gallery",
 		pattern: "**/*.md",
 	}),
-	schema: ({ image }) =>
-		z.object({
+	schema: ({ image }) => {
+		return z.object({
 			...collectionSchema,
 			thumbnail: image().optional(),
-		}),
+		});
+	},
 });
 
 export const collections = { blog, gallery };

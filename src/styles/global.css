@@ -64,12 +64,13 @@
 
 	--color-cta-primary-text: var(--color-zinc-950);
 	--color-text: var(--color-zinc-950);
+	--color-invert: var(--color-zinc-50);
 
 	--text-sm: 0.875rem;
 
 	/* General */
-	--color-brand: var(--color-brand-500);
-	--color-brand-hover: var(--color-brand-400);
+	--color-brand: var(--color-brand-400);
+	--color-brand-hover: var(--color-brand-300);
 
 	--color-error: var(--color-red-600);
 
@@ -93,7 +94,7 @@
 	--radius-pill: 100vw;
 
 	--site-gap: --spacing(4);
-	--spacing-element: --spacing(4);
+	--spacing-element: --spacing(8);
 
 	/* Gradients */
 	--intensity: 0.25;
@@ -123,6 +124,7 @@
 
 		/* Typography */
 		--color-text: var(--color-zinc-50);
+		--color-invert: var(--color-zinc-950);
 
 		/* General */
 		--color-error: var(--color-red-400);
