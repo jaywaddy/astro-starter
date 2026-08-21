@@ -11,7 +11,7 @@ type Props = { entry: CollectionEntry<TCollection> };
 const { entry } = Astro.props;
 ---
 
-<Fragment>
+<div class="flex flex-col gap-2 border-50 border-b border-dashed pb-8">
 	<a class="w-fit hover:underline" href={setHref(entry)}>
 		<strong>{entry.data.title}</strong>
 	</a>
@@ -19,7 +19,7 @@ const { entry } = Astro.props;
 		<small class="opacity-50">
 			{formatDate(entry.data.dateCreated)}
 		</small>
-		<Seperator />
+		<small><Seperator axis="x" /></small>
 		<small class="opacity-50">{calcReadTime(entry.body)}</small>
 	</div>
-</Fragment>
+</div>

@@ -29,7 +29,7 @@ const Card = collection === "blog" ? CardBlogPost : CardGalleryEntry;
 			<h1>{data.title}</h1>
 		</Container>
 		<Container layout="content">
-			<Grid class="flex flex-col gap-8" size={gridLayouts[collection]} tag="ul">
+			<Grid class="gap-8" size={gridLayouts[collection]} tag="ul">
 				{
 					entries.map((entry) => (
 						<li class="flex flex-col gap-1">

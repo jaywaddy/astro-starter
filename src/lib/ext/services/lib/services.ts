@@ -1,9 +1,10 @@
 import { features } from "./features";
 
+export type TPlanFeature = { asterisk?: string; id: string; list: boolean };
 export type TPricePlan = {
 	description: string;
 	discount: number;
-	features: { asterisk?: string; name: string; list: boolean }[];
+	features: TPlanFeature[];
 	featureTitle: string;
 	id: string;
 	isFeatured: boolean;
@@ -35,14 +36,15 @@ const services: TPricePlan[] = [
 		id: "p_1",
 		discount: discount,
 		features: [
-			{ name: features["f_1"], list: true },
-			{ name: features["f_2"], list: true },
-			{ name: features["f_3"], list: true },
+			{ id: "f_1", list: true },
+			{ id: "f_2", list: true },
+			{ id: "f_3", list: true },
+			{ asterisk: "+$12 per seat", id: "f_4", list: true },
 		],
-		featureTitle: featureTitle(),
+		featureTitle: featuresHeading(),
 		isFeatured: false,
 		price: calPrices(197),
-		note: "+$6/per seat",
+		note: "5 seats",
 	},
 	{
 		label: "Premium",
@@ -50,32 +52,27 @@ const services: TPricePlan[] = [
 		id: "p_2",
 		discount: discount,
 		features: [
-			{ name: features["f_1"], list: false },
-			{ name: features["f_2"], list: false },
-			{ name: features["f_3"], list: false },
-			{ name: features["f_4"], list: true },
-			{ name: features["f_5"], list: true },
-			{
-				name: features["f_6"],
-				list: true,
-
-				asterisk: "+$35/per additional",
-			},
-			{
-				name: features["f_7"],
-				list: true,
-
-				asterisk: "+$35/per additional",
-			},
+			{ id: "f_1", list: false },
+			{ id: "f_2", list: false },
+			{ id: "f_3", list: false },
+			{ id: "f_4", list: true },
+			{ id: "f_5", list: true },
+			{ id: "f_6", list: true },
+			{ id: "f_7", list: true },
+			{ id: "f_8", list: true },
 		],
-		featureTitle: featureTitle("Basic"),
+		featureTitle: featuresHeading("Basic"),
 		isFeatured: true,
 		price: calPrices(297),
-		note: "+$12/per seat",
+		note: "20 seats",
 	},
 ];
 
-function featureTitle(prevPlan?: string) {
+export function featureLabel(featureId: string) {
+	return features.filter(({ id }) => id === featureId)[0].label;
+}
+
+function featuresHeading(prevPlan?: string) {
 	if (prevPlan) {
 		return `All ${prevPlan} features, plus:`;
 	}

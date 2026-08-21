@@ -1,7 +1,7 @@
 import Banner, { type TBanner } from "./base/banner";
 import Brand, { type TBrand } from "./base/brand";
 import Navigation, { type TNavigation } from "./base/navigation";
-import Services, { type TPricePlan } from "./ext/services/services";
+import Services, { type TPricePlan } from "@lib/ext/services/lib/services";
 import Utils, { type TUtils } from "./utils/utils";
 
 type TDev = {
@@ -27,7 +27,7 @@ const globalConfig: TGlobalConfig = {
 		enableGrid: false,
 		hidePage: false,
 		showGridLines: true,
-		showLayouts: false,
+		showLayouts: true,
 	},
 	services: Services,
 	navigation: Navigation,

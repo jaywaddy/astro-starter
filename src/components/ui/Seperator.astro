@@ -6,7 +6,7 @@ const { axis = "x", class: className } = Astro.props;
 
 <span
 	class:list={[
-		"bg-outline content-['']",
-		axis === "x" ? "h-full w-px" : "h-px w-full",
+		"border-outline content-['']",
+		axis === "x" ? "w-px border-l" : "h-px border-b",
 		className,
 	]}></span>

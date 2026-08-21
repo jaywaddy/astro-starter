@@ -14,9 +14,9 @@ const { tabs, class: className, id } = Astro.props;
 			<li class="items-center justify-center">
 				<label
 					class:list={[
-						"bg-secondary relative cursor-pointer px-4 py-2 text-sm",
+						"bg-primary relative cursor-pointer px-4 py-2 text-sm",
 						"has-checked:bg-cta-primary has-checked:text-cta-primary-text",
-						"hover:bg-primary-hover",
+						"hover:bg-cta-secondary-hover",
 						index === 0 && "rounded-l-cta",
 						index === tabs.length - 1 && "rounded-r-cta",
 					]}

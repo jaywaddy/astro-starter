@@ -1,0 +1,32 @@
+---
+import Icon from "@components/ui/Icon.astro";
+import { type TPlanFeature } from "../lib/services";
+import Button from "@components/ui/Button.astro";
+
+type Props = {
+	align?: "left" | "center" | "right";
+	class?: string;
+	features: TPlanFeature[];
+	isFeatured: boolean;
+	title: string;
+};
+
+const { align = "center", class: className, features, isFeatured, title } = Astro.props;
+
+const alignments = { left: "justify-start", center: "justify-center", right: "justify-end" };
+---
+
+<ul class:list={[className]}>
+	<li><span class:list={["eyebrow h-16", alignments[align]]}>{title}</span></li>
+	{
+		features.map((feature, index) => (
+			<li class:list={["flex h-16 items-center", alignments[align]]}>
+				{feature.asterisk ? (
+					<span class="text-70 text-center text-sm">{features[index].asterisk}</span>
+				) : (
+					<Icon class="w-4" name="check" />
+				)}
+			</li>
+		))
+	}
+</ul>
